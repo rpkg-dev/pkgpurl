@@ -1,0 +1,36 @@
+Package: pkgpurl
+Title: Author R packages using a literate programming approach
+Version: 0.0.9000
+Authors@R: 
+    person(given = "Salim",
+           family = "Brüggemann",
+           role = c("aut", "cre"),
+           email = "salim-b@pm.me",
+           comment = c(ORCID = "0000-0002-5329-5987"))
+Description: pkgpurl facilitates R package authoring using a literate 
+    programming approach. The main idea is to write all of the source code in
+    R Markdown files (`.Rmd`), which allows the actual code to be freely mixed
+    with explanatory and supplementary information in expressive Markdown
+    format. The main object of pkgpurl is to provide a standardized way to
+    compile the bare `.R` files from the Prose-enhanced and thus more human-
+    readable `.Rmd` files.
+License: AGPL-3
+URL: https://gitlab.com/salim_b/r/pkgs/pkgpurl
+BugReports: https://gitlab.com/salim_b/r/pkgs/pkgpurl/issues
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+Imports: 
+    dplyr (>= 0.8.4),
+    fs (>= 1.4.1),
+    glue (>= 1.4.1),
+    knitr (>= 1.28),
+    magrittr (>= 1.5),
+    purrr (>= 0.3.4),
+    readr (>= 1.3.1),
+    rlang (>= 0.4.4),
+    stringr (>= 1.4.0),
+    tibble (>= 2.1.3)
+Suggests: 
+    testthat
+RoxygenNote: 7.1.0.9001

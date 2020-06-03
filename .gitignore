@@ -1,0 +1,18 @@
+# system-specific temp, backup, thumbnail etc. files
+.~lock*
+*.backup
+~$*
+.DS_Store
+Thumbs.db
+
+# R(Studio) specific (temp) files
+.RData
+.Rhistory
+.Rproj.user
+.Ruserdata
+
+# (knitted) HTML files
+*.html
+
+# API keys
+.httr-oauth

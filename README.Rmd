@@ -1,0 +1,49 @@
+# [package name + short description]
+```{r, prep-snippets, echo = FALSE}
+# download the snippets to insert later on
+## define temporary file paths
+path_notice_inst_dev <- tempfile(pattern = "path_notice_inst_dev_")
+path_notice_lp <- tempfile(pattern = "path_notice_lp_")
+path_notice_coding_style <- tempfile(pattern = "path_notice_coding_style_")
+on.exit(unlink(c(path_notice_inst_dev,
+                 path_notice_lp,
+                 path_notice_coding_style)))
+
+## download the files
+download.file(url = "https://gitlab.com/salim_b/r/snippets/raw/master/R%20Markdown/installation_notice_dev_version_gitlab.Rmd",
+              destfile = path_notice_inst_dev,
+              quiet = TRUE)
+download.file(url = "https://gitlab.com/salim_b/r/snippets/raw/master/R%20Markdown/literate_programming_notice.Rmd",
+              destfile = path_notice_lp,
+              quiet = TRUE)
+download.file(url = "https://gitlab.com/salim_b/r/snippets/raw/master/R%20Markdown/coding_style_notice.Rmd",
+              destfile = path_notice_coding_style,
+              quiet = TRUE)
+```
+[lead-style package description]
+
+## Features
+
+...
+
+## Details
+
+...
+
+## Installation
+```{r, install-snippet-dev, child = path_notice_inst_dev}
+```
+
+## Development
+
+### Literate Programming
+```{r, literate-programming-snippet, child = path_notice_lp}
+```
+
+### Coding Style
+```{r, coding-style-snippet, child = path_notice_coding_style}
+```
+
+## See also
+
+- ...
