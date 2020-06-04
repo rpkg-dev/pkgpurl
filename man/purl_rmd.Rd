@@ -2,9 +2,12 @@
 % Please edit documentation in R/pkgpurl-GEN.R
 \name{purl_rmd}
 \alias{purl_rmd}
-\title{Knit \verb{Rmd/*.Rmd} to \verb{R/*-GEN.R}}
+\title{Purl \verb{Rmd/*.Rmd} to \verb{R/*-GEN.R}}
 \usage{
-purl_rmd()
+purl_rmd(pkg_dir = ".")
+}
+\arguments{
+\item{pkg_dir}{The path to the root of the package directory.}
 }
 \description{
 This function strives to provide a standardized way to convert all \code{.Rmd} files in the \verb{Rmd/} directory to bare \code{.R} files in the directory \verb{R/} using
@@ -15,8 +18,8 @@ The generated \code{.R} files will be named the same as the \code{.Rmd} files pl
 \code{Rmd/foo.Rmd} for example will be converted to \code{R/foo-GEN.R}.
 
 The \href{https://rmarkdown.rstudio.com/}{R Markdown file format} allows to write code in the
-\href{https://en.wikipedia.org/wiki/Literate_programming}{literate programming} way. So you can write code-related prose in the
+\href{https://en.wikipedia.org/wiki/Literate_programming}{literate programming} way. So you can intermingle code with related prose in
 \href{https://bookdown.org/yihui/rmarkdown/markdown-syntax.html}{Markdown syntax} optimized for human readability instead of having to
-rely on \href{https://cran.r-project.org/doc/manuals/r-release/R-intro.html#R-commands_003b-case-sensitivity-etc}{\verb{#} comments}. It also allows you to easily
-compile your source code to beautifully looking HTML, PDF etc. files.
+rely on \href{https://cran.r-project.org/doc/manuals/r-release/R-intro.html#R-commands_003b-case-sensitivity-etc}{\verb{#} comments} only. It also allows you to
+easily compile your source code to beautifully looking HTML, PDF etc. files.
 }
