@@ -1,4 +1,8 @@
-# [package name + short description]
+---
+output: pal::gitlab_document
+---
+
+# pkgpurl: Purl an Rmd package.
 ```{r, prep-snippets, echo = FALSE}
 # download the snippets to insert later on
 ## define temporary file paths
@@ -20,7 +24,7 @@ download.file(url = "https://gitlab.com/salim_b/r/snippets/raw/master/R%20Markdo
               destfile = path_notice_coding_style,
               quiet = TRUE)
 ```
-[lead-style package description]
+Facilitate authoring R packages that use a literate programming approach applying the [R Markdown file format](https://rmarkdown.rstudio.com/).
 
 ## Features
 
@@ -46,4 +50,4 @@ download.file(url = "https://gitlab.com/salim_b/r/snippets/raw/master/R%20Markdo
 
 ## See also
 
-- ...
+- [Write An R Package Using Literate Programming Techniques](https://yihui.org/rlp/) by Yihui Xie
