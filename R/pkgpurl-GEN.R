@@ -5,8 +5,8 @@ utils::globalVariables(names = ".")
 
 #' Purl `Rmd/*.Rmd` to `R/*-GEN.R`
 #'
-#' This function strives to provide a standardized way to convert all `.Rmd` files in the `Rmd/` directory to bare `.R` files in the directory `R/` using
-#' [knitr::purl()].
+#' This function strives to provide a standardized way to convert all `.Rmd` files in the `Rmd/` subdirectory to bare `.R` files in the `R/` subdirectory using
+#' [knitr::purl()]. It is mainly intended for the creation of R packages.
 #'
 #' The generated `.R` files will be named the same as the `.Rmd` files plus the suffix `-GEN` to indicate the file was auto-generated. So the file
 #' `Rmd/foo.Rmd` for example will be converted to `R/foo-GEN.R`.
@@ -17,12 +17,12 @@ utils::globalVariables(names = ".")
 #' rely on [`#` comments](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#R-commands_003b-case-sensitivity-etc) only. It also allows you to
 #' easily compile your source code to beautifully looking HTML, PDF etc. files.
 #'
-#' @param pkg_dir The path to the root of the package directory.
+#' @param path The path to the root of the package directory.
 #'
 #' @export
-purl_rmd <- function(pkg_dir = ".") {
+purl_rmd <- function(path = ".") {
   
-  rmd_dir <- fs::path_abs(pkg_dir, "Rmd/")
+  rmd_dir <- fs::path_abs(path, "Rmd/")
   
   if (fs::dir_exists(rmd_dir)) {
     
@@ -35,7 +35,7 @@ purl_rmd <- function(pkg_dir = ".") {
       
     } else {
       
-      rlang::warn(glue::glue("`{pkg_dir}` does not appear to be an Rmd package directory. Nothing done."))
+      rlang::warn(glue::glue("`{path}` does not appear to be an Rmd package directory. Nothing done."))
     }
   }
 }

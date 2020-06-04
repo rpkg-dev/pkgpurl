@@ -4,14 +4,14 @@
 \alias{purl_rmd}
 \title{Purl \verb{Rmd/*.Rmd} to \verb{R/*-GEN.R}}
 \usage{
-purl_rmd(pkg_dir = ".")
+purl_rmd(path = ".")
 }
 \arguments{
-\item{pkg_dir}{The path to the root of the package directory.}
+\item{path}{The path to the root of the package directory.}
 }
 \description{
-This function strives to provide a standardized way to convert all \code{.Rmd} files in the \verb{Rmd/} directory to bare \code{.R} files in the directory \verb{R/} using
-\code{\link[knitr:purl]{knitr::purl()}}.
+This function strives to provide a standardized way to convert all \code{.Rmd} files in the \verb{Rmd/} subdirectory to bare \code{.R} files in the \verb{R/} subdirectory using
+\code{\link[knitr:purl]{knitr::purl()}}. It is mainly intended for the creation of R packages.
 }
 \details{
 The generated \code{.R} files will be named the same as the \code{.Rmd} files plus the suffix \code{-GEN} to indicate the file was auto-generated. So the file
