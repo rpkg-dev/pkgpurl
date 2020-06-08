@@ -4,15 +4,15 @@
 \name{pkgpurl-package}
 \alias{pkgpurl}
 \alias{pkgpurl-package}
-\title{pkgpurl: Author R packages using a literate programming approach}
+\title{pkgpurl: Facilitate authoring R packages in the R Markdown file format}
 \description{
 pkgpurl facilitates R package authoring using a literate 
-    programming approach. The main idea is to write all of the source code in
-    R Markdown files (`.Rmd`), which allows the actual code to be freely mixed
-    with explanatory and supplementary information in expressive Markdown
-    format. The main object of pkgpurl is to provide a standardized way to
-    compile the bare `.R` files from the Prose-enhanced and thus more human-
-    readable `.Rmd` files.
+    programming approach. The main idea behind this is to write all of the
+    R source code in R Markdown files (`Rmd/*.Rmd`), which allows the actual
+    code to be freely mixed with explanatory and supplementary information
+    in expressive Markdown format. The main object of pkgpurl is to provide a
+    standardized way to compile the bare `.R` files from the Prose-enhanced and
+    thus more human-oriented `.Rmd` files.
 }
 \seealso{
 Useful links:
