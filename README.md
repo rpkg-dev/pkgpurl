@@ -1,6 +1,6 @@
 # pkgpurl: Purl an Rmd package.
 
-Facilitate authoring R packages that use a literate programming approach applying the [R Markdown file format](https://rmarkdown.rstudio.com/).
+Facilitate authoring R packages in the [R Markdown file format](https://rmarkdown.rstudio.com/).
 
 ## Features
 
