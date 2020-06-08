@@ -15,7 +15,9 @@ utils::globalVariables(names = ".")
 
 # Purl `Rmd/*.Rmd` to `R/*-GEN.R`
 
-The basic workflow is heavily inspired by a pertinent makefile from Yihui Xie found [here](https://yihui.org/rlp/#from-rmd-to-r). Not least because I'm a complete noob regarding [makefile syntax](https://en.wikipedia.org/wiki/Makefile), I decided to write the relevant pieces in R. 
+The basic workflow is heavily inspired by a pertinent makefile from Yihui Xie found [here](https://yihui.org/rlp/#from-rmd-to-r). Not least because I'm a complete noob regarding [makefile syntax](https://en.wikipedia.org/wiki/Makefile), I decided to write the relevant pieces in R.
+
+This function is also registered as an [RStudio add-in](https://rstudio.github.io/rstudioaddins/) to allow RStudio users to assign a custom shortcut.
 
 ```{r}
 #' Purl `Rmd/*.Rmd` to `R/*-GEN.R`

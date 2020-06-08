@@ -1,0 +1,4 @@
+Name: Purl `Rmd/`
+Description: Executes `pkgpurl::purl_rmd()`.
+Binding: purl_rmd
+Interactive: false
