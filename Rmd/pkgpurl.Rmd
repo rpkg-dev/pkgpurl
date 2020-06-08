@@ -48,6 +48,9 @@ purl_rmd <- function(path = ".") {
     
     if (length(rmd_files) > 0) {
       
+      r_dir <- fs::path(path, "R/")
+      if (!fs::dir_exists(r_dir)) fs::dir_create(r_dir)
+      
       rmd_files %>% purrr::walk(process_rmd)
       
     } else {
