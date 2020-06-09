@@ -4,7 +4,7 @@
 \name{pkgpurl-package}
 \alias{pkgpurl}
 \alias{pkgpurl-package}
-\title{pkgpurl: Facilitate authoring R packages in the R Markdown file format}
+\title{pkgpurl: Facilitate Authoring R Packages in the R Markdown File Format}
 \description{
 pkgpurl facilitates R package authoring using a literate 
     programming approach. The main idea behind this is to write all of the

@@ -17,8 +17,6 @@ utils::globalVariables(names = ".")
 
 The basic workflow is heavily inspired by a pertinent makefile from Yihui Xie found [here](https://yihui.org/rlp/#from-rmd-to-r). Not least because I'm a complete noob regarding [makefile syntax](https://en.wikipedia.org/wiki/Makefile), I decided to write the relevant pieces in R.
 
-This function is also registered as an [RStudio add-in](https://rstudio.github.io/rstudioaddins/) to allow RStudio users to assign a custom shortcut.
-
 ```{r}
 #' Purl `Rmd/*.Rmd` to `R/*-GEN.R`
 #'
@@ -32,7 +30,9 @@ This function is also registered as an [RStudio add-in](https://rstudio.github.i
 #' [literate programming](https://en.wikipedia.org/wiki/Literate_programming) way. So you can intermingle code with related prose in
 #' [Markdown syntax](https://bookdown.org/yihui/rmarkdown/markdown-syntax.html) optimized for human readability instead of having to
 #' rely on [`#` comments](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#R-commands_003b-case-sensitivity-etc) only. It also allows you to
-#' easily compile your source code to beautifully looking HTML, PDF etc. files.
+#' easily compile your source code to beautifully looking HTML, PDF etc. files using [rmarkdown::render()].
+#'
+#' This function is also registered as an [RStudio add-in](https://rstudio.github.io/rstudioaddins/) to allow RStudio users to assign it a custom shortcut.
 #'
 #' @param path The path to the root of the package directory.
 #'

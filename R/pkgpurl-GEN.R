@@ -15,7 +15,9 @@ utils::globalVariables(names = ".")
 #' [literate programming](https://en.wikipedia.org/wiki/Literate_programming) way. So you can intermingle code with related prose in
 #' [Markdown syntax](https://bookdown.org/yihui/rmarkdown/markdown-syntax.html) optimized for human readability instead of having to
 #' rely on [`#` comments](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#R-commands_003b-case-sensitivity-etc) only. It also allows you to
-#' easily compile your source code to beautifully looking HTML, PDF etc. files.
+#' easily compile your source code to beautifully looking HTML, PDF etc. files using [rmarkdown::render()].
+#'
+#' This function is also registered as an [RStudio add-in](https://rstudio.github.io/rstudioaddins/) to allow RStudio users to assign it a custom shortcut.
 #'
 #' @param path The path to the root of the package directory.
 #'
