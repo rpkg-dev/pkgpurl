@@ -2,17 +2,9 @@
 output: pal::gitlab_document
 ---
 
-# `r paste0(desc::desc_get_field(key = "Package"), ": ", desc::desc_get_field(key = "Title", default = "<No \x60Title\x60 field set in DESCRIPTION!>"))`
+# `r paste0(pal::desc_value("Package"), ": ", pal::desc_value("Title"))`
 
-`r desc::desc_get_field(key = "Description", default = "<No \x60Description\x60 field set in DESCRIPTION!>")`
-
-## Features
-
-...
-
-## Details
-
-...
+`r pal::desc_value("Description")`
 
 ## Installation
 ```{r, install-snippet-dev, child = pkgsnippets::file("installation-notice_dev-version_gitlab.Rmd")}
