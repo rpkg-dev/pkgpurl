@@ -23,5 +23,5 @@ The \href{https://rmarkdown.rstudio.com/}{R Markdown file format} allows to writ
 rely on \href{https://cran.r-project.org/doc/manuals/r-release/R-intro.html#R-commands_003b-case-sensitivity-etc}{\verb{#} comments} only. It also allows you to
 easily compile your source code to beautifully looking HTML, PDF etc. files using \code{\link[rmarkdown:render]{rmarkdown::render()}}.
 
-This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in} to allow RStudio users to assign it a custom shortcut.
+This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in} allowing RStudio users to assign a custom shortcut to it.
 }

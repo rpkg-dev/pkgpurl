@@ -17,7 +17,7 @@ utils::globalVariables(names = ".")
 #' rely on [`#` comments](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#R-commands_003b-case-sensitivity-etc) only. It also allows you to
 #' easily compile your source code to beautifully looking HTML, PDF etc. files using [rmarkdown::render()].
 #'
-#' This function is also registered as an [RStudio add-in](https://rstudio.github.io/rstudioaddins/) to allow RStudio users to assign it a custom shortcut.
+#' `r pkgsnippets::md_snippet("rstudio_addin_hint")`
 #'
 #' @param path The path to the root of the package directory.
 #'
