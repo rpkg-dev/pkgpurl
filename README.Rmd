@@ -7,17 +7,17 @@ output: pal::gitlab_document
 `r pal::desc_value("Description")`
 
 ## Installation
-```{r, install-snippet-dev, child = pkgsnippets::file("installation-notice_dev-version_gitlab.Rmd")}
+```{r, install-snippet-dev, child = pkgsnippets::snippet_path("installation-notice_dev-version_gitlab.Rmd")}
 ```
 
 ## Development
 
 ### Literate Programming
-```{r, literate-programming-snippet, child = pkgsnippets::file("literate-programming-notice.Rmd")}
+```{r, literate-programming-snippet, child = pkgsnippets::snippet_path("literate-programming-notice.Rmd")}
 ```
 
 ### Coding Style
-```{r, coding-style-snippet, child = pkgsnippets::file("coding-style-notice.Rmd")}
+```{r, coding-style-snippet, child = pkgsnippets::snippet_path("coding-style-notice.Rmd")}
 ```
 
 ## See also
