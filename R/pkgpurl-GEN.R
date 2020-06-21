@@ -31,7 +31,7 @@ purl_rmd <- function(path = ".") {
     rmd_files <- fs::dir_ls(path = rmd_dir,
                             regexp = "Rmd/[^/]+\\.[Rr]md")
     
-    if (length(rmd_files) > 0) {
+    if (length(rmd_files)) {
       
       r_dir <- fs::path(path, "R/")
       if (!fs::dir_exists(r_dir)) fs::dir_create(r_dir)
@@ -54,7 +54,7 @@ process_rmd <- function(rmd) {
   knitr::purl(input = rmd,
               output = output,
               quiet = TRUE,
-              documentation = 0)
+              documentation = 0L)
   
   # add reminder header lines to generated .R files
   rmd %>%
@@ -63,4 +63,36 @@ process_rmd <- function(rmd) {
            "# See `README.md#literate-programming` for more information on the literature programming approach used applying the R Markdown format.\n\n",
            readr::read_file(file = output)) %>%
     readr::write_file(path = output)
+}
+
+#' Lint R Markdown package
+#'
+#' This is a convenience wrapper around [lintr::lint_dir()] which is tailored to a typical R Markdown package. To use this function, the
+#' [lintr](https://github.com/jimhester/lintr/#readme) package must be installed.
+#'
+#' @inheritParams purl_rmd
+#'
+#' @export
+lint_rmd <- function(path = ".") {
+  
+  if (requireNamespace(package = "lintr",
+                       quietly = TRUE)) {
+    
+    # paths <-
+    #   checkmate::assert_directory(path,
+    #                               access = "r") %>%
+    #   fs::path(c("Rmd",
+    #              "R",
+    #              "man/roxygen",
+    #              "tests/testthat")) %>%
+    #   magrittr::extract(fs::dir_exists(.))
+    
+    lintr::lint_dir(path = checkmate::assert_directory(path,
+                                                       access = "r"),
+                    pattern = "\\.[Rr](md)?$")
+
+  } else {
+    rlang::abort(pkgsnippets::msg(name = "pkg_required",
+                                  pkg = "lintr"))
+  }
 }
