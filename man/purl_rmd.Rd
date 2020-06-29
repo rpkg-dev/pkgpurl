@@ -11,7 +11,7 @@ purl_rmd(path = ".")
 }
 \description{
 This function strives to provide a standardized way to convert all \code{.Rmd} files in the \verb{Rmd/} subdirectory to bare \code{.R} files in the \verb{R/} subdirectory using
-\code{\link[knitr:purl]{knitr::purl()}}. It is mainly intended for the creation of R packages.
+\code{\link[knitr:knit]{knitr::purl()}}. It is mainly intended for the creation of R packages.
 }
 \details{
 The generated \code{.R} files will be named the same as the \code{.Rmd} files plus the suffix \code{-GEN} to indicate the file was auto-generated. So the file
