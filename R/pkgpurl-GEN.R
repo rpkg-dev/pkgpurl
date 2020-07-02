@@ -78,20 +78,12 @@ lint_rmd <- function(path = ".") {
   if (requireNamespace(package = "lintr",
                        quietly = TRUE)) {
     
-    # paths <-
-    #   checkmate::assert_directory(path,
-    #                               access = "r") %>%
-    #   fs::path(c("Rmd",
-    #              "R",
-    #              "man/roxygen",
-    #              "tests/testthat")) %>%
-    #   magrittr::extract(fs::dir_exists(.))
-    
     lintr::lint_dir(path = checkmate::assert_directory(path,
                                                        access = "r"),
                     pattern = "\\.[Rr](md)?$")
 
   } else {
+    
     rlang::abort(pkgsnippets::msg(name = "pkg_required",
                                   pkg = "lintr"))
   }
