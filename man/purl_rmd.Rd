@@ -11,17 +11,19 @@ purl_rmd(path = ".")
 }
 \description{
 This function strives to provide a standardized way to convert all \code{.Rmd} files in the \verb{Rmd/} subdirectory to bare \code{.R} files in the \verb{R/} subdirectory using
-\code{\link[knitr:knit]{knitr::purl()}}. It is mainly intended for the creation of R packages.
+\code{\link[knitr:knit]{knitr::purl()}}. It is mainly intended for authoring R packages in the \href{https://rmarkdown.rstudio.com/}{R Markdown file format}.
 }
 \details{
 The generated \code{.R} files will be named the same as the \code{.Rmd} files plus the suffix \code{-GEN} to indicate the file was auto-generated. So the file
 \code{Rmd/foo.Rmd} for example will be converted to \code{R/foo-GEN.R}.
 
-The \href{https://rmarkdown.rstudio.com/}{R Markdown file format} allows to write code in the
-\href{https://en.wikipedia.org/wiki/Literate_programming}{literate programming} way. So you can intermingle code with related prose in
-\href{https://bookdown.org/yihui/rmarkdown/markdown-syntax.html}{Markdown syntax} optimized for human readability instead of having to
-rely on \href{https://cran.r-project.org/doc/manuals/r-release/R-intro.html#R-commands_003b-case-sensitivity-etc}{\verb{#} comments} only. It also allows you to
-easily compile your source code to beautifully looking HTML, PDF etc. files using \code{\link[rmarkdown:render]{rmarkdown::render()}}.
+The R Markdown file format allows you to intermingle code with related prose in \href{https://bookdown.org/yihui/rmarkdown/markdown-syntax.html}{Markdown syntax}
+optimized for human readability. This facilitates (best) practices which are commonly referred to as
+\href{https://en.wikipedia.org/wiki/Literate_programming}{\emph{literate programming}}.
+
+In practice, the main advantage of writing R code in R Markdown is that you don't have to rely on
+\href{https://cran.r-project.org/doc/manuals/r-release/R-intro.html#R-commands_003b-case-sensitivity-etc}{\verb{#} comments} to explain, annotate or otherwise
+elaborate on your code. It also allows you to easily compile your source code to beautifully looking HTML, PDF etc. files using \code{\link[rmarkdown:render]{rmarkdown::render()}}.
 
 This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in} allowing RStudio users to assign a custom shortcut to it.
 }

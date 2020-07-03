@@ -21,16 +21,18 @@ The basic workflow is heavily inspired by a pertinent makefile from Yihui Xie fo
 #' Purl `Rmd/*.Rmd` to `R/*-GEN.R`
 #'
 #' This function strives to provide a standardized way to convert all `.Rmd` files in the `Rmd/` subdirectory to bare `.R` files in the `R/` subdirectory using
-#' [knitr::purl()]. It is mainly intended for the creation of R packages.
+#' [knitr::purl()]. It is mainly intended for authoring R packages in the [R Markdown file format](https://rmarkdown.rstudio.com/).
 #'
 #' The generated `.R` files will be named the same as the `.Rmd` files plus the suffix `-GEN` to indicate the file was auto-generated. So the file
 #' `Rmd/foo.Rmd` for example will be converted to `R/foo-GEN.R`.
 #'
-#' The [R Markdown file format](https://rmarkdown.rstudio.com/) allows to write code in the
-#' [literate programming](https://en.wikipedia.org/wiki/Literate_programming) way. So you can intermingle code with related prose in
-#' [Markdown syntax](https://bookdown.org/yihui/rmarkdown/markdown-syntax.html) optimized for human readability instead of having to
-#' rely on [`#` comments](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#R-commands_003b-case-sensitivity-etc) only. It also allows you to
-#' easily compile your source code to beautifully looking HTML, PDF etc. files using [rmarkdown::render()].
+#' The R Markdown file format allows you to intermingle code with related prose in [Markdown syntax](https://bookdown.org/yihui/rmarkdown/markdown-syntax.html)
+#' optimized for human readability. This facilitates (best) practices which are commonly referred to as
+#' [_literate programming_](https://en.wikipedia.org/wiki/Literate_programming).
+#' 
+#' In practice, the main advantage of writing R code in R Markdown is that you don't have to rely on
+#' [`#` comments](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#R-commands_003b-case-sensitivity-etc) to explain, annotate or otherwise
+#' elaborate on your code. It also allows you to easily compile your source code to beautifully looking HTML, PDF etc. files using [rmarkdown::render()].
 #'
 #' `r pkgsnippets::md_snippet("rstudio_addin_hint")`
 #'
