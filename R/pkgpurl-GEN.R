@@ -16,8 +16,8 @@ utils::globalVariables(names = ".")
 #' [_literate programming_](https://en.wikipedia.org/wiki/Literate_programming).
 #' 
 #' In practice, the main advantage of writing R code in R Markdown is that you don't have to rely on
-#' [`#` comments](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#R-commands_003b-case-sensitivity-etc) to explain, annotate or otherwise
-#' elaborate on your code. It also allows you to easily compile your source code to beautifully looking HTML, PDF etc. files using [rmarkdown::render()].
+#' [`#` comments](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Comments) to explain, annotate or otherwise elaborate on your code. It also
+#' allows you to easily compile your source code to beautifully looking HTML, PDF etc. files using [rmarkdown::render()].
 #'
 #' `r pkgsnippets::md_snippet("rstudio_addin_hint")`
 #'

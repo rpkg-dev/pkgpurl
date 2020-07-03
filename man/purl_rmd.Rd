@@ -22,8 +22,8 @@ optimized for human readability. This facilitates (best) practices which are com
 \href{https://en.wikipedia.org/wiki/Literate_programming}{\emph{literate programming}}.
 
 In practice, the main advantage of writing R code in R Markdown is that you don't have to rely on
-\href{https://cran.r-project.org/doc/manuals/r-release/R-intro.html#R-commands_003b-case-sensitivity-etc}{\verb{#} comments} to explain, annotate or otherwise
-elaborate on your code. It also allows you to easily compile your source code to beautifully looking HTML, PDF etc. files using \code{\link[rmarkdown:render]{rmarkdown::render()}}.
+\href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Comments}{\verb{#} comments} to explain, annotate or otherwise elaborate on your code. It also
+allows you to easily compile your source code to beautifully looking HTML, PDF etc. files using \code{\link[rmarkdown:render]{rmarkdown::render()}}.
 
 This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in} allowing RStudio users to assign a custom shortcut to it.
 }
