@@ -2,3 +2,8 @@ Name: Purl `Rmd/`
 Description: Executes `pkgpurl::purl_rmd()`.
 Binding: purl_rmd
 Interactive: false
+
+Name: Lint R Markdown package
+Description: Executes `pkgpurl::lint_rmd()`.
+Binding: lint_rmd
+Interactive: false

@@ -70,6 +70,8 @@ process_rmd <- function(rmd) {
 #' This is a convenience wrapper around [lintr::lint_dir()] which is tailored to a typical R Markdown package. To use this function, the
 #' [lintr](https://github.com/jimhester/lintr/#readme) package must be installed.
 #'
+#' `r pkgsnippets::md_snippet("rstudio_addin_hint")`
+#'
 #' @inheritParams purl_rmd
 #'
 #' @export

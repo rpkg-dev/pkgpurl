@@ -13,3 +13,6 @@ lint_rmd(path = ".")
 This is a convenience wrapper around \code{\link[lintr:lint_dir]{lintr::lint_dir()}} which is tailored to a typical R Markdown package. To use this function, the
 \href{https://github.com/jimhester/lintr/#readme}{lintr} package must be installed.
 }
+\details{
+This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in} allowing RStudio users to assign a custom shortcut to it.
+}
