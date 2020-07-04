@@ -6,20 +6,18 @@ output: pal::gitlab_document
 
 `r pal::desc_value("Description")`
 
+The basic idea behind the concept this package implements originates from Yihui Xie. See his blog post [_Write An R Package Using Literate Programming Techniques_](https://yihui.org/rlp/) for more details, it's definitively worth reading. This package's function `pkgpurl::purl_rmd()` is just a less cumbersome alternative to the Makefile approach outlined by him.
+
 ## Installation
 ```{r, install-snippet-dev, child = pkgsnippets::snippet_path("installation-notice_dev-version_gitlab.Rmd")}
 ```
 
 ## Development
 
-### Literate Programming
-```{r, literate-programming-snippet, child = pkgsnippets::snippet_path("literate-programming-notice.Rmd")}
+### R Markdown format
+```{r, rmd-pkg-snippet, child = pkgsnippets::snippet_path("rmd-package-notice.Rmd")}
 ```
 
-### Coding Style
+### Coding style
 ```{r, coding-style-snippet, child = pkgsnippets::snippet_path("coding-style-notice.Rmd")}
 ```
-
-## See also
-
-- [_Write An R Package Using Literate Programming Techniques_](https://yihui.org/rlp/) by Yihui Xie

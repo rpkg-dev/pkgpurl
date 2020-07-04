@@ -13,7 +13,7 @@ pkgpurl facilitates R package authoring using
     allows the actual code to be freely mixed with explanatory and
     supplementary information in expressive Markdown format. The main
     object of pkgpurl is to provide a standardized way to compile the bare
-    `.R` files from the Prose-enhanced and thus more human-oriented `.Rmd`
+    `.R` files from the prose-enhanced and thus more human-oriented `.Rmd`
     files.
 }
 \seealso{
