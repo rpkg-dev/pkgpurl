@@ -24,7 +24,7 @@ But there are also a few drawbacks of the R Markdown format:
 
     For the time being, you can use my ready-to-go [R Markdown Package Development Template](https://gitlab.com/salim_b/r/pkg-dev-tpl) as a starting point for creating new R packages in the R Markdown format.
 
--   Other than in `.R` files, RStudio currently doesn’t support auto-completion of [roxygen2 tags](https://roxygen2.r-lib.org/articles/rd.html) in `.Rmd` files. The same applies to the roxygen2 comment continuation when inserting a newline. This is a [known issue](https://github.com/rstudio/rstudio/issues/5809) and will hopefully be resolved in the near future.
+-   Other than in `.R` files, RStudio currently doesn’t support auto-completion of [roxygen2 tags](https://roxygen2.r-lib.org/articles/rd.html) in `.Rmd` files. The same applies to the roxygen2 comment continuation when inserting a newline. These are [known issues](https://github.com/rstudio/rstudio/issues/5809) which will hopefully be resolved in the near future.
 
 ## Installation
 
