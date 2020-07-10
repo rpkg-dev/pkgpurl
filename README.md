@@ -8,7 +8,7 @@ The basic idea behind the concept this package implements originates from Yihui 
 
 Besides the ability to write accompanying information in expressive [Markdown](https://en.wikipedia.org/wiki/Markdown), the [R Markdown](https://rmarkdown.rstudio.com/) format provides several further advantages over the bare R source format:
 
--   If you use RStudio or any other editor with proper R Markdown syntax highlighting, you will probably like the gained visual clarity for distinguishing individual functions/code parts (i.e. R code chunks). This also facilitates to create a meaningful document structure (in Markdown) alongside the actual R source code.
+-   If you use RStudio or any other editor with proper R Markdown syntax highlighting, you will probably like the gained visual clarity for distinguishing individual functions/code parts (i.e. R code chunks). This also facilitates creating a meaningful document structure (in Markdown) alongside the actual R source code.
 
 -   You can use RStudio’s [code outline](https://rviews.rstudio.com/2016/11/11/easy-tricks-you-mightve-missed/#code-outline) to easily navigate through longer scripts. It provides significantly better usability than the [code section standard](https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections) of classic R scripts. It makes it easy to find your way around source files that are thousands of lines long.
 
@@ -23,6 +23,8 @@ But there are also a few drawbacks of the R Markdown format:
 -   Setting up a new project to write an R package in the R Markdown format involves some additional steps compared to the classic approach. A suitable convenience function like `create_rmd_package()` to set up all the necessary parts could probably be added to [usethis](usethis.r-lib.org/) in the future.
 
     For the time being, you can use my ready-to-go [R Markdown Package Development Template](https://gitlab.com/salim_b/r/pkg-dev-tpl) as a starting point for creating new R packages in the R Markdown format.
+
+-   Other than in `.R` files, RStudio currently doesn’t support auto-completion of [roxygen2 tags](https://roxygen2.r-lib.org/articles/rd.html) in `.Rmd` files. The same applies to the roxygen2 comment continuation when inserting a newline. This is a [known issue](https://github.com/rstudio/rstudio/issues/5809) and will hopefully be resolved in the near future.
 
 ## Installation
 
