@@ -6,9 +6,9 @@ The basic idea behind the concept this package implements originates from Yihui 
 
 ## Details
 
-Besides the ability to write accompanying information in expressive [Markdown](https://en.wikipedia.org/wiki/Markdown), the R Markdown format provides several further advantages over the bare R source format:
+Besides the ability to write accompanying information in expressive [Markdown](https://en.wikipedia.org/wiki/Markdown), the [R Markdown](https://rmarkdown.rstudio.com/) format provides several further advantages over the bare R source format:
 
--   If you use RStudio or any other editor with proper R Markdown syntax highlighting, you will probably like the gained visual clarity for distinguishing individual functions/code parts (i.e. R code chunks). This also facilitates to create a meaningful document structure alongside the actual R source code.
+-   If you use RStudio or any other editor with proper R Markdown syntax highlighting, you will probably like the gained visual clarity for distinguishing individual functions/code parts (i.e. R code chunks). This also facilitates to create a meaningful document structure (in Markdown) alongside the actual R source code.
 
 -   You can use RStudio’s [code outline](https://rviews.rstudio.com/2016/11/11/easy-tricks-you-mightve-missed/#code-outline) to easily navigate through longer scripts. It provides significantly better usability than the [code section standard](https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections) of classic R scripts. It makes it easy to find your way around source files that are thousands of lines long.
 
