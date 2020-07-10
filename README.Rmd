@@ -8,6 +8,43 @@ output: pal::gitlab_document
 
 The basic idea behind the concept this package implements originates from Yihui Xie. See his blog post [_Write An R Package Using Literate Programming Techniques_](https://yihui.org/rlp/) for more details, it's definitively worth reading. This package's function `pkgpurl::purl_rmd()` is just a less cumbersome alternative to the Makefile approach outlined by him.
 
+## Details
+
+Besides the ability to write accompanying information in expressive [Markdown](https://en.wikipedia.org/wiki/Markdown), the R Markdown format provides several
+further advantages over the bare R source format:
+
+- If you use RStudio or any other editor with proper R Markdown syntax highlighting, you will probably like the gained visual clarity for distinguishing
+  individual functions/code parts (i.e. R code chunks). This also facilitates to create a meaningful document structure alongside the actual R source code.
+
+- You can use RStudio's [code outline](https://rviews.rstudio.com/2016/11/11/easy-tricks-you-mightve-missed/#code-outline) to easily navigate through longer
+  scripts. It provides significantly better usability than the
+  [code section standard](https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections) of classic R scripts. It makes it easy to find
+  your way around source files that are thousands of lines long.
+
+- You can have development-only code which never lands in the generated R source files (and thus the R package) in separate code chunks with the chunk option
+  [`purl = FALSE`](https://yihui.org/knitr/options/#extracting-source-code). This turns out to be very convenient in certain situations.
+
+But there are also a few drawbacks of the R Markdown format:
+
+- The pkgpurl approach on writing R packages in the R Markdown format introduces _one_ additional step at the very beginning of typical package development
+  workflows: Running `pkgpurl::purl_rmd()` to generate the `R/*-GEN.R` files from the original `Rmd/*.Rmd` sources before documenting/checking/testing/building
+  the package. Given sufficient user demand, this could probably be integrated into [devtools](https://devtools.r-lib.org/)' functions in the future, so that
+  no additional action has to be taken by the user when relying on RStudio's built-in package building infrastructure.
+
+  For the time being, it's recommended to set up a custom shortcut[^recommended-keycombo] for `pkgpurl::purl_rmd()` which is registered as an
+  [RStudio add-in](https://rstudio.github.io/rstudioaddins/).
+
+- Setting up a new project to write an R package in the R Markdown format involves some additional steps compared to the classic approach. A suitable
+  convenience function like `create_rmd_package()` to set up all the necessary parts could probably be added to [usethis](usethis.r-lib.org/) in the future.
+
+  For the time being, you can use my ready-to-go [R Markdown Package Development Template](https://gitlab.com/salim_b/r/pkg-dev-tpl) as a starting point for
+  creating new R packages in the R Markdown format.
+
+
+[^recommended-keycombo]: I personally recommend to use <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> since it's not occupied yet by any of the predefined
+[RStudio shortcuts](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts).
+
+
 ## Installation
 ```{r, install-snippet-dev, child = pkgsnippets::snippet_path("installation-notice_dev-version_gitlab.Rmd")}
 ```
@@ -21,3 +58,5 @@ The basic idea behind the concept this package implements originates from Yihui 
 ### Coding style
 ```{r, coding-style-snippet, child = pkgsnippets::snippet_path("coding-style-notice.Rmd")}
 ```
+
+---
