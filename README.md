@@ -20,7 +20,7 @@ But there are also a few drawbacks of the R Markdown format:
 
     For the time being, it’s recommended to set up a custom shortcut[^1] for `pkgpurl::purl_rmd()` which is registered as an [RStudio add-in](https://rstudio.github.io/rstudioaddins/).
 
--   Setting up a new project to write an R package in the R Markdown format involves some additional steps compared to the classic approach. A suitable convenience function like `create_rmd_package()` to set up all the necessary parts could probably be added to [usethis](https://usethis.r-lib.org/) in the future.
+-   Setting up a new project to write an R package in the R Markdown differs slightly from the classic approach. A suitable convenience function like `create_rmd_package()` to set up all the necessary parts could probably be added to [usethis](https://usethis.r-lib.org/) in the future.
 
     For the time being, you can use my ready-to-go [R Markdown Package Development Template](https://gitlab.com/salim_b/r/pkg-dev-tpl) as a starting point for creating new R packages in the R Markdown format.
 
