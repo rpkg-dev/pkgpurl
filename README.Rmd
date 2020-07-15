@@ -36,7 +36,7 @@ But there are also a few drawbacks of the R Markdown format:
   [RStudio add-in](https://rstudio.github.io/rstudioaddins/).
 
 - Setting up a new project to write an R package in the R Markdown format involves some additional steps compared to the classic approach. A suitable
-  convenience function like `create_rmd_package()` to set up all the necessary parts could probably be added to [usethis](usethis.r-lib.org/) in the future.
+  convenience function like `create_rmd_package()` to set up all the necessary parts could probably be added to [usethis](https://usethis.r-lib.org/) in the future.
 
   For the time being, you can use my ready-to-go [R Markdown Package Development Template](https://gitlab.com/salim_b/r/pkg-dev-tpl) as a starting point for
   creating new R packages in the R Markdown format.
@@ -51,17 +51,17 @@ But there are also a few drawbacks of the R Markdown format:
 
 
 ## Installation
-```{r, install-snippet-dev, child = pkgsnippets::snippet_path("installation-notice_dev-version_gitlab.Rmd")}
+```{r, install-snippet-dev, child = pkgsnippets::rmd_snippet_path("installation-notice_dev-version_gitlab.Rmd")}
 ```
 
 ## Development
 
 ### R Markdown format
-```{r, rmd-pkg-snippet, child = pkgsnippets::snippet_path("rmd-package-notice.Rmd")}
+```{r, rmd-pkg-snippet, child = pkgsnippets::rmd_snippet_path("rmd-package-notice.Rmd")}
 ```
 
 ### Coding style
-```{r, coding-style-snippet, child = pkgsnippets::snippet_path("coding-style-notice.Rmd")}
+```{r, coding-style-snippet, child = pkgsnippets::rmd_snippet_path("coding-style-notice.Rmd")}
 ```
 
 ---
