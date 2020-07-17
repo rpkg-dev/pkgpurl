@@ -19,7 +19,7 @@ utils::globalVariables(names = ".")
 #' [`#` comments](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Comments) to explain, annotate or otherwise elaborate on your code. It also
 #' allows you to easily compile your source code to beautifully looking HTML, PDF etc. files using [rmarkdown::render()].
 #'
-#' `r pkgsnippets::md_snippet("rstudio_addin_hint")`
+#' `r pkgsnip::md_snip("rstudio_addin_hint")`
 #'
 #' @param path The path to the root of the package directory.
 #'
@@ -72,7 +72,7 @@ process_rmd <- function(rmd) {
 #' This is a convenience wrapper around [lintr::lint_dir()] which is tailored to a typical R Markdown package. To use this function, the
 #' [lintr](https://github.com/jimhester/lintr/#readme) package must be installed.
 #'
-#' `r pkgsnippets::md_snippet("rstudio_addin_hint")`
+#' `r pkgsnip::md_snip("rstudio_addin_hint")`
 #'
 #' @inheritParams purl_rmd
 #'
@@ -88,7 +88,7 @@ lint_rmd <- function(path = ".") {
 
   } else {
     
-    rlang::abort(pkgsnippets::msg(name = "pkg_required",
-                                  pkg = "lintr"))
+    rlang::abort(pkgsnip::msg(name = "pkg_required",
+                              pkg = "lintr"))
   }
 }
