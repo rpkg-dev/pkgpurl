@@ -6,7 +6,7 @@ The basic idea behind the concept this package implements originates from Yihui 
 
 ## Details
 
-Besides the ability to write accompanying information in expressive [Markdown](https://en.wikipedia.org/wiki/Markdown), the [R Markdown](https://rmarkdown.rstudio.com/) format provides several further advantages over the bare R source format:
+Besides the ability to write accompanying information in expressive [Markdown](https://en.wikipedia.org/wiki/Markdown), the [R Markdown](https://rmarkdown.rstudio.com/) format provides several further **advantages** over the bare R source format:
 
 -   If you use RStudio or any other editor with proper R Markdown syntax highlighting, you will probably like the gained visual clarity for distinguishing individual functions/code parts (i.e. R code chunks). This also facilitates creating a meaningful document structure (in Markdown) alongside the actual R source code.
 
@@ -16,7 +16,7 @@ Besides the ability to write accompanying information in expressive [Markdown](h
 
 -   As you might already know, [you can only use ASCII characters in your code if you plan on submitting your package to CRAN](https://r-pkgs.org/r.html#r-cran). This of course also applies to R code chunks in the `Rmd/*.Rmd` files that are compiled to `R/*-GEN.R` files by pkgpurl. But since the accompanying Markdown documentation won’t land in the compiled R files, you can use the full Unicode spectrum of characters there (🥳) – as long as you exclude the R Markdown source from the built package by putting a line `^Rmd$` in `.Rbuildignore` (which is recommended anyway).
 
-But there are also a few drawbacks of the R Markdown format:
+But there are also a few **drawbacks** of the R Markdown format:
 
 -   The pkgpurl approach on writing R packages in the R Markdown format introduces *one* additional step at the very beginning of typical package development workflows: Running `pkgpurl::purl_rmd()` to generate the `R/*-GEN.R` files from the original `Rmd/*.Rmd` sources before documenting/checking/testing/building the package. Given sufficient user demand, this could probably be integrated into [devtools](https://devtools.r-lib.org/)’ functions in the future, so that no additional action has to be taken by the user when relying on RStudio’s built-in package building infrastructure.
 
