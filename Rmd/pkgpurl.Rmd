@@ -102,6 +102,8 @@ process_rmd <- function(rmd) {
                  "tests/testthat")) %>%
       magrittr::extract(fs::dir_exists(.))
   ```
+  
+  Then, the `pattern` of `lintr::lint_dir()` would need to be adapted to exclude files ending in `-GEN.R`.
 
 ```{r}
 #' Lint R Markdown package
