@@ -26,6 +26,12 @@ Besides the ability to write accompanying information in expressive [Markdown](h
 
 - You can have development-only code which never lands in the generated R source files (and thus the R package) in separate code chunks with the chunk option
   [`purl = FALSE`](https://yihui.org/knitr/options/#extracting-source-code). This turns out to be very convenient in certain situations.
+  
+  For example, this is a good way to reproducibly document the generation of cleaned versions of [exported data](https://r-pkgs.org/data.html#data-data) as
+  well as [internal data](https://r-pkgs.org/data.html#data-sysdata). This avoids having to put the code in separate files under `data-raw/` and adding the
+  directory to `.Rbuildignore`, i.e. no need to use `usethis::use_data_raw()`. Instead, you just set `purl = FALSE` for the relevant code chunk(s). You can
+  (and should) still use `usethis::use_data(...)` (optionally with `overwrite = TRUE`) to generate the files under `data/` holding external package data as
+  well as the `R/sysdata.rda` file (using `internal = TRUE`) holding internal package data.
 
 - As you might already know, [you can only use ASCII characters in your code if you plan on submitting your package to CRAN](https://r-pkgs.org/r.html#r-cran).
   This of course also applies to R code chunks in the `Rmd/*.Rmd` files that are compiled to `R/*-GEN.R` files by pkgpurl. But since the accompanying Markdown
