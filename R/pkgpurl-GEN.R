@@ -70,7 +70,9 @@ process_rmd <- function(rmd) {
 #' Lint R Markdown package
 #'
 #' This is a convenience wrapper around [lintr::lint_dir()] which is tailored to a typical R Markdown package. To use this function, the
-#' [lintr](https://github.com/jimhester/lintr/#readme) package must be installed.
+#' [lintr](https://github.com/jimhester/lintr/#readme) package is required.
+#'
+#' To avoid unnecessary noise, all the the generated `R/*-GEN.R` files as well as R Markdown vignettes under `vignettes/*.Rmd` are excluded from linting.
 #'
 #' `r pkgsnip::md_snip("rstudio_addin_hint")`
 #'
@@ -79,16 +81,17 @@ process_rmd <- function(rmd) {
 #' @export
 lint_rmd <- function(path = ".") {
   
-  if (requireNamespace(package = "lintr",
-                       quietly = TRUE)) {
-    
-    lintr::lint_dir(path = checkmate::assert_directory(path,
-                                                       access = "r"),
-                    pattern = "\\.[Rr](md)?$")
-
-  } else {
-    
-    rlang::abort(pkgsnip::msg(name = "pkg_required",
-                              pkg = "lintr"))
-  }
+  pal::assert_pkg("lintr")
+  
+  lintr::lint_dir(path = checkmate::assert_directory(path,
+                                                     access = "r"),
+                  pattern = "\\.[Rr](md)?$",
+                  exclusions = list(c(list.files(path = c("R"),
+                                                 recursive = TRUE,
+                                                 full.names = TRUE,
+                                                 pattern = "-GEN\\.R$",),
+                                      list.files(path = c("vignettes"),
+                                                 recursive = TRUE,
+                                                 full.names = TRUE,
+                                                 pattern = "\\.Rmd$"))))
 }

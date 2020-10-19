@@ -11,8 +11,10 @@ lint_rmd(path = ".")
 }
 \description{
 This is a convenience wrapper around \code{\link[lintr:lint_dir]{lintr::lint_dir()}} which is tailored to a typical R Markdown package. To use this function, the
-\href{https://github.com/jimhester/lintr/#readme}{lintr} package must be installed.
+\href{https://github.com/jimhester/lintr/#readme}{lintr} package is required.
 }
 \details{
+To avoid unnecessary noise, all the the generated \verb{R/*-GEN.R} files as well as R Markdown vignettes under \verb{vignettes/*.Rmd} are excluded from linting.
+
 This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in} allowing RStudio users to assign a custom shortcut to it.
 }
