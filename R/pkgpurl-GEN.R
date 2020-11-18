@@ -79,22 +79,24 @@ process_rmd <- function(rmd) {
 #'
 #' `r pkgsnip::md_snip("rstudio_addin_hint")`
 #'
+#' @param exclude_vignettes Whether to exclude all `.Rmd` files under `vignettes/`. A logical scalar.
 #' @inheritParams purl_rmd
 #'
 #' @export
-lint_rmd <- function(path = ".") {
+lint_rmd <- function(path = ".",
+                     exclude_vignettes = TRUE) {
   
   pal::assert_pkg("lintr")
   
   lintr::lint_dir(path = checkmate::assert_directory(path,
                                                      access = "r"),
-                  pattern = "\\.[Rr](md)?$",
-                  exclusions = list(c(list.files(path = c("R"),
+                  pattern = "\\.[Rr]([Mm][Dd])?$",
+                  exclusions = list(c(list.files(path = "R",
                                                  recursive = TRUE,
                                                  full.names = TRUE,
-                                                 pattern = "-GEN\\.R$",),
-                                      list.files(path = c("vignettes"),
+                                                 pattern = "-GEN\\.R$"),
+                                      list.files(path = "vignettes",
                                                  recursive = TRUE,
                                                  full.names = TRUE,
-                                                 pattern = "\\.Rmd$"))))
+                                                 pattern = "\\.Rmd$")[!checkmate::assert_flag(exclude_vignettes)])))
 }
