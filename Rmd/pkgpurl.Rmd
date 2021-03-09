@@ -65,9 +65,9 @@ purl_rmd <- function(path = ".") {
 # helper function purling a single file `Rmd/*.Rmd` to `R/*-GEN.R`
 process_rmd <- function(rmd) {
   
-  output <- stringr::str_replace(string = rmd,
-                                 pattern = "Rmd/([^/]+)\\.[Rr]md$",
-                                 replacement = "R/\\1-GEN.R")
+  output <- sub(x = rmd,
+                pattern = "Rmd/([^/]+)\\.[Rr]md$",
+                replacement = "R/\\1-GEN.R")
   
   knitr::purl(input = rmd,
               output = output,
