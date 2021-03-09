@@ -35,14 +35,20 @@ purl_rmd <- function(path = ".") {
     
     if (length(rmd_files)) {
       
-      r_dir <- fs::path(path, "R/")
-      if (!fs::dir_exists(r_dir)) fs::dir_create(r_dir)
-      
-      rmd_files %>% purrr::walk(process_rmd)
+      pal::cli_process_expr(msg = "Purling {.file Rmd/*.Rmd} to {.file R/*-GEN.R}",
+                            expr = {
+        
+        r_dir <- fs::path(path, "R/")
+        if (!fs::dir_exists(r_dir)) fs::dir_create(r_dir)
+        
+        rmd_files %>% purrr::walk(process_rmd)
+      })
       
     } else {
-      rlang::warn(glue::glue("`{path}` does not appear to be an Rmd package directory. Nothing done."))
+      cli::cli_alert_warning(text = "{.file {path}} does not appear to be an Rmd package directory. Nothing done.")
     }
+  } else {
+    cli::cli_alert_warning(text = "{.file {path}/Rmd/} does not exist. Nothing done.")
   }
 }
 
