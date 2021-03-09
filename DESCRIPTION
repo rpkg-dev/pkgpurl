@@ -1,6 +1,5 @@
 Package: pkgpurl
-Title: Facilitate Authoring R Packages in the R Markdown File
-    Format
+Title: Facilitate Authoring R Packages in the R Markdown File Format
 Version: 0.0.9006
 Authors@R: 
     person(given = "Salim",
@@ -8,37 +7,33 @@ Authors@R:
            role = c("aut", "cre"),
            email = "salim-b@pm.me",
            comment = c(ORCID = "0000-0002-5329-5987"))
-Description: pkgpurl facilitates R package authoring using
-    a literate programming approach. The main idea behind this is to write
-    all of the R source code in R Markdown files (`Rmd/*.Rmd`), which
-    allows the actual code to be freely mixed with explanatory and
-    supplementary information in expressive Markdown format. The main
-    object of pkgpurl is to provide a standardized way to compile the bare
-    `.R` files from the prose-enhanced and thus more human-oriented `.Rmd`
-    files.
+Description: pkgpurl facilitates R package authoring using a literate
+    programming approach. The main idea behind this is to write all of the
+    R source code in R Markdown files (`Rmd/*.Rmd`), which allows the
+    actual code to be freely mixed with explanatory and supplementary
+    information in expressive Markdown format. The main object of pkgpurl
+    is to provide a standardized way to compile the bare `.R` files from
+    the prose-enhanced and thus more human-oriented `.Rmd` files.
 License: AGPL (>= 3)
 URL: https://gitlab.com/salim_b/r/pkgs/pkgpurl
 BugReports: https://gitlab.com/salim_b/r/pkgs/pkgpurl/issues
 Imports: 
+    brio (>= 1.1.1),
     checkmate (>= 2.0.0),
-    dplyr (>= 0.8.4),
+    cli (>= 2.3.1),
     fs (>= 1.4.1),
     glue (>= 1.4.1),
     knitr (>= 1.28),
     magrittr (>= 1.5),
-    pal (>= 0.0.9000),
-    pkgsnip (>= 0.0.9001),
-    purrr (>= 0.3.4),
-    readr (>= 1.4.0),
-    rlang (>= 0.4.4),
-    stringr (>= 1.4.0),
-    tibble (>= 2.1.3)
+    pal (>= 0.0.9052),
+    purrr (>= 0.3.4)
 Suggests: 
-    lintr (>= 2.0.1)
+    lintr (>= 2.0.1),
+    pkgsnip (>= 0.0.9001)
 Remotes:
     gitlab::salim_b/r/pkgs/pal,
     gitlab::salim_b/r/pkgs/pkgsnip
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.1.9001

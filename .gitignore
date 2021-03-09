@@ -11,8 +11,5 @@ Thumbs.db
 .Rproj.user
 .Ruserdata
 
-# (knitted) HTML files
-*.html
-
 # API keys
 .httr-oauth
