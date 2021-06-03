@@ -78,5 +78,3 @@ But there are also a few **drawbacks** of the R Markdown format:
 
 ```{r, coding-style-snippet, child = pkgsnip::snip_path("coding-style-notice.Rmd")}
 ```
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
