@@ -1,6 +1,6 @@
 Package: pkgpurl
 Title: Facilitate Authoring R Packages in the R Markdown File Format
-Version: 0.0.9007
+Version: 0.0.9008
 Authors@R: 
     person(given = "Salim",
            family = "Brüggemann",
