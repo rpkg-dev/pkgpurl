@@ -24,19 +24,20 @@ Markdown](https://rmarkdown.rstudio.com/) format provides several further **adva
     standard](https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections) of classic R scripts. It makes it easy to find your way around
     source files that are thousands of lines long.
 
--   You can have development-only code which never lands in the generated R source files (and thus the R package) in separate code chunks with the chunk option
+-   You can put development-only code which never lands in the generated R source files (and thus the R package) in separate code chunks with the chunk option
     [`purl = FALSE`](https://yihui.org/knitr/options/#extracting-source-code). This turns out to be very convenient in certain situations.
 
     For example, this is a good way to reproducibly document the generation of cleaned versions of [exported data](https://r-pkgs.org/data.html#data-data) as
-    well as [internal data](https://r-pkgs.org/data.html#data-sysdata). This avoids having to put the code in separate files under `data-raw/` and adding the
-    directory to `.Rbuildignore`, i.e. no need to use `usethis::use_data_raw()`. Instead, you just set `purl = FALSE` for the relevant code chunk(s). You can
-    (and should) still use `usethis::use_data(...)` (optionally with `overwrite = TRUE`) to generate the files under `data/` holding external package data as
-    well as the `R/sysdata.rda` file (using `internal = TRUE`) holding internal package data.
+    well as [internal data](https://r-pkgs.org/data.html#data-sysdata). This avoids having to outsource the code to separate files under `data-raw/` and adding
+    the directory to `.Rbuildignore`, i.e. no need to use `usethis::use_data_raw()`. Instead, you just set `purl = FALSE` for the relevant code chunk(s). You
+    can (and should) still use `usethis::use_data(...)` (optionally with `overwrite = TRUE`) to generate the files under `data/` holding external package data
+    as well as the `R/sysdata.rda` file (using `internal = TRUE`) holding internal package data.
 
 -   As you might already know, [you are limited to the ASCII character set for your code if you plan on submitting your package to
     CRAN](https://r-pkgs.org/r.html#r-cran). This of course also applies to R code chunks in the `Rmd/*.Rmd` files that are compiled to `R/*-GEN.R` files by
-    pkgpurl. But since the accompanying Markdown documentation won't land in the compiled R files, you can use the full Unicode spectrum of characters there (🥳)
-    -- as long as you exclude the R Markdown source from the built package by putting a line `^Rmd$` in `.Rbuildignore` (which is recommended anyway).
+    pkgpurl. But since the accompanying Markdown documentation won't land in the compiled R files, you can use the full Unicode spectrum of characters there
+    (:partying_face:) -- as long as you exclude the R Markdown source from the built package by putting a line `^Rmd$` in `.Rbuildignore` (which is recommended
+    anyway).
 
 But there are also a few **drawbacks** of the R Markdown format:
 
@@ -60,7 +61,7 @@ But there are also a few **drawbacks** of the R Markdown format:
     which will hopefully be resolved in the near future.
 
 [^1]: I personally recommend to use <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> since it's not occupied yet by any of the predefined [RStudio
-    shortcuts](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts).
+shortcuts](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts).
 
 ## Installation
 
