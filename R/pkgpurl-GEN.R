@@ -2,17 +2,88 @@
 # See `README.md#r-markdown-format` for more information on the literate programming approach used applying the R Markdown format.
 
 # pkgpurl: Facilitate Authoring R Packages in the R Markdown File Format
-# Copyright (C) 2021  Salim Brüggemann
-#
+# Copyright (C) 2021 Salim Brüggemann
+# 
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or any later version.
-#
-# This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# 
+# This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+# 
+# You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 utils::globalVariables(names = ".")
+
+assemble_copyright_notice <- function(path) {
+  
+  pal::assert_pkg("desc")
+  notice <- character()
+  if (fs::is_dir(path)) path <- fs::path(path, "DESCRIPTION")
+  
+  if (desc::desc_has_fields(keys = "Authors@R",
+                            file = path)) {
+    
+    pkg <- pal::desc_value(key = "Package",
+                           file = path)
+    desc <- pal::desc_value(key = "Title",
+                            default = "",
+                            file = path)
+    authors <-
+      desc::desc_get_authors(file = path) %>%
+      format(include = c("given", "family")) %>%
+      pal::prose_ls()
+    
+    if (length(authors)) {
+      
+      notice <- c(paste0(pkg, ": ", desc),
+                  paste0("Copyright (C) ", format(Sys.Date(), "%Y"), "  ", authors))
+      
+    } else {
+      cli::cli_alert_warning("{.field Authors@R} field in the package's {.file DESCRIPTION} file is empty, thus skipped adding copyright notice.")
+    }
+      
+  } else {
+    cli::cli_alert_warning(paste0("No {.field Authors@R} field present in the package's {.file DESCRIPTION} file, thus skipped adding license notice.",
+                                  paste0(" Try converting the existing {.field Author} field to an {.field Authors@R} field using {.fun ",
+                                         "desc::desc_coerce_authors_at_r}.")[desc::desc_has_fields("Author")]))
+  }
+  
+  notice
+}
+
+assemble_license_notice <- function(path) {
+  
+  pal::assert_pkg("desc")
+  notice <- character()
+  if (fs::is_dir(path)) path <- fs::path(path, "DESCRIPTION")
+  
+  if (desc::desc_has_fields(keys = "License",
+                            file = path)) {
+    
+    license <- pal::desc_value(key = "License",
+                               file = path)
+    
+    if (grepl(x = license,
+              pattern = "^\\s*(AGPL ?\\(>= ?3\\)|AGPL-3\\.0-or-later)\\s*$")) {
+      
+      notice <- c(paste0("This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as ",
+                         "published by the Free Software Foundation, either version 3 of the License, or any later version."),
+                  paste0("This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of ",
+                         "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details."),
+                  paste0("You should have received a copy of the GNU Affero General Public License along with this program. If not, see",
+                         " <https://www.gnu.org/licenses/>."))
+        
+    } else {
+      cli::cli_alert_warning(paste0("{.field License} field in the package's {.file DESCRIPTION} file is not set to {.val AGPL (>= 3)}, thus skipped adding ",
+                                    "license notice."))
+    }
+    
+  } else {
+    cli::cli_alert_warning("No {.field License} field present in the package's {.file DESCRIPTION} file, thus skipped adding license notice.")
+  }
+  
+  notice
+}
 
 #' Purl `Rmd/*.Rmd` to `R/*-GEN.R`
 #'
@@ -33,9 +104,19 @@ utils::globalVariables(names = ".")
 #' `r pkgsnip::md_snip("rstudio_addin_hint")`
 #'
 #' @param path The path to the root of the package directory.
+#' @param add_copyright_notice Whether or not to add a **copyright notice** at the beginning of the generated `.R` files as recommended by e.g. the [GNU
+#'   licenses](https://www.gnu.org/licenses/gpl-howto.html). If `NULL`, it will be added only if the `.Rmd` files to be purled are part of an R package. The
+#'   notice consists of the name and description of the program and the word `Copyright (C)`, followed by the release years and the name of the author(s). The
+#'   year is always the current year. All the other information is extracted from the package's `DESCRIPTION` file.
+#' @param add_license_notice Whether or not to add a **license notice** at the beginning of the generated `.R` files as recommended by e.g. the [GNU
+#'   licenses](https://www.gnu.org/licenses/gpl-howto.html). If `NULL`, it will be added only if the `.Rmd` files to be purled are part of an R package. The
+#'   license is determined from the package's `DESCRIPTION` file and currently only the [`AGPL-3.0-or-later`
+#'   license](https://spdx.org/licenses/AGPL-3.0-or-later.html) is supported.
 #'
 #' @export
-purl_rmd <- function(path = ".") {
+purl_rmd <- function(path = ".",
+                     add_copyright_notice = NULL,
+                     add_license_notice = NULL) {
   
   rmd_dir <- fs::path_abs(path, "Rmd/")
   
@@ -46,25 +127,62 @@ purl_rmd <- function(path = ".") {
     
     if (length(rmd_files)) {
       
-      pal::cli_process_expr(msg = "Purling {.file Rmd/*.Rmd} to {.file R/*-GEN.R}",
-                            expr = {
-        
-        r_dir <- fs::path(path, "R/")
-        if (!fs::dir_exists(r_dir)) fs::dir_create(r_dir)
-        
-        rmd_files %>% purrr::walk(process_rmd)
-      })
+      pal::cli_process_expr(
+        msg = "Purling {.file Rmd/*.Rmd} to {.file R/*-GEN.R}",
+        expr = {
+          
+          r_dir <- fs::path(path, "R/")
+          if (!fs::dir_exists(r_dir)) fs::dir_create(r_dir)
+          checkmate::assert_flag(add_copyright_notice, null.ok = TRUE)
+          checkmate::assert_flag(add_license_notice, null.ok = TRUE)
+          copyright_notice <- NULL
+          license_notice <- NULL
+          is_pkg <- pal::is_pkg_dir(path)
+          
+          if (is_pkg) {
+            
+            add_copyright_notice <- add_copyright_notice %||% TRUE
+            add_license_notice <- add_license_notice %||% TRUE
+            if (add_copyright_notice) copyright_notice <- assemble_copyright_notice(path = path)
+            if (add_license_notice) license_notice <- assemble_license_notice(path = path)
+            
+          } else {
+            
+            impossible_opts <- c("add_copyright_notice"[isTRUE(add_copyright_notice)],
+                                 "add_license_notice"[isTRUE(add_license_notice)])
+            n_impossible_opts <- length(impossible_opts)
+            
+            if (n_impossible_opts) {
+              rlang::abort(cli::format_error(paste0("{.arg {impossible_opts[1L]}} ",
+                                                    "and {.arg {impossible_opts[2L]}} "[n_impossible_opts > 1L],
+                                                    "{qty(n_impossible_opts)} {?was/were both} set to {.val TRUE}, but {.file {path}} does not appear to be an",
+                                                    " R package directory \u2013 thus cannot extract the necessary information from the package's ",
+                                                    "{.file DESCRIPTION} file.")))
+            } else {
+              add_copyright_notice <- FALSE
+              add_license_notice <- FALSE
+            }
+          }
+          
+          rmd_files %>% purrr::walk(process_rmd,
+                                    copyright_notice = copyright_notice,
+                                    license_notice = license_notice)
+        }
+      )
       
     } else {
-      cli::cli_alert_warning(text = "{.file {path}} does not appear to be an Rmd package directory. Nothing done.")
+      cli::cli_alert_warning("{.file {path}} does not appear to be an Rmd package directory. Nothing done.")
     }
   } else {
-    cli::cli_alert_warning(text = "{.file {path}/Rmd/} does not exist. Nothing done.")
+    cli::cli_alert_warning("{.file {path}/Rmd/} does not exist. Nothing done.")
   }
 }
 
 # helper function purling a single file `Rmd/*.Rmd` to `R/*-GEN.R`
-process_rmd <- function(rmd) {
+process_rmd <- function(rmd,
+                        copyright_notice,
+                        license_notice,
+                        line_width = 160L) {
   
   output <- sub(x = rmd,
                 pattern = "Rmd/([^/]+)\\.[Rr]md$",
@@ -79,8 +197,16 @@ process_rmd <- function(rmd) {
   result <-
     rmd %>%
     fs::path_rel(start = fs::path_dir(fs::path_dir(.))) %>%
-    paste0("# DO NOT EDIT THIS FILE BY HAND! Instead edit the R Markdown source file `", ., "` and run `pkgpurl::purl_rmd()`.\n",
-           "# See `README.md#r-markdown-format` for more information on the literate programming approach used applying the R Markdown format.\n\n",
+    paste0("DO NOT EDIT THIS FILE BY HAND! Instead edit the R Markdown source file `", ., "` and run `pkgpurl::purl_rmd()`.") %>%
+    pal::as_comment_string("See `README.md#r-markdown-format` for more information on the literate programming approach used applying the R Markdown format.",
+                           sep_paragraphs = FALSE) %>%
+    paste0("\n",
+           if (length(copyright_notice)) {
+             copyright_notice %>% pal::as_comment_string("", sep_paragraphs = FALSE)
+           },
+           if (length(license_notice)) {
+             license_notice %>% pal::as_comment_string() %>% paste0("\n")
+           },
            brio::read_file(path = output))
   
   brio::write_file(text = result,

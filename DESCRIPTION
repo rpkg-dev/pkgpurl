@@ -25,9 +25,11 @@ Imports:
     glue (>= 1.4.1),
     knitr (>= 1.28),
     magrittr (>= 1.5),
-    pal (>= 0.0.9052),
-    purrr (>= 0.3.4)
+    pal (>= 0.0.9058),
+    purrr (>= 0.3.4),
+    rlang (>= 0.4.11)
 Suggests: 
+    desc,
     lintr (>= 2.0.1),
     pkgsnip (>= 0.0.9001)
 Remotes:
