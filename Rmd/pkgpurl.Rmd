@@ -34,6 +34,10 @@ assemble_copyright_notice <- function(path) {
                             file = path)
     authors <-
       desc::desc_get_authors(file = path) %>%
+      # reduce to copyright holders or otherwise authors
+      purrr::when(any(purrr::map_lgl(., ~ "cph" %in% .x$role)) ~ purrr::keep(., ~ "cph" %in% .x$role),
+                  any(purrr::map_lgl(., ~ "aut" %in% .x$role)) ~ purrr::keep(., ~ "aut" %in% .x$role),
+                  ~ .) %>%
       format(include = c("given", "family")) %>%
       pal::prose_ls()
     
@@ -43,7 +47,8 @@ assemble_copyright_notice <- function(path) {
                   paste0("Copyright (C) ", format(Sys.Date(), "%Y"), "  ", authors))
       
     } else {
-      cli::cli_alert_warning("{.field Authors@R} field in the package's {.file DESCRIPTION} file is empty, thus skipped adding copyright notice.")
+      cli::cli_alert_warning(paste0("Neither copyright holders nor authors found in {.field Authors@R} field in the package's {.file DESCRIPTION} file, thus ",
+                                    "skipped adding copyright notice."))
     }
       
   } else {
@@ -139,8 +144,9 @@ TODO:
 #' @param path The path to the root of the package directory.
 #' @param add_copyright_notice Whether or not to add a **copyright notice** at the beginning of the generated `.R` files as recommended by e.g. the [GNU
 #'   licenses](https://www.gnu.org/licenses/gpl-howto.html). If `NULL`, it will be added only if the `.Rmd` files to be purled are part of an R package. The
-#'   notice consists of the name and description of the program and the word `Copyright (C)`, followed by the release years and the name of the author(s). The
-#'   year is always the current year. All the other information is extracted from the package's `DESCRIPTION` file.
+#'   notice consists of the name and description of the program and the word `Copyright (C)`, followed by the release years and the name(s) of the copyright 
+#'   holder(s), or if not specified, the author(s). The year is always the current year. All the other information is extracted from the package's `DESCRIPTION`
+#'   file.
 #' @param add_license_notice Whether or not to add a **license notice** at the beginning of the generated `.R` files as recommended by e.g. the [GNU
 #'   licenses](https://www.gnu.org/licenses/gpl-howto.html). If `NULL`, it will be added only if the `.Rmd` files to be purled are part of an R package. The
 #'   license is determined from the package's `DESCRIPTION` file and currently only the [`AGPL-3.0-or-later`

@@ -10,8 +10,9 @@ purl_rmd(path = ".", add_copyright_notice = NULL, add_license_notice = NULL)
 \item{path}{The path to the root of the package directory.}
 
 \item{add_copyright_notice}{Whether or not to add a \strong{copyright notice} at the beginning of the generated \code{.R} files as recommended by e.g. the \href{https://www.gnu.org/licenses/gpl-howto.html}{GNU licenses}. If \code{NULL}, it will be added only if the \code{.Rmd} files to be purled are part of an R package. The
-notice consists of the name and description of the program and the word \code{Copyright (C)}, followed by the release years and the name of the author(s). The
-year is always the current year. All the other information is extracted from the package's \code{DESCRIPTION} file.}
+notice consists of the name and description of the program and the word \code{Copyright (C)}, followed by the release years and the name(s) of the copyright
+holder(s), or if not specified, the author(s). The year is always the current year. All the other information is extracted from the package's \code{DESCRIPTION}
+file.}
 
 \item{add_license_notice}{Whether or not to add a \strong{license notice} at the beginning of the generated \code{.R} files as recommended by e.g. the \href{https://www.gnu.org/licenses/gpl-howto.html}{GNU licenses}. If \code{NULL}, it will be added only if the \code{.Rmd} files to be purled are part of an R package. The
 license is determined from the package's \code{DESCRIPTION} file and currently only the \href{https://spdx.org/licenses/AGPL-3.0-or-later.html}{\code{AGPL-3.0-or-later} license} is supported.}
