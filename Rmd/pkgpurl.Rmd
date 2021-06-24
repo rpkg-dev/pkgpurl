@@ -106,7 +106,8 @@ complete noob regarding [makefile syntax](https://en.wikipedia.org/wiki/Makefile
 
 TODO:
 
--   [ ] Support more OSS licenses in `add_license_notice`. Default license headers would have to be systematically fetched from somewhere for this!
+-   [ ] Support more OSS licenses in param `add_license_notice` / fn `assemble_license_notice()`. Default license headers would have to be systematically
+    fetched from somewhere for this!
 
     Notable stuff:
 
@@ -117,10 +118,14 @@ TODO:
         `https://spdx.org/licenses/[SPDX-ID].html`; it seems to always include a section *Standard License Header* 🎉 (which just says "There is no standard
         license header for the license" if there's none).
 
-    A viable solution could be to feed the license info in the pkg DESCRIPTION to the OSI API, query the SPDX identifier and based on that scrape the SPDX page
-    for the *Standard License Header* section. But the OSI API doesn't seem to offer any (fuzzy) search endpoint... so at least we need to implement a mapping
-    from the [license identifiers officially supported by R](https://cran.rstudio.com/doc/manuals/r-devel/R-exts.html#Licensing) (like the "standard" short
-    specifications) to the SPDX identifiers!
+    Viable solution:
+
+    1.  Determine a package license's SPDX identifier. If the OSI API would offer any (fuzzy) search endpoint, we could feed the license info in the pkg
+        DESCRIPTION to the OSI API and query the SPDX identifier. But the OSI API doesn't seem to ... so at least we need to implement a mapping from the
+        [license identifiers officially supported by R](https://cran.rstudio.com/doc/manuals/r-devel/R-exts.html#Licensing) (like the "standard" short
+        specifications) to the SPDX identifiers!
+
+    2.  Based on the SPDX identifier, scrape the SPDX page for the *Standard License Header* section.
 
 ```{r}
 #' Purl `Rmd/*.Rmd` to `R/*-GEN.R`
