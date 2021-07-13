@@ -106,6 +106,29 @@ complete noob regarding [makefile syntax](https://en.wikipedia.org/wiki/Makefile
 
 TODO:
 
+-   [ ] Add a parameter `gen_pkgdown_ref = getOption("pkgpurl.purl_rmd.gen_pkgdown_ref")` (`TRUE`/`FALSE`, default `NULL`) that autogenerates the [`Reference:`
+    index](https://pkgdown.r-lib.org/reference/build_reference.html#reference-index) of `_pkgdown.yml` / `pkgdown/_pkgdown.yml` based on the Rmd Markdown
+    headers.
+
+    If `NULL`, autogeneration is only done if `is_pkg` and `all(names(eval(parse("man/roxygen/meta.R"))$rd_family_title) %in% md_headers)` ~~and file
+    `man/roxygen/meta.R` exists~~
+
+    Steps:
+
+    1.  We'need to define an unambiguous mapping from the Markdown header hierarchy to the hierarchy/keys the pkgdown reference customization supports. The
+        latter supports a max. of 2 hierarchy levels.
+
+    2.  Simplest presumption would be that we always assign a `@family` to functions, so we wouldn't have to parse the actual Rmd content (besides headers).
+        Problem: It seems we can't assign `@family` to all documentable objects like e.g. datasets.
+
+        So an alternative solution that only needs MD header parsing would be: Always set leaf headers to names ob documented objects (mostly fns) which are
+        then listed in `contents`, their parent headers to `title`, *or* to `subtitle` and their grandparent `headers` to `title`. Paragraphs below a `title` /
+        `subtitle header before the first R code chunk could be used as`desc`(it supports Markdown content, just use`desc: \|\` YAML syntax to preserve
+        linebreaks). 🎉
+
+        For a sophisticated pkgdown reference example, see the one of [ggplot2](https://ggplot2.tidyverse.org/reference/index.html) (and compare with its
+        [source](https://github.com/tidyverse/ggplot2/blob/master/_pkgdown.yml)).
+
 -   [ ] Support more OSS licenses in param `add_license_notice` / fn `assemble_license_notice()`. Default license headers would have to be systematically
     fetched from somewhere for this!
 
