@@ -33,6 +33,10 @@ Markdown](https://rmarkdown.rstudio.com/) format provides several further **adva
     can (and should) still use `usethis::use_data(...)` (optionally with `overwrite = TRUE`) to generate the files under `data/` holding external package data
     as well as the `R/sysdata.rda` file (using `internal = TRUE`) holding internal package data.
 
+-   If you're enable [styler](https://styler.r-lib.org/) to auto-format your code globally by [setting
+    `knitr::opts_chunk$set(tidy = "styler")`](https://styler.r-lib.org/articles/third-party-integrations.html), you can still opt-out on a per-chunk basis by
+    setting [`tidy = FALSE`](https://github.com/r-lib/styler/releases/tag/v1.5.1). This gives pleasant flexibility.
+
 -   As you might already know, [you are limited to the ASCII character set for your code if you plan on submitting your package to
     CRAN](https://r-pkgs.org/r.html#r-cran). This of course also applies to R code chunks in the `Rmd/*.Rmd` files that are compiled to `R/*-GEN.R` files by
     pkgpurl. But since the accompanying Markdown documentation won't land in the compiled R files, you can use the full Unicode spectrum of characters there
