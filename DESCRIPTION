@@ -20,7 +20,7 @@ BugReports: https://gitlab.com/salim_b/r/pkgs/pkgpurl/issues
 Imports: 
     brio (>= 1.1.1),
     checkmate (>= 2.0.0),
-    cli (>= 2.3.1),
+    cli (>= 3.0.0),
     fs (>= 1.4.1),
     glue (>= 1.4.1),
     knitr (>= 1.28),

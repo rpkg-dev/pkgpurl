@@ -220,11 +220,10 @@ purl_rmd <- function(path = ".",
             n_impossible_opts <- length(impossible_opts)
             
             if (n_impossible_opts) {
-              rlang::abort(cli::format_error(paste0("{.arg {impossible_opts[1L]}} ",
-                                                    "and {.arg {impossible_opts[2L]}} "[n_impossible_opts > 1L],
-                                                    "{qty(n_impossible_opts)} {?was/were both} set to {.val TRUE}, but {.file {path}} does not appear to be an",
-                                                    " R package directory \u2013 thus cannot extract the necessary information from the package's ",
-                                                    "{.file DESCRIPTION} file.")))
+              cli::cli_abort(paste0("{.arg {impossible_opts[1L]}} ",
+                                    "and {.arg {impossible_opts[2L]}} "[n_impossible_opts > 1L],
+                                    "{qty(n_impossible_opts)} {?was/were both} set to {.val TRUE}, but {.file {path}} does not appear to be an R package ",
+                                    "directory \u2013 thus cannot extract the necessary information from the package's {.file DESCRIPTION} file."))
             } else {
               add_copyright_notice <- FALSE
               add_license_notice <- FALSE
