@@ -1,0 +1,78 @@
+---
+editor_options:
+  markdown:
+    wrap: 80
+---
+
+# `main_fn`
+
+The fn below is under no title or subtitle in the pkgdown index.
+
+```{r}
+main_fn <- function(...) {...}
+```
+
+# First group of fns
+
+## DESCRIPTION
+
+The description text for *First group of fns*.
+
+## `group_wide_fn`
+
+The fn below is only under a title, but no subtitle in the pkgdown index.
+
+```{r}
+group_wide_fn <- function(...) {...}
+```
+
+## Some subgroup
+
+The fns below are both under a title and subtitle in the pkgdown index.
+
+### `subgroup_fn_1`
+
+```{r}
+subgroup_fn_1 <- function(...) {...}
+```
+
+### `subgroup_fn_2`
+
+```{r}
+subgroup_fn_2 <- function(...) {...}
+```
+
+### Sub-subgroup
+
+The above *Sub-subgroup* heading is ignored for the pkgdown index because the
+latter only supports up to two heading levels.
+
+The fn below thus moves one hierarchy level up in the pkgdown index.
+
+#### `sub_subgroup_fn`
+
+```{r}
+sub_subgroup_fn <- function(...) {...}
+```
+
+## Another subgroup
+
+### DESCRIPTION
+
+The description text for *Another subgroup*.
+
+### `another_subgroup_fn`
+
+```{r}
+another_subgroup_fn <- function(...) {...}
+```
+
+# Second group of fns
+
+## Yet another subgroup
+
+### `yet_another_subgroup_fn`
+
+```{r}
+yet_another_subgroup_fn <- function(...) {...}
+```
