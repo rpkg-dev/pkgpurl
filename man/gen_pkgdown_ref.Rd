@@ -137,10 +137,11 @@ yet_another_subgroup_fn <- function(...) \{...\}
 }
 }
 \examples{
+\dontrun{
 pal::gh_text_file(path = "Rmd/pal.Rmd",
                   owner = "salim-b",
                   name = "pal") |>
   pkgpurl::gen_pkgdown_ref() |>
   yaml::as.yaml() |>
-  cat()
+  cat()}
 }

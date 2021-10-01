@@ -10,7 +10,12 @@ editor_options:
 cf. <https://github.com/tidyverse/magrittr/issues/29#issuecomment-74313262>
 
 ```{r}
-utils::globalVariables(names = ".")
+utils::globalVariables(names = c(".",
+                                 "heading_lvl",
+                                 "i_subtitle",
+                                 "i_title",
+                                 "is_help_topic",
+                                 "subnode_ix"))
 ```
 
 ## Functions
@@ -551,6 +556,18 @@ lint_rmd <- function(path = ".",
 
 # `gen_pkgdown_ref`
 
+TODO:
+
+-   Exclude headings named `EXPORTED` for (sub)title determination.
+
+-   Figure out why the example throws the following error during testing:
+
+    ``` error
+    Error: C stack usage  7972020 is too close to the limit
+    ```
+
+    No error occurs when the example is run interactively or via `Rscript`. Maybe it has to do with C++ pointers used in pkg xml2?
+
 NOTES:
 
 -   The pkgdown reference supports a max. of 2 hierarchy levels.
@@ -609,12 +626,13 @@ NOTES:
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' pal::gh_text_file(path = "Rmd/pal.Rmd",
 #'                   owner = "salim-b",
 #'                   name = "pal") |>
 #'   pkgpurl::gen_pkgdown_ref() |>
 #'   yaml::as.yaml() |>
-#'   cat()
+#'   cat()}
 gen_pkgdown_ref <- function(rmd) {
   
   checkmate::assert_string(rmd)

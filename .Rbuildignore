@@ -1,4 +1,5 @@
 ^data-raw$
+^docs$
 ^pkgdown$
 ^Rmd$
 ^snippets$

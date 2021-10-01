@@ -12,7 +12,12 @@
 # 
 # You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-utils::globalVariables(names = ".")
+utils::globalVariables(names = c(".",
+                                 "heading_lvl",
+                                 "i_subtitle",
+                                 "i_title",
+                                 "is_help_topic",
+                                 "subnode_ix"))
 
 assemble_copyright_notice <- function(path) {
   
@@ -463,12 +468,13 @@ lint_rmd <- function(path = ".",
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' pal::gh_text_file(path = "Rmd/pal.Rmd",
 #'                   owner = "salim-b",
 #'                   name = "pal") |>
 #'   pkgpurl::gen_pkgdown_ref() |>
 #'   yaml::as.yaml() |>
-#'   cat()
+#'   cat()}
 gen_pkgdown_ref <- function(rmd) {
   
   checkmate::assert_string(rmd)
