@@ -92,6 +92,10 @@ Unfortunately, there are also a few **drawbacks** of the R Markdown format:
 
     Other than in `.R` files, RStudio currently doesn’t support auto-completion of [roxygen2 tags](https://roxygen2.r-lib.org/articles/rd.html) in `.Rmd` files. These are [known issues](https://github.com/rstudio/rstudio/issues/5809) which will hopefully be resolved in the near future.
 
+## Documentation
+
+The documentation of this package is found [here](https://rpkg.dev/pkgpurl).
+
 ## Installation
 
 To install the latest development version of pkgpurl, run the following in R:
