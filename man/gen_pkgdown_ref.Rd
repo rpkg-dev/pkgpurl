@@ -17,12 +17,23 @@ Generates the \href{https://pkgdown.r-lib.org/reference/build_reference.html#ref
 a package's main \code{.Rmd} file.
 }
 \details{
-Basically, all of the pkgdown reference index except \code{desc} keys are derived from \code{rmd}'s \href{https://pandoc.org/MANUAL.html#headings}{Markdown \strong{headings}}
-and their \strong{hierarchy}. The \code{desc} keys, however, are assembled from the text paragraphs below some specially named headings (see below).
+Basically, all elements of the pkgdown reference index except \code{desc} keys are derived from \code{rmd}'s \href{https://pandoc.org/MANUAL.html#headings}{Markdown \strong{headings}} and their \strong{hierarchy}. The \code{desc} keys, however, are assembled from the paragraph(s) below some
+specially named headings. See below for details.
+}
+\section{Special headings}{
+Headings that exactly match certain strings (case-insensitive, but without any inline formatting or additional text) are treated specially. Here's an
+overview:\tabular{ll}{
+   \strong{Headings} \tab \strong{Meaning} \cr
+   DESCRIPTION \tab Paragraph(s) below this heading, that in turn is hierarchically below a \code{title} or \code{subtitle} heading, are used as the description for this very (sub)title (\code{desc} in the pkgdown reference index). \cr
+   EXPORTED \tab Will never be used as \code{title}/\code{subtitle} in the pkgdown reference index (i.e. ignored). Simply serves as a (usually top-level) heading to indicate that the objects defined below it are \href{https://r-pkgs.org/namespace.html#exports}{exported} by the package. \cr
+   INTERNAL , TEMPORARY, TEMP \tab Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index generation. \cr
+}
+}
 
-To be able to unambiguously map an \code{.Rmd} file's heading hierarchy to the pkgdown reference index, some rules are necessary. Attention must be paid to the
-fact that, while (R) Markdown supports up to six heading levels (corresponding to HTML's \verb{<h1>}–\verb{<h6>} tags), the pkgdown reference index only supports up
-to two (\code{title} and \code{subtitle}).
+\section{Parsing rules}{
+To be able to unambiguously map an \code{.Rmd} file's heading hierarchy to the pkgdown reference index, some parsing rules are necessary. Attention must be paid
+to the fact that, while (R) Markdown supports up to six heading levels (corresponding to HTML's \verb{<h1>}–\verb{<h6>} tags), the pkgdown reference index only
+supports up to two (\code{title} and \code{subtitle}).
 
 The following rules define how the reference index is generated:
 \enumerate{
@@ -33,12 +44,17 @@ considered to be the name of a help topic (usually the name of a function or dat
 key of the reference index' YAML.
 \item Non-help-topic headings above help topic headings are used as reference index (sub)titles as far as hierarchical nesting allows. More precisely,
 non-help-topic headings \emph{of the highest two levels} above the help topic heading are used as title and subtitle, the rest of the headings above the help
-topic heading is ignored. This maps to the \code{title} and \code{subtitle} keys of the reference index' YAML.
-\item Text paragraph(s) below headings named \emph{DESCRIPTION} (case-insensitive, but without any inline formatting), that in turn are hierarchically below a title
-or subtitle heading, will be used as descriptions for the (sub)titles. This maps to the \code{desc} key of the reference index' YAML.
+topic heading is ignored – and a heading named \emph{EXPORTED} (case-insensitive, but without any inline formatting) is always ignored regardless of its
+level. This maps to the \code{title} and \code{subtitle} keys of the reference index' YAML.
+\item Paragraph(s) below headings named \emph{DESCRIPTION} (case-insensitive, but without any inline formatting), that in turn are hierarchically below a title or
+subtitle heading, are be used as descriptions for the (sub)titles. This maps to the \code{desc} key of the reference index' YAML.
+}
 }
 
-When fed to \code{gen_pkgdown_ref()}, the following simplified example \code{.Rmd}...\if{html}{\out{<div class="sourceCode rmd">}}\preformatted{---
+\section{Parsing example}{
+An example might better explain how the parsing rules work than a thousand words, so here's a simplified one.
+
+When fed to \code{gen_pkgdown_ref()}, the following R Markdown content...\if{html}{\out{<div class="sourceCode rmd">}}\preformatted{---
 editor_options:
   markdown:
     wrap: 80
@@ -118,7 +134,7 @@ yet_another_subgroup_fn <- function(...) \{...\}
 ```
 }\if{html}{\out{</div>}}
 
-...yields this pkgdown index YAML:\preformatted{reference:
+...yields this pkgdown index (converted \link[yaml:as.yaml]{to YAML}):\preformatted{reference:
 - contents: main_fn
 - title: First group of fns
   desc: The description text for *First group of fns*.
@@ -136,6 +152,7 @@ yet_another_subgroup_fn <- function(...) \{...\}
 - contents: yet_another_subgroup_fn
 }
 }
+
 \examples{
 \dontrun{
 pal::gh_text_file(path = "Rmd/pal.Rmd",

@@ -18,6 +18,40 @@ utils::globalVariables(names = c(".",
                                  "subnode_ix"))
 ```
 
+## Constants
+
+### `data_special_headings`
+
+```{r}
+data_special_headings <- tibble::tribble(
+  
+  ~type,          ~heading_texts,  ~meaning,
+  "description",  "DESCRIPTION",   paste0("Paragraph(s) below this heading, that in turn is hierarchically below a `title` or `subtitle` heading, are used as",
+                                          " the description for this very (sub)title (`desc` in the pkgdown reference index)."),
+  "ignore_title", "EXPORTED",      paste0("Will never be used as `title`/`subtitle` in the pkgdown reference index (i.e. ignored). Simply serves as a (usually",
+                                         " top-level) heading to indicate that the objects defined below it are ",
+                                         "[exported](https://r-pkgs.org/namespace.html#exports) by the package."),
+  "ignore_content", c("INTERNAL",
+                      "TEMPORARY",
+                      "TEMP"),     paste0("Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index",
+                                          " generation.")
+)
+```
+
+Pre-assign each heading type to a character vector variable for optimal performance.
+
+```{r}
+# somehow `envir = parent.frame(4)` doesn't assign in the right environment, so we explicitly provide it
+pkg_env <- rlang::current_env()
+
+data_special_headings %>%
+  dplyr::group_split(type) %>%
+  purrr::walk(~ assign(x = paste0("heading_texts_", .x$type),
+                       value = purrr::flatten_chr(.x$heading_texts),
+                       envir = pkg_env))
+rm(pkg_env)
+```
+
 ## Functions
 
 ### `assemble_copyright_notice`
@@ -197,7 +231,9 @@ rmd_files <- function(path) {
 }
 ```
 
-# `process_pkg`
+# EXPORTED
+
+## `process_pkg`
 
 TODO:
 
@@ -333,7 +369,7 @@ process_pkg <- function(path = ".",
 }
 ```
 
-# `purl_rmd`
+## `purl_rmd`
 
 The basic workflow is heavily inspired by a pertinent makefile from Yihui Xie found [here](https://yihui.org/rlp/#from-rmd-to-r). Not least because I'm a
 complete noob regarding [makefile syntax](https://en.wikipedia.org/wiki/Makefile), I decided to write the relevant pieces in R.
@@ -498,7 +534,7 @@ purl_rmd <- function(path = ".",
 }
 ```
 
-# `lint_rmd`
+## `lint_rmd`
 
 TODO:
 
@@ -554,7 +590,7 @@ lint_rmd <- function(path = ".",
 }
 ```
 
-# `gen_pkgdown_ref`
+## `gen_pkgdown_ref`
 
 TODO:
 
@@ -580,15 +616,33 @@ NOTES:
 ```{r}
 #' Generate pkgdown reference index
 #'
+#' @description
 #' Generates the [pkgdown reference index](https://pkgdown.r-lib.org/reference/build_reference.html#reference-index) based on the heading hierarchy structure of
 #' a package's main `.Rmd` file.
 #'
-#' Basically, all of the pkgdown reference index except `desc` keys are derived from `rmd`'s [Markdown **headings**](https://pandoc.org/MANUAL.html#headings)
-#' and their **hierarchy**. The `desc` keys, however, are assembled from the text paragraphs below some specially named headings (see below).
+#' @details
+#' Basically, all elements of the pkgdown reference index except `desc` keys are derived from `rmd`'s [Markdown
+#' **headings**](https://pandoc.org/MANUAL.html#headings) and their **hierarchy**. The `desc` keys, however, are assembled from the paragraph(s) below some
+#' specially named headings. See below for details.
 #'
-#' To be able to unambiguously map an `.Rmd` file's heading hierarchy to the pkgdown reference index, some rules are necessary. Attention must be paid to the
-#' fact that, while (R) Markdown supports up to six heading levels (corresponding to HTML's `<h1>`–`<h6>` tags), the pkgdown reference index only supports up
-#' to two (`title` and `subtitle`).
+#' # Special headings
+#' 
+#' Headings that exactly match certain strings (case-insensitive, but without any inline formatting or additional text) are treated specially. Here's an
+#' overview:
+#'
+#' ```{r, results = "asis", echo = FALSE}
+#' data_special_headings %>%
+#'   dplyr::select(-type) %>%
+#'   dplyr::rename(Headings = heading_texts,
+#'                 Meaning = meaning) %>%
+#'   pal::pipe_table()
+#' ```
+#'
+#' # Parsing rules
+#'
+#' To be able to unambiguously map an `.Rmd` file's heading hierarchy to the pkgdown reference index, some parsing rules are necessary. Attention must be paid
+#' to the fact that, while (R) Markdown supports up to six heading levels (corresponding to HTML's `<h1>`–`<h6>` tags), the pkgdown reference index only
+#' supports up to two (`title` and `subtitle`).
 #' 
 #' The following rules define how the reference index is generated:
 #' 
@@ -599,11 +653,16 @@ NOTES:
 #'    key of the reference index' YAML.
 #' 3. Non-help-topic headings above help topic headings are used as reference index (sub)titles as far as hierarchical nesting allows. More precisely,
 #'    non-help-topic headings *of the highest two levels* above the help topic heading are used as title and subtitle, the rest of the headings above the help
-#'    topic heading is ignored. This maps to the `title` and `subtitle` keys of the reference index' YAML.
-#' 4. Text paragraph(s) below headings named *DESCRIPTION* (case-insensitive, but without any inline formatting), that in turn are hierarchically below a title
-#'    or subtitle heading, will be used as descriptions for the (sub)titles. This maps to the `desc` key of the reference index' YAML.
+#'    topic heading is ignored – and a heading named *EXPORTED* (case-insensitive, but without any inline formatting) is always ignored regardless of its
+#'    level. This maps to the `title` and `subtitle` keys of the reference index' YAML.
+#' 4. Paragraph(s) below headings named *DESCRIPTION* (case-insensitive, but without any inline formatting), that in turn are hierarchically below a title or
+#'    subtitle heading, are be used as descriptions for the (sub)titles. This maps to the `desc` key of the reference index' YAML.
 #'
-#' When fed to `gen_pkgdown_ref()`, the following simplified example `.Rmd`...
+#' # Parsing example
+#'
+#' An example might better explain how the parsing rules work than a thousand words, so here's a simplified one.
+#' 
+#' When fed to `gen_pkgdown_ref()`, the following R Markdown content...
 #'
 #' ```{r, results = "asis", echo = FALSE}
 #' brio::read_lines("snippets/simplified_example.Rmd") %>%
@@ -611,7 +670,7 @@ NOTES:
 #'   pal::cat_lines()
 #' ```
 #'
-#' ...yields this pkgdown index YAML:
+#' ...yields this pkgdown index (converted [to YAML][yaml::as.yaml()]):
 #'
 #' ```{r, comment = "", echo = FALSE}
 #' brio::read_file("snippets/simplified_example.Rmd") %>%
@@ -670,13 +729,28 @@ gen_pkgdown_ref <- function(rmd) {
                                         & rmd_xml[i] %>%
                                           xml2::xml_child(search = "d1:text") %>%
                                           xml2::xml_text(trim = TRUE) %>%
-                                          stringr::str_detect(pattern = "^(?i)description$"),
+                                          stringr::str_detect(pattern =
+                                                                heading_texts_description %>%
+                                                                pal::fuse_regex() %>%
+                                                                paste0("^(?i)", ., "$")),
                                         is_ignored =
                                           xml2::xml_length(rmd_xml[i]) == 1L
                                         & rmd_xml[i] %>%
                                           xml2::xml_child(search = "d1:text") %>%
                                           xml2::xml_text(trim = TRUE) %>%
-                                          stringr::str_detect(pattern = "^(?i)(internal|temp(orary)?)$")),
+                                          stringr::str_detect(pattern =
+                                                                heading_texts_ignore_content %>%
+                                                                pal::fuse_regex() %>%
+                                                                paste0("^(?i)", ., "$")),
+                                        is_heading_ignored =
+                                          xml2::xml_length(rmd_xml[i]) == 1L
+                                        & rmd_xml[i] %>%
+                                          xml2::xml_child(search = "d1:text") %>%
+                                          xml2::xml_text(trim = TRUE) %>%
+                                          stringr::str_detect(pattern =
+                                                                heading_texts_ignore_title %>%
+                                                                pal::fuse_regex() %>%
+                                                                paste0("^(?i)", ., "$"))),
                      by = "i") %>%
     tidyr::replace_na(replace = list(is_help_topic = FALSE,
                                      is_description_heading = FALSE))
@@ -711,6 +785,7 @@ gen_pkgdown_ref <- function(rmd) {
       hierarchy_subset <-
         hierarchy %>%
         dplyr::filter(!is_help_topic
+                      & !is_heading_ignored
                       & hierarchy$subnode_ix %>% purrr::map_lgl(~ !!i %in% .x))
       
       title_lvl <- pal::safe_min(hierarchy_subset$heading_lvl)
@@ -837,7 +912,7 @@ gen_pkgdown_ref <- function(rmd) {
 }
 ```
 
-# `main_rmd`
+## `main_rmd`
 
 ```{r}
 #' Determine a package's main `.Rmd` source file

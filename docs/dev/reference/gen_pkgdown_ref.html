@@ -139,11 +139,24 @@ a package's main <code>.Rmd</code> file.</p>
     <p>A list.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Basically, all of the pkgdown reference index except <code>desc</code> keys are derived from <code>rmd</code>'s <a href='https://pandoc.org/MANUAL.html#headings'>Markdown <strong>headings</strong></a>
-and their <strong>hierarchy</strong>. The <code>desc</code> keys, however, are assembled from the text paragraphs below some specially named headings (see below).</p>
-<p>To be able to unambiguously map an <code>.Rmd</code> file's heading hierarchy to the pkgdown reference index, some rules are necessary. Attention must be paid to the
-fact that, while (R) Markdown supports up to six heading levels (corresponding to HTML's <code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code> tags), the pkgdown reference index only supports up
-to two (<code>title</code> and <code>subtitle</code>).</p>
+    <p>Basically, all elements of the pkgdown reference index except <code>desc</code> keys are derived from <code>rmd</code>'s <a href='https://pandoc.org/MANUAL.html#headings'>Markdown <strong>headings</strong></a> and their <strong>hierarchy</strong>. The <code>desc</code> keys, however, are assembled from the paragraph(s) below some
+specially named headings. See below for details.</p>
+    <h2 class="hasAnchor" id="special-headings"><a class="anchor" href="#special-headings"></a>Special headings</h2>
+
+    <p>Headings that exactly match certain strings (case-insensitive, but without any inline formatting or additional text) are treated specially. Here's an
+overview:</p><table class='table'>
+<tr><td><strong>Headings</strong></td><td><strong>Meaning</strong></td></tr>
+<tr><td>DESCRIPTION</td><td>Paragraph(s) below this heading, that in turn is hierarchically below a <code>title</code> or <code>subtitle</code> heading, are used as the description for this very (sub)title (<code>desc</code> in the pkgdown reference index).</td></tr>
+<tr><td>EXPORTED</td><td>Will never be used as <code>title</code>/<code>subtitle</code> in the pkgdown reference index (i.e. ignored). Simply serves as a (usually top-level) heading to indicate that the objects defined below it are <a href='https://r-pkgs.org/namespace.html#exports'>exported</a> by the package.</td></tr>
+<tr><td>INTERNAL , TEMPORARY, TEMP</td><td>Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index generation.</td></tr>
+</table>
+
+
+    <h2 class="hasAnchor" id="parsing-rules"><a class="anchor" href="#parsing-rules"></a>Parsing rules</h2>
+
+    <p>To be able to unambiguously map an <code>.Rmd</code> file's heading hierarchy to the pkgdown reference index, some parsing rules are necessary. Attention must be paid
+to the fact that, while (R) Markdown supports up to six heading levels (corresponding to HTML's <code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code> tags), the pkgdown reference index only
+supports up to two (<code>title</code> and <code>subtitle</code>).</p>
 <p>The following rules define how the reference index is generated:</p><ol>
 <li><p>Headings below a heading named <em>INTERNAL</em>, <em>TEMP</em> or <em>TEMPORARY</em> (case-insensitive, but without any inline formatting) are simply ignored when generating
 the reference index.</p></li>
@@ -152,12 +165,16 @@ considered to be the name of a help topic (usually the name of a function or dat
 key of the reference index' YAML.</p></li>
 <li><p>Non-help-topic headings above help topic headings are used as reference index (sub)titles as far as hierarchical nesting allows. More precisely,
 non-help-topic headings <em>of the highest two levels</em> above the help topic heading are used as title and subtitle, the rest of the headings above the help
-topic heading is ignored. This maps to the <code>title</code> and <code>subtitle</code> keys of the reference index' YAML.</p></li>
-<li><p>Text paragraph(s) below headings named <em>DESCRIPTION</em> (case-insensitive, but without any inline formatting), that in turn are hierarchically below a title
-or subtitle heading, will be used as descriptions for the (sub)titles. This maps to the <code>desc</code> key of the reference index' YAML.</p></li>
+topic heading is ignored – and a heading named <em>EXPORTED</em> (case-insensitive, but without any inline formatting) is always ignored regardless of its
+level. This maps to the <code>title</code> and <code>subtitle</code> keys of the reference index' YAML.</p></li>
+<li><p>Paragraph(s) below headings named <em>DESCRIPTION</em> (case-insensitive, but without any inline formatting), that in turn are hierarchically below a title or
+subtitle heading, are be used as descriptions for the (sub)titles. This maps to the <code>desc</code> key of the reference index' YAML.</p></li>
 </ol>
 
-<p>When fed to <code>gen_pkgdown_ref()</code>, the following simplified example <code>.Rmd</code>...<div class="sourceCode rmd"></p><pre>---
+    <h2 class="hasAnchor" id="parsing-example"><a class="anchor" href="#parsing-example"></a>Parsing example</h2>
+
+    <p>An example might better explain how the parsing rules work than a thousand words, so here's a simplified one.</p>
+<p>When fed to <code>gen_pkgdown_ref()</code>, the following R Markdown content...<div class="sourceCode rmd"></p><pre>---
 editor_options:
   markdown:
     wrap: 80
@@ -236,7 +253,7 @@ another_subgroup_fn &lt;- function(...) {...}
 yet_another_subgroup_fn &lt;- function(...) {...}
 ```
 </pre><p></div></p>
-<p>...yields this pkgdown index YAML:</p><pre>reference:
+<p>...yields this pkgdown index (converted <a href='https://rdrr.io/pkg/yaml/man/as.yaml.html'>to YAML</a>):</p><pre>reference:
 - contents: main_fn
 - title: First group of fns
   desc: The description text for *First group of fns*.
@@ -256,115 +273,14 @@ yet_another_subgroup_fn &lt;- function(...) {...}
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>pal</span><span class='fu'>::</span><span class='fu'><a href='https://rpkg.dev/pal/reference/gh_text_file.html'>gh_text_file</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='st'>"Rmd/pal.Rmd"</span>,
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>pal</span><span class='fu'>::</span><span class='fu'><a href='https://rpkg.dev/pal/reference/gh_text_file.html'>gh_text_file</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='st'>"Rmd/pal.Rmd"</span>,
                   owner <span class='op'>=</span> <span class='st'>"salim-b"</span>,
                   name <span class='op'>=</span> <span class='st'>"pal"</span><span class='op'>)</span> |&gt;
   <span class='fu'>pkgpurl</span><span class='fu'>::</span><span class='fu'>gen_pkgdown_ref</span><span class='op'>(</span><span class='op'>)</span> |&gt;
   <span class='fu'>yaml</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/yaml/man/as.yaml.html'>as.yaml</a></span><span class='op'>(</span><span class='op'>)</span> |&gt;
-  <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; reference:
-#&gt; - title: Statistical computing / numbers
-#&gt; - contents:
-#&gt;   - safe_seq_len
-#&gt;   - safe_max
-#&gt;   - safe_min
-#&gt;   - round_to
-#&gt;   - stat_mode
-#&gt; - title: Data frames / Tibbles
-#&gt; - contents:
-#&gt;   - is_equal_df
-#&gt;   - reduce_df_list
-#&gt; - title: Lists
-#&gt; - contents:
-#&gt;   - as_flat_list
-#&gt;   - list_drop
-#&gt;   - list_keep
-#&gt; - title: Strings
-#&gt; - contents:
-#&gt;   - as_comment_string
-#&gt;   - as_chr
-#&gt;   - as_line_feed_chr
-#&gt;   - as_string
-#&gt;   - sentenceify
-#&gt;   - escape_lf
-#&gt;   - fuse_regex
-#&gt;   - dsv_colnames
-#&gt;   - prose_ls
-#&gt;   - prettify_nr
-#&gt;   - cat_lines
-#&gt;   - wrap_chr
-#&gt; - title: Dots
-#&gt;   desc: |-
-#&gt;     Extending the [ellipsis](https://ellipsis.r-lib.org/) package, making the use of [R's `...` argument placeholder](https://rdrr.io/r/base/dots.html) yet another
-#&gt;     bit safer.
-#&gt; - contents: check_dots_named
-#&gt; - title: R packages
-#&gt; - contents:
-#&gt;   - ls_pkg
-#&gt;   - assert_pkg
-#&gt;   - is_pkg_installed
-#&gt;   - is_pkg_cran
-#&gt;   - is_pkg_dir
-#&gt;   - is_pkgdown_dir
-#&gt; - subtitle: Package DESCRIPTION
-#&gt;   desc: Extending the [desc](https://github.com/r-lib/desc#readme) package.
-#&gt; - contents:
-#&gt;   - desc_list
-#&gt;   - desc_value
-#&gt;   - desc_url_git
-#&gt; - subtitle: Package documentation
-#&gt;   desc: Extending the [roxygen2](https://roxygen2.r-lib.org/) package.
-#&gt; - contents:
-#&gt;   - roxy_blocks
-#&gt;   - roxy_obj
-#&gt;   - roxy_tag_value
-#&gt; - title: (Pandoc) Markdown
-#&gt; - contents:
-#&gt;   - as_md_list
-#&gt;   - pipe_table
-#&gt;   - strip_md
-#&gt;   - strip_md_footnotes
-#&gt; - subtitle: CommonMark parsing
-#&gt;   desc: Extending the [commonmark](https://github.com/r-lib/commonmark#readme) package.
-#&gt; - contents:
-#&gt;   - md_to_xml
-#&gt;   - md_xml_subnode_ix
-#&gt;   - xml_to_md
-#&gt; - title: R Markdown / knitr
-#&gt; - contents:
-#&gt;   - build_readme
-#&gt;   - knitr_table_format
-#&gt;   - strip_yaml_header
-#&gt; - subtitle: Output formats
-#&gt;   desc: |-
-#&gt;     [Custom R Markdown output formats](https://bookdown.org/yihui/rmarkdown/new-formats.html) which can be used in addition to the [default output
-#&gt;     formats](https://bookdown.org/yihui/rmarkdown/output-formats.html).
-#&gt; - contents: gitlab_document
-#&gt; - title: GitHub
-#&gt;   desc: Extending the [gh](https://gh.r-lib.org/) package, leveraging [GitHub's GraphQL
-#&gt;     API](https://docs.github.com/en/graphql).
-#&gt; - contents:
-#&gt;   - gh_text_file
-#&gt;   - gh_text_files
-#&gt;   - gh_dir_ls
-#&gt; - title: HTTP
-#&gt;   desc: Extending the [httr](https://httr.r-lib.org/) package that wraps the [curl](https://jeroen.cran.dev/curl/)
-#&gt;     package.
-#&gt; - contents:
-#&gt;   - assert_mime_type
-#&gt;   - is_http_success
-#&gt; - title: System interaction
-#&gt; - contents:
-#&gt;   - check_cli
-#&gt;   - path_script
-#&gt; - title: Miscellaneous
-#&gt; - contents:
-#&gt;   - assert_class_any
-#&gt;   - capture_print
-#&gt;   - cols_regex
-#&gt;   - cli_process_expr
-#&gt;   - order_by
-#&gt;   - prose_ls_fn_param</div></pre>
+  <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
