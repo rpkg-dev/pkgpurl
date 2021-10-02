@@ -2,7 +2,7 @@
 
 pkgpurl facilitates R package authoring using a literate programming approach. The main idea behind this is to write all of the R source code in R Markdown files (`Rmd/*.Rmd`), which allows the actual code to be freely mixed with explanatory and supplementary information in expressive Markdown format. The main object of pkgpurl is to provide a standardized way to compile the bare `.R` files from the prose-enhanced and thus more human-oriented `.Rmd` files.
 
-The basic idea behind the concept this package implements originates from Yihui Xie. See his blog post [*Write An R Package Using Literate Programming Techniques*](https://yihui.org/rlp/) for more details, it's definitively worth reading. This package's function `pkgpurl::purl_rmd()` is just a less cumbersome alternative to the Makefile approach outlined by him.
+The basic idea behind the concept this package implements originates from Yihui Xie. See his blog post [*Write An R Package Using Literate Programming Techniques*](https://yihui.org/rlp/) for more details, it's definitively worth reading. This package's function [`pkgpurl::purl_rmd()`](https://rpkg.dev/pkgpurl/reference/purl_rmd.html) is just a less cumbersome alternative to the Makefile approach outlined by him.
 
 ## Details
 
@@ -64,7 +64,7 @@ The [R Markdown](https://rmarkdown.rstudio.com/) format provides several **advan
 
     You can put development-only code which never lands in the generated R source files (and thus the R package) in separate code chunks with the chunk option [`purl = FALSE`](https://yihui.org/knitr/options/#extracting-source-code). This turns out to be very convenient in certain situations.
 
-    For example, this is a good way to reproducibly document the generation of cleaned versions of [exported data](https://r-pkgs.org/data.html#data-data) as well as [internal data](https://r-pkgs.org/data.html#data-sysdata). This avoids having to outsource the code to separate files under `data-raw/` and adding the directory to `.Rbuildignore`, i.e. no need to use `usethis::use_data_raw()`. Instead, you just set `purl = FALSE` for the relevant code chunk(s). You can (and should) still use `usethis::use_data(...)` (optionally with `overwrite = TRUE`) to generate the files under `data/` holding external package data as well as the `R/sysdata.rda` file (using `internal = TRUE`) holding internal package data.
+    For example, this is a good way to reproducibly document the generation of cleaned versions of [exported data](https://r-pkgs.org/data.html#data-data) as well as [internal data](https://r-pkgs.org/data.html#data-sysdata). This avoids having to outsource the code to separate files under `data-raw/` and adding the directory to `.Rbuildignore`, i.e. no need to use `usethis::use_data_raw()`. Instead, you just set `purl = FALSE` for the relevant code chunk(s). You can (and should) still use [`usethis::use_data()`](https://usethis.r-lib.org/reference/use_data.html) (optionally with `overwrite = TRUE`) to generate the files under `data/` holding external package data as well as the `R/sysdata.rda` file (using `internal = TRUE`) holding internal package data.
 
 -   **Easily toggle styler**
 
@@ -74,9 +74,9 @@ Unfortunately, there are also a few **drawbacks** of the R Markdown format:
 
 -   **Additional workflow step**
 
-    The pkgpurl approach on writing R packages in the R Markdown format introduces *one* additional step at the very beginning of typical package development workflows: Running `pkgpurl::purl_rmd()` to generate the `R/*.gen.R` files from the original `Rmd/*.Rmd` sources before documenting/checking/testing/building the package. Given sufficient user demand, this could probably be integrated into [devtools](https://devtools.r-lib.org/)' functions in the future, so that no additional action has to be taken by the user when relying on RStudio's built-in package building infrastructure.
+    The pkgpurl approach on writing R packages in the R Markdown format introduces *one* additional step at the very beginning of typical package development workflows: Running [`pkgpurl::purl_rmd()`](https://rpkg.dev/pkgpurl/reference/purl_rmd.html) to generate the `R/*.gen.R` files from the original `Rmd/*.Rmd` sources before documenting/checking/testing/building the package. Given sufficient user demand, this could probably be integrated into [devtools](https://devtools.r-lib.org/)' functions in the future, so that no additional action has to be taken by the user when relying on RStudio's built-in package building infrastructure.
 
-    For the time being, it's recommended to set up a custom shortcut[^3] for one or both of `pkgpurl::purl_rmd()` and `pkgpurl::process_pkg()` which are registered as [RStudio add-ins](https://rstudio.github.io/rstudioaddins/).
+    For the time being, it's recommended to set up a custom shortcut[^3] for one or both of [`pkgpurl::purl_rmd()`](https://rpkg.dev/pkgpurl/reference/purl_rmd.html) and [`pkgpurl::process_pkg()`](https://rpkg.dev/pkgpurl/reference/process_pkg.html) which are registered as [RStudio add-ins](https://rstudio.github.io/rstudioaddins/).
 
 -   **Differing setup**
 
@@ -90,7 +90,7 @@ Unfortunately, there are also a few **drawbacks** of the R Markdown format:
 
 -   **Missing roxygen2 auto-completion**
 
-    Other than in `.R` files, RStudio currently doesn't support auto-completion of [roxygen2 tags](https://roxygen2.r-lib.org/articles/rd.html) in `.Rmd` files. These are [known issues](https://github.com/rstudio/rstudio/issues/5809) which will hopefully be resolved in the near future.
+    Other than in `.R` files, RStudio currently doesn't support auto-completion of [roxygen2 tags](https://roxygen2.r-lib.org/articles/rd.html) in `.Rmd` files and its <kbd>Reflow Comment</kbd> command doesn't properly work on them. These are [known issues](https://github.com/rstudio/rstudio/issues/5809#issuecomment-932228146) which will hopefully be resolved in the near future.
 
 ## Installation
 
@@ -111,7 +111,7 @@ remotes::install_gitlab(repo = "salim_b/r/pkgs/pkgpurl")
 
 This package's source code is written in the [R Markdown](https://rmarkdown.rstudio.com/) file format to facilitate practices commonly referred to as [*literate programming*](https://en.wikipedia.org/wiki/Literate_programming). It allows the actual code to be freely mixed with explanatory and supplementary information in expressive Markdown format instead of having to rely on [`#` comments](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Comments) only.
 
-All the `-GEN.R` suffixed R source code found under [`R/`](R/) is generated from the respective R Markdown counterparts under [`Rmd/`](Rmd/) using [`pkgpurl::purl_rmd()`](https://gitlab.com/salim_b/r/pkgs/pkgpurl/)[^4]. Always make changes only to the `.Rmd` files -- never the `.R` files -- and then run `pkgpurl::purl_rmd()` to regenerate the R source files.
+All the `.gen.R` suffixed R source code found under [`R/`](R/) is generated from the respective R Markdown counterparts under [`Rmd/`](Rmd/) using [`pkgpurl::purl_rmd()`](https://rpkg.dev/pkgpurl/reference/purl_rmd.html)[^4]. Always make changes only to the `.Rmd` files -- never the `.R` files -- and then run `pkgpurl::purl_rmd()` to regenerate the R source files.
 
 ### Coding style
 
