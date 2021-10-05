@@ -16,6 +16,7 @@ utils::globalVariables(names = c(".",
                                  "heading_lvl",
                                  "i_subtitle",
                                  "i_title",
+                                 "is_heading_ignored",
                                  "is_help_topic",
                                  "subnode_ix"))
 
