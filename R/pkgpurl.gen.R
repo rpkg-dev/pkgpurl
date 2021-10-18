@@ -554,7 +554,7 @@ gen_pkgdown_ref <- function(rmd) {
                                         & rmd_xml[i] %>%
                                           xml2::xml_child(search = "d1:code") %>%
                                           xml2::xml_text() %>%
-                                          stringr::str_detect(pattern = "^[\\S]+$"),
+                                          stringr::str_detect(pattern = "^[^\\s`]+$"),
                                         is_description_heading =
                                           xml2::xml_length(rmd_xml[i]) == 1L
                                         & rmd_xml[i] %>%
@@ -605,7 +605,7 @@ gen_pkgdown_ref <- function(rmd) {
     
   } else {
     
-    # initalize reference index data
+    # initialize reference index data
     data_ref_i <- tibble::tibble(i_title = integer(),
                                  i_subtitle = integer(),
                                  content = character())
