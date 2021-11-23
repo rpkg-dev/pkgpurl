@@ -384,10 +384,14 @@ TODO:
 
     -   There's an [Open Source License API by the OSI](https://github.com/OpenSourceOrg/api/blob/master/doc/endpoints.md); maybe create an API wrapper pkg for
         R? (unfortunately, default license headers don't seem to be included in the data returned by the API (yet))
+
     -   There's the [Software Package Data Exchange (SPDX)](https://spdx.org/licenses/) project by the Linux Foundation systematically offering license
         information in a standardized format and defining unique license identifiers (SPDX IDs); an individual license page can be accessed under the URL
         `https://spdx.org/licenses/[SPDX-ID].html`; it seems to always include a section *Standard License Header* 🎉 (which just says "There is no standard
         license header for the license" if there's none).
+
+        Maybe we should add the [`SPDX-License-Identifier` and `SPDX-FileCopyrightText` tags](https://reuse.software/tutorial/#step-2) to the generated R files
+        besides the license header and instead of the current copyright notice?
 
     Viable solution:
 
