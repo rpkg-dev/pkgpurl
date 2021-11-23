@@ -1,6 +1,6 @@
 Package: pkgpurl
 Title: Facilitate Authoring R Packages in the R Markdown File Format
-Version: 0.0.9010
+Version: 0.0.9011
 Authors@R: 
     person(given = "Salim",
            family = "Brüggemann",
@@ -29,7 +29,7 @@ Imports:
     glue (>= 1.4.1),
     knitr (>= 1.28),
     magrittr (>= 2.0.0),
-    pal (>= 0.0.9072),
+    pal (>= 0.0.9073),
     purrr (>= 0.3.4),
     rlang (>= 0.4.11),
     rstudioapi (>= 0.13),
@@ -41,7 +41,7 @@ Imports:
 Suggests: 
     desc (>= 1.4.0),
     lintr (>= 2.0.1),
-    pkgsnip (>= 0.0.9024)
+    pkgsnip (>= 0.0.9026)
 Remotes:
     gitlab::salim_b/r/pkgs/pal,
     gitlab::salim_b/r/pkgs/pkgsnip
