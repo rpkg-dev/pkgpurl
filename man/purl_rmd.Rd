@@ -30,8 +30,8 @@ based on the main input file as described in \code{\link[=gen_pkgdown_ref]{gen_p
 \code{path}, invisibly.
 }
 \description{
-This function strives to provide a standardized way to convert all \code{.Rmd} files in the \verb{Rmd/} subdirectory to bare \code{.R} files in the \verb{R/} subdirectory using
-\code{\link[knitr:knit]{knitr::purl()}}. It is mainly intended for authoring R packages in the \href{https://rmarkdown.rstudio.com/}{R Markdown file format}.
+This function strives to provide a standardized way to convert all relevant \code{.Rmd} files in the \verb{Rmd/} subdirectory to bare \code{.R} files in the \verb{R/}
+subdirectory using \code{\link[knitr:knit]{knitr::purl()}}. It is mainly intended for authoring R packages in the \href{https://rmarkdown.rstudio.com/}{R Markdown file format}.
 }
 \details{
 The generated \code{.R} files will be named the same as the \code{.Rmd} files plus the suffix \code{.gen} to indicate the file was auto-generated. So the file
@@ -47,3 +47,16 @@ allows you to easily compile your source code to beautifully looking HTML, PDF e
 
 This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in} allowing RStudio users to assign a custom shortcut to it.
 }
+\section{\code{.Rmd} files excluded from purling}{
+\code{purl_rmd()} does not generate an \code{.R} file for each and every R Markdown file in the \verb{Rmd/} subdirectory. Two types of \code{.Rmd} files are excluded from
+purling:
+\enumerate{
+\item Files having the suffix \code{.nopurl} in their name, e.g. \code{Rmd/playground.nopurl.Rmd}.
+\item Hidden files \href{https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments}{as per Unix convention} whose names start
+with a dot, e.g. \code{Rmd/.playground.Rmd}.
+}
+
+The above convention allows for easy exclusion of specific \code{.Rmd} files from purling. A common case for this are scripts that generate \href{https://r-pkgs.org/data.html#data-sysdata}{package-internal data} from raw sources. Such a script could be stored as \code{Rmd/data.nopurl.Rmd}, so that no corresponding file
+under \verb{R/*.R} is generated. For the sake of clarity, it's generally advised to prefer the \code{.nopurl} suffix over hiding files.
+}
+

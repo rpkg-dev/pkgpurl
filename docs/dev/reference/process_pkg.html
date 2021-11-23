@@ -43,8 +43,8 @@
 
 
 <meta property="og:title" content="Process an R Markdown package from source to installation — process_pkg" />
-<meta name="description" content="Executes all steps to process an R package written in R Markdown format from source to installation in one go: Purl all Rmd/*.Rmd files to R/*.gen.R files using purl_rmd(). Re-generate the pkgdown reference index based on the package's main R Markdown file using gen_pkgdown_ref() (if gen_pkgdown_ref = TRUE). Re-build the package documentation using devtools::document() (if document = TRUE). Build and install the package using devtools::install() (if build_and_install = TRUE). Restarts the R session using rstudioapi::restartSession() (if restart_r_session = TRUE).">
-<meta property="og:description" content="Executes all steps to process an R package written in R Markdown format from source to installation in one go: Purl all Rmd/*.Rmd files to R/*.gen.R files using purl_rmd(). Re-generate the pkgdown reference index based on the package's main R Markdown file using gen_pkgdown_ref() (if gen_pkgdown_ref = TRUE). Re-build the package documentation using devtools::document() (if document = TRUE). Build and install the package using devtools::install() (if build_and_install = TRUE). Restarts the R session using rstudioapi::restartSession() (if restart_r_session = TRUE)." />
+<meta name="description" content="Executes all steps to process an R package written in R Markdown format from source to installation in one go: Purl all relevant Rmd/*.Rmd files to R/*.gen.R files using purl_rmd(). Re-generate the pkgdown reference index based on the package's main R Markdown file using gen_pkgdown_ref() (if gen_pkgdown_ref = TRUE). Re-build the package documentation using devtools::document() (if document = TRUE). Build and install the package using devtools::install() (if build_and_install = TRUE). Restarts the R session using rstudioapi::restartSession() (if restart_r_session = TRUE).">
+<meta property="og:description" content="Executes all steps to process an R package written in R Markdown format from source to installation in one go: Purl all relevant Rmd/*.Rmd files to R/*.gen.R files using purl_rmd(). Re-generate the pkgdown reference index based on the package's main R Markdown file using gen_pkgdown_ref() (if gen_pkgdown_ref = TRUE). Re-build the package documentation using devtools::document() (if document = TRUE). Build and install the package using devtools::install() (if build_and_install = TRUE). Restarts the R session using rstudioapi::restartSession() (if restart_r_session = TRUE)." />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@2BSalim" />
 <meta name="twitter:site" content="@2BSalim" />
@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pkgpurl</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9010</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9011</span>
       </span>
     </div>
 
@@ -120,7 +120,7 @@
 
     <div class="ref-description">
     <p>Executes all steps to process an R package written in R Markdown format from source to installation in one go:</p><ol>
-<li><p>Purl all <code>Rmd/*.Rmd</code> files to <code>R/*.gen.R</code> files using <code><a href='purl_rmd.html'>purl_rmd()</a></code>.</p></li>
+<li><p>Purl all relevant <code>Rmd/*.Rmd</code> files to <code>R/*.gen.R</code> files using <code><a href='purl_rmd.html'>purl_rmd()</a></code>.</p></li>
 <li><p>Re-generate the <a href='https://pkgdown.r-lib.org/reference/build_reference.html#reference-index'>pkgdown reference index</a> based on the package's <a href='main_rmd.html'>main R Markdown file</a> using <code><a href='gen_pkgdown_ref.html'>gen_pkgdown_ref()</a></code> (if <code>gen_pkgdown_ref = TRUE</code>).</p></li>
 <li><p>Re-build the package documentation using <code><a href='https://devtools.r-lib.org//reference/document.html'>devtools::document()</a></code> (if <code>document = TRUE</code>).</p></li>
 <li><p>Build and install the package using <code><a href='https://devtools.r-lib.org//reference/install.html'>devtools::install()</a></code> (if <code>build_and_install = TRUE</code>).</p></li>
@@ -192,7 +192,7 @@ RStudio.</p></td>
       <th>roclets</th>
       <td><p>Character vector of roclet names to use with package.
 The default, <code>NULL</code>, uses the roxygen <code>roclets</code> option,
-which defaults to <code><a href='https://rdrr.io/r/base/c.html'>c("collate", "namespace", "rd")</a></code>.</p></td>
+which defaults to <code>c("collate", "namespace", "rd")</code>.</p></td>
     </tr>
     <tr>
       <th>reload</th>

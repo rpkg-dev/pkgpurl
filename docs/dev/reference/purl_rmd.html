@@ -43,8 +43,8 @@
 
 
 <meta property="og:title" content="Purl Rmd/*.Rmd to R/*.gen.R — purl_rmd" />
-<meta name="description" content="This function strives to provide a standardized way to convert all .Rmd files in the Rmd/ subdirectory to bare .R files in the R/ subdirectory using knitr::purl(). It is mainly intended for authoring R packages in the R Markdown file format.">
-<meta property="og:description" content="This function strives to provide a standardized way to convert all .Rmd files in the Rmd/ subdirectory to bare .R files in the R/ subdirectory using knitr::purl(). It is mainly intended for authoring R packages in the R Markdown file format." />
+<meta name="description" content="This function strives to provide a standardized way to convert all relevant .Rmd files in the Rmd/ subdirectory to bare .R files in the R/ subdirectory using knitr::purl(). It is mainly intended for authoring R packages in the R Markdown file format.">
+<meta property="og:description" content="This function strives to provide a standardized way to convert all relevant .Rmd files in the Rmd/ subdirectory to bare .R files in the R/ subdirectory using knitr::purl(). It is mainly intended for authoring R packages in the R Markdown file format." />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@2BSalim" />
 <meta name="twitter:site" content="@2BSalim" />
@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pkgpurl</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9010</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9011</span>
       </span>
     </div>
 
@@ -119,8 +119,8 @@
     </div>
 
     <div class="ref-description">
-    <p>This function strives to provide a standardized way to convert all <code>.Rmd</code> files in the <code>Rmd/</code> subdirectory to bare <code>.R</code> files in the <code>R/</code> subdirectory using
-<code><a href='https://rdrr.io/pkg/knitr/man/knit.html'>knitr::purl()</a></code>. It is mainly intended for authoring R packages in the <a href='https://rmarkdown.rstudio.com/'>R Markdown file format</a>.</p>
+    <p>This function strives to provide a standardized way to convert all relevant <code>.Rmd</code> files in the <code>Rmd/</code> subdirectory to bare <code>.R</code> files in the <code>R/</code>
+subdirectory using <code><a href='https://rdrr.io/pkg/knitr/man/knit.html'>knitr::purl()</a></code>. It is mainly intended for authoring R packages in the <a href='https://rmarkdown.rstudio.com/'>R Markdown file format</a>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>purl_rmd</span><span class='op'>(</span>
@@ -171,6 +171,17 @@ optimized for human readability. This facilitates (best) practices which are com
 <a href='https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Comments'><code>#</code> comments</a> to explain, annotate or otherwise elaborate on your code. It also
 allows you to easily compile your source code to beautifully looking HTML, PDF etc. files using <code><a href='https://pkgs.rstudio.com/rmarkdown/reference/render.html'>rmarkdown::render()</a></code>.</p>
 <p>This function is also registered as an <a href='https://rstudio.github.io/rstudioaddins/'>RStudio add-in</a> allowing RStudio users to assign a custom shortcut to it.</p>
+    <h2 class="hasAnchor" id="-rmd-files-excluded-from-purling"><a class="anchor" href="#-rmd-files-excluded-from-purling"></a><code>.Rmd</code> files excluded from purling</h2>
+
+    <p><code>purl_rmd()</code> does not generate an <code>.R</code> file for each and every R Markdown file in the <code>Rmd/</code> subdirectory. Two types of <code>.Rmd</code> files are excluded from
+purling:</p><ol>
+<li><p>Files having the suffix <code>.nopurl</code> in their name, e.g. <code>Rmd/playground.nopurl.Rmd</code>.</p></li>
+<li><p>Hidden files <a href='https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments'>as per Unix convention</a> whose names start
+with a dot, e.g. <code>Rmd/.playground.Rmd</code>.</p></li>
+</ol>
+
+<p>The above convention allows for easy exclusion of specific <code>.Rmd</code> files from purling. A common case for this are scripts that generate <a href='https://r-pkgs.org/data.html#data-sysdata'>package-internal data</a> from raw sources. Such a script could be stored as <code>Rmd/data.nopurl.Rmd</code>, so that no corresponding file
+under <code>R/*.R</code> is generated. For the sake of clarity, it's generally advised to prefer the <code>.nopurl</code> suffix over hiding files.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

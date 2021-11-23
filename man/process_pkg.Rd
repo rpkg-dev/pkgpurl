@@ -91,7 +91,7 @@ It defaults to the option \code{"keep.source.pkgs"}.}
 \description{
 Executes all steps to process an R package written in R Markdown format from source to installation in one go:
 \enumerate{
-\item Purl all \verb{Rmd/*.Rmd} files to \verb{R/*.gen.R} files using \code{\link[=purl_rmd]{purl_rmd()}}.
+\item Purl all relevant \verb{Rmd/*.Rmd} files to \verb{R/*.gen.R} files using \code{\link[=purl_rmd]{purl_rmd()}}.
 \item Re-generate the \href{https://pkgdown.r-lib.org/reference/build_reference.html#reference-index}{pkgdown reference index} based on the package's \link[=main_rmd]{main R Markdown file} using \code{\link[=gen_pkgdown_ref]{gen_pkgdown_ref()}} (if \code{gen_pkgdown_ref = TRUE}).
 \item Re-build the package documentation using \code{\link[devtools:document]{devtools::document()}} (if \code{document = TRUE}).
 \item Build and install the package using \code{\link[devtools:install]{devtools::install()}} (if \code{build_and_install = TRUE}).

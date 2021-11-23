@@ -50,11 +50,13 @@ The [R Markdown](https://rmarkdown.rstudio.com/) format provides several **advan
 
     Instead, I encourage you to keep all your code (as far as possible) in a single file `Rmd/PACKAGE_NAME.Rmd` and structure it according to the [rules described here](https://rpkg.dev/pkgpurl/reference/gen_pkgdown_ref.html#details), which even allows the [pkgdown `Reference:` index](https://pkgdown.r-lib.org/reference/build_reference.html#reference-index) to be automatically in sync with the source code structure. As a result, you re-organize (and thus most likely improve) your package's code structure whenever you intend to improve the pkgdown reference -- and vice versa.
 
-    Keeping all code in a single file frees you from the traditional hassle of finding a viable (but in the end still unsatisfactory) way to organize your R source code across multiple files.
+    Keeping all code in a single file frees you from the traditional hassle of finding a viable (but in the end still unsatisfactory) way to organize your R source code across multiple files. Of course, there are still good reasons to outsource code into separate files *in certain situations*, which nothing is stopping you from doing. You can also [exclude whole `.Rmd` files from purling using the `.nopurl.Rmd"` filename suffix](https://rpkg.dev/pkgpurl/reference/purl_rmd.html#-rmd-files-excluded-from-purling).
 
 -   **Improved overview and navigation**
 
     You can rely on RStudio's [code outline](https://rviews.rstudio.com/2016/11/11/easy-tricks-you-mightve-missed/#code-outline) to easily navigate through longer `.Rmd` files. IMHO it provides significantly better usability than the [code section standard](https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections) of `.R` files. It makes it easy to find your way around source files that are thousands of lines long.
+
+    RStudio's [*Go to File/Function* shortcut](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts) also works for `.Rmd` files.
 
 -   **Improved visual clarity**
 
@@ -70,7 +72,7 @@ The [R Markdown](https://rmarkdown.rstudio.com/) format provides several **advan
 
     If you use [styler](https://styler.r-lib.org/) to auto-format your code globally by [setting `knitr::opts_chunk$set(tidy = "styler")`](https://styler.r-lib.org/articles/third-party-integrations.html), you can still opt-out on a per-chunk basis by setting [`tidy = FALSE`](https://github.com/r-lib/styler/releases/tag/v1.5.1). This gives pleasant flexibility.
 
-Unfortunately, there are also a few **drawbacks** of the R Markdown format:
+Unfortunately, there are also a few notable **drawbacks** of the R Markdown format:
 
 -   **Additional workflow step**
 

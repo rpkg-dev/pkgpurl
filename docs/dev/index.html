@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">pkgpurl</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9010</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9011</span>
       </span>
     </div>
 
@@ -113,11 +113,12 @@ editor_options:
 </blockquote>
 <p>I think this is just ridiculous.</p>
 <p>Instead, I encourage you to keep all your code (as far as possible) in a single file <code>Rmd/PACKAGE_NAME.Rmd</code> and structure it according to the <a href="https://rpkg.dev/pkgpurl/reference/gen_pkgdown_ref.html#details">rules described here</a>, which even allows the <a href="https://pkgdown.r-lib.org/reference/build_reference.html#reference-index" class="external-link">pkgdown <code>Reference:</code> index</a> to be automatically in sync with the source code structure. As a result, you re-organize (and thus most likely improve) your package’s code structure whenever you intend to improve the pkgdown reference – and vice versa.</p>
-<p>Keeping all code in a single file frees you from the traditional hassle of finding a viable (but in the end still unsatisfactory) way to organize your R source code across multiple files.</p>
+<p>Keeping all code in a single file frees you from the traditional hassle of finding a viable (but in the end still unsatisfactory) way to organize your R source code across multiple files. Of course, there are still good reasons to outsource code into separate files <em>in certain situations</em>, which nothing is stopping you from doing. You can also <a href="https://rpkg.dev/pkgpurl/reference/purl_rmd.html#-rmd-files-excluded-from-purling">exclude whole <code>.Rmd</code> files from purling using the <code>.nopurl.Rmd"</code> filename suffix</a>.</p>
 </li>
 <li>
 <p><strong>Improved overview and navigation</strong></p>
 <p>You can rely on RStudio’s <a href="https://rviews.rstudio.com/2016/11/11/easy-tricks-you-mightve-missed/#code-outline" class="external-link">code outline</a> to easily navigate through longer <code>.Rmd</code> files. IMHO it provides significantly better usability than the <a href="https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections" class="external-link">code section standard</a> of <code>.R</code> files. It makes it easy to find your way around source files that are thousands of lines long.</p>
+<p>RStudio’s <a href="https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts" class="external-link"><em>Go to File/Function</em> shortcut</a> also works for <code>.Rmd</code> files.</p>
 </li>
 <li>
 <p><strong>Improved visual clarity</strong></p>
@@ -133,7 +134,7 @@ editor_options:
 <p>If you use <a href="https://styler.r-lib.org/" class="external-link">styler</a> to auto-format your code globally by <a href="https://styler.r-lib.org/articles/third-party-integrations.html" class="external-link">setting <code>knitr::opts_chunk$set(tidy = "styler")</code></a>, you can still opt-out on a per-chunk basis by setting <a href="https://github.com/r-lib/styler/releases/tag/v1.5.1" class="external-link"><code>tidy = FALSE</code></a>. This gives pleasant flexibility.</p>
 </li>
 </ul>
-<p>Unfortunately, there are also a few <strong>drawbacks</strong> of the R Markdown format:</p>
+<p>Unfortunately, there are also a few notable <strong>drawbacks</strong> of the R Markdown format:</p>
 <ul>
 <li>
 <p><strong>Additional workflow step</strong></p>
@@ -160,7 +161,7 @@ editor_options:
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>To install the latest development version of pkgpurl, run the following in R:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"remotes"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"remotes"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span>pkgs <span class="op">=</span> <span class="st">"remotes"</span>,
                    repos <span class="op">=</span> <span class="st">"https://cloud.r-project.org/"</span><span class="op">)</span>
 <span class="op">}</span>
@@ -192,7 +193,7 @@ editor_options:
 </div>
 </div>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr>
 <ol>
 <li id="fn1"><p>Actually, you could write anything you like in any syntax outside of R code chunks as long as you don’t mind the file to be <em>knittable</em> (which it doesn’t have to be).<a href="#fnref1" class="footnote-back">↩︎</a></p></li>

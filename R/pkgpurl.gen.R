@@ -179,8 +179,10 @@ rmd_files <- function(path) {
   checkmate::assert_string(path) %>%
     fs::path("Rmd/") %>%
     fs::path_abs() %>%
-    fs::dir_ls(regexp = "Rmd/[^/]+\\.[Rr]md$",
-               recurse = TRUE)
+    fs::dir_ls(recurse = TRUE,
+               type = "file",
+               regexp = "(?<!\\.nopurl)\\.[Rr]md$",
+               perl = TRUE)
 }
 
 #' Process an R Markdown package from source to installation
@@ -188,7 +190,7 @@ rmd_files <- function(path) {
 #' @description
 #' Executes all steps to process an R package written in R Markdown format from source to installation in one go:
 #'
-#' 1. Purl all `Rmd/*.Rmd` files to `R/*.gen.R` files using [purl_rmd()].
+#' 1. Purl all relevant `Rmd/*.Rmd` files to `R/*.gen.R` files using [purl_rmd()].
 #' 2. Re-generate the [pkgdown reference index](https://pkgdown.r-lib.org/reference/build_reference.html#reference-index) based on the package's [main R
 #'    Markdown file][main_rmd()] using [gen_pkgdown_ref()] (if `gen_pkgdown_ref = TRUE`).
 #' 3. Re-build the package documentation using [devtools::document()] (if `document = TRUE`).
@@ -281,8 +283,8 @@ process_pkg <- function(path = ".",
 
 #' Purl `Rmd/*.Rmd` to `R/*.gen.R`
 #'
-#' This function strives to provide a standardized way to convert all `.Rmd` files in the `Rmd/` subdirectory to bare `.R` files in the `R/` subdirectory using
-#' [knitr::purl()]. It is mainly intended for authoring R packages in the [R Markdown file format](https://rmarkdown.rstudio.com/).
+#' This function strives to provide a standardized way to convert all relevant `.Rmd` files in the `Rmd/` subdirectory to bare `.R` files in the `R/`
+#' subdirectory using [knitr::purl()]. It is mainly intended for authoring R packages in the [R Markdown file format](https://rmarkdown.rstudio.com/).
 #'
 #' The generated `.R` files will be named the same as the `.Rmd` files plus the suffix `.gen` to indicate the file was auto-generated. So the file
 #' `Rmd/foo.Rmd` for example will be converted to `R/foo.gen.R`.
@@ -296,6 +298,19 @@ process_pkg <- function(path = ".",
 #' allows you to easily compile your source code to beautifully looking HTML, PDF etc. files using [rmarkdown::render()].
 #'
 #' `r pkgsnip::md_snip("rstudio_addin_hint")`
+#' 
+#' # `.Rmd` files excluded from purling
+#' 
+#' `purl_rmd()` does not generate an `.R` file for each and every R Markdown file in the `Rmd/` subdirectory. Two types of `.Rmd` files are excluded from
+#' purling:
+#' 
+#' 1. Files having the suffix `.nopurl` in their name, e.g. `Rmd/playground.nopurl.Rmd`.
+#' 2. Hidden files [as per Unix convention](https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments) whose names start
+#'    with a dot, e.g. `Rmd/.playground.Rmd`.
+#' 
+#' The above convention allows for easy exclusion of specific `.Rmd` files from purling. A common case for this are scripts that generate [package-internal
+#' data](https://r-pkgs.org/data.html#data-sysdata) from raw sources. Such a script could be stored as `Rmd/data.nopurl.Rmd`, so that no corresponding file
+#' under `R/*.R` is generated. For the sake of clarity, it's generally advised to prefer the `.nopurl` suffix over hiding files.
 #'
 #' @param path The path to the root of the package directory.
 #' @param add_copyright_notice Whether or not to add a **copyright notice** at the beginning of the generated `.R` files as recommended by e.g. the [GNU
