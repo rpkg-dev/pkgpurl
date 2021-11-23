@@ -24,8 +24,8 @@ The [R Markdown](https://rmarkdown.rstudio.com/) format provides several **advan
     It is especially powerful in combination with the [Visual R Markdown](https://rstudio.github.io/visual-markdown-editing/) feature introduced in RStudio 1.4,
     which -- in addition to the visual editor -- offers a feature whose utility can hardly be overestimated: Pandoc Markdown
     [canonicalization](https://en.wikipedia.org/wiki/Canonicalization) (on file save[^canon]). For example, it allows paragraphs being wrapped automatically at
-    the desired line width; or to write a minimal sloppy [pipe table](https://pandoc.org/MANUAL.html#extension-pipe_tables) that is
-    automatically normalized to a beautifully formatted and actually readable one.
+    the desired line width; or to write a minimal sloppy [pipe table](https://pandoc.org/MANUAL.html#extension-pipe_tables) that is automatically normalized to
+    a beautifully formatted and actually readable one.
 
     The relevant editor options which adjust the canonical Markdown generation can either be set
 
@@ -78,6 +78,8 @@ The [R Markdown](https://rmarkdown.rstudio.com/) format provides several **advan
     standard](https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections) of `.R` files. It makes it easy to find your way around source
     files that are thousands of lines long.
 
+    RStudio's [*Go to File/Function* shortcut](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts) also works for `.Rmd` files.
+
 -   **Improved visual clarity**
 
     If you use RStudio or any other editor with proper R Markdown syntax highlighting, you will probably like the gained visual clarity for distinguishing
@@ -101,7 +103,7 @@ The [R Markdown](https://rmarkdown.rstudio.com/) format provides several **advan
     `knitr::opts_chunk$set(tidy = "styler")`](https://styler.r-lib.org/articles/third-party-integrations.html), you can still opt-out on a per-chunk basis by
     setting [`tidy = FALSE`](https://github.com/r-lib/styler/releases/tag/v1.5.1). This gives pleasant flexibility.
 
-Unfortunately, there are also a few **drawbacks** of the R Markdown format:
+Unfortunately, there are also a few notable **drawbacks** of the R Markdown format:
 
 -   **Additional workflow step**
 
