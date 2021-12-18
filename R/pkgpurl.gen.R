@@ -250,6 +250,8 @@ process_pkg <- function(path = ".",
     devtools::document(pkg = path,
                        roclets = roclets,
                        quiet = quiet)
+    
+    cli::cli_progress_done()
   }
   
   # build and install package
@@ -267,6 +269,8 @@ process_pkg <- function(path = ".",
                       dependencies = dependencies,
                       upgrade = upgrade,
                       keep_source = keep_source)
+    
+    cli::cli_progress_done()
   }
   
   if (restart_r_session) {
