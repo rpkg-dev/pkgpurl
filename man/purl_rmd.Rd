@@ -23,7 +23,7 @@ other information is extracted from the package's \code{DESCRIPTION} file. A log
 if \code{path} \link[pal:is_pkg_dir]{is actually an R package directory}. Defaults to the R option \code{pkgpurl.add_license_notice}.}
 
 \item{gen_pkgdown_ref}{Whether or not to overwrite \link[pkgdown:pkgdown-package]{pkgdown}'s \href{https://pkgdown.r-lib.org/reference/build_reference.html#reference-index}{reference index} in the configuration file \verb{_pkgdown.yml} with an auto-generated one
-based on the main input file as described in \code{\link[=gen_pkgdown_ref]{gen_pkgdown_ref()}}. A logical scalar. Only applies if \code{path} \link[pal:is_pkg_dir]{is actually an R package directory}, \link[pal:is_pkgdown_dir]{pkgdown is setup} and a \link[=main_rmd]{main R Markdown file} exists. Defaults to the R option
+based on the main input file as described in \code{\link[=gen_pkgdown_ref]{gen_pkgdown_ref()}}. A logical scalar. Only applies if \code{path} \link[pal:is_pkg_dir]{is actually an R package directory}, \link[pal:is_pkgdown_dir]{pkgdown is set up} and a \link[=main_rmd]{main R Markdown file} exists. Defaults to the R option
 \code{pkgpurl.gen_pkgdown_ref}.}
 }
 \value{

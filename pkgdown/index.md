@@ -50,7 +50,7 @@ The [R Markdown](https://rmarkdown.rstudio.com/) format provides several **advan
 
     Instead, I encourage you to keep all your code (as far as possible) in a single file `Rmd/PACKAGE_NAME.Rmd` and structure it according to the [rules described here](https://rpkg.dev/pkgpurl/reference/gen_pkgdown_ref.html#details), which even allows the [pkgdown `Reference:` index](https://pkgdown.r-lib.org/reference/build_reference.html#reference-index) to be automatically in sync with the source code structure. As a result, you re-organize (and thus most likely improve) your package's code structure whenever you intend to improve the pkgdown reference -- and vice versa.
 
-    Keeping all code in a single file frees you from the traditional hassle of finding a viable (but in the end still unsatisfactory) way to organize your R source code across multiple files. Of course, there are still good reasons to outsource code into separate files *in certain situations*, which nothing is stopping you from doing. You can also [exclude whole `.Rmd` files from purling using the `.nopurl.Rmd"` filename suffix](https://rpkg.dev/pkgpurl/reference/purl_rmd.html#-rmd-files-excluded-from-purling).
+    Keeping all code in a single file frees you from the traditional hassle of finding a viable (but in the end still unsatisfactory) way to organize your R source code across multiple files. Of course, there are still good reasons to outsource code into separate files *in certain situations*, which nothing is stopping you from doing. You can also [exclude whole `.Rmd` files from purling using the `.nopurl.Rmd` filename suffix](https://rpkg.dev/pkgpurl/reference/purl_rmd.html#-rmd-files-excluded-from-purling).
 
 -   **Improved overview and navigation**
 
