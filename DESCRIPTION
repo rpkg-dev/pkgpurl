@@ -12,7 +12,7 @@ Description: pkgpurl facilitates R package authoring using a literate
     is to provide a standardized way to compile the bare `.R` files from
     the prose-enhanced and thus more human-oriented `.Rmd` files.
 License: AGPL (>= 3)
-URL: https://gitlab.com/salim_b/r/pkgs/pkgpurl
+URL: https://rpkg.dev/pkgpurl, https://gitlab.com/salim_b/r/pkgs/pkgpurl
 BugReports: https://gitlab.com/salim_b/r/pkgs/pkgpurl/issues
 Depends: 
     R (>= 4.1)
@@ -23,8 +23,8 @@ Imports:
     dplyr (>= 1.0.7),
     fs (>= 1.4.1),
     glue (>= 1.4.1),
-    lifecycle (>= 1.0.1),
     knitr (>= 1.28),
+    lifecycle (>= 1.0.1),
     magrittr (>= 2.0.0),
     pal (>= 0.0.9078),
     purrr (>= 0.3.4),
