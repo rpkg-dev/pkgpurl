@@ -23,15 +23,16 @@ utils::globalVariables(names = c(".",
 data_special_headings <- tibble::tribble(
   
   ~type,          ~heading_texts,  ~meaning,
-  "description",  "DESCRIPTION",   paste0("Paragraph(s) below this heading, that in turn is hierarchically below a `title` or `subtitle` heading, are used as",
-                                          " the description for this very (sub)title (`desc` in the pkgdown reference index)."),
+  "description",  "DESCRIPTION",   paste0("Paragraph(s) below this heading, that in turn is hierarchically below a `title` or `subtitle` heading, are used as ",
+                                          "the description for this very (sub)title (`desc` in the pkgdown reference index)."),
   "ignore_title", "EXPORTED",      paste0("Will never be used as `title`/`subtitle` in the pkgdown reference index (i.e. ignored). Simply serves as a (usually",
                                          " top-level) heading to indicate that the objects defined below it are ",
                                          "[exported](https://r-pkgs.org/namespace.html#exports) by the package."),
   "ignore_content", c("INTERNAL",
+                      "NOTES",
                       "TEMPORARY",
-                      "TEMP"),     paste0("Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index",
-                                          " generation.")
+                      "TEMP"),     paste0("Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index ",
+                                          "generation.")
 )
 
 # somehow `envir = parent.frame(4)` doesn't assign in the right environment, so we explicitly provide it
@@ -188,6 +189,8 @@ rmd_files <- function(path) {
 #' Process an R Markdown package from source to installation
 #'
 #' @description
+#' `r lifecycle::badge("experimental")`
+#' 
 #' Executes all steps to process an R package written in R Markdown format from source to installation in one go:
 #'
 #' 1. Purl all relevant `Rmd/*.Rmd` files to `R/*.gen.R` files using [purl_rmd()].
@@ -221,7 +224,6 @@ process_pkg <- function(path = ".",
                         restart_r_session = build_and_install,
                         quiet = TRUE,
                         roclets = NULL,
-                        reload = TRUE,
                         args = getOption("devtools.install.args"),
                         dependencies = NA,
                         upgrade = "never",
@@ -232,6 +234,8 @@ process_pkg <- function(path = ".",
   checkmate::assert_flag(restart_r_session)
   checkmate::assert_flag(gen_pkgdown_ref)
   checkmate::assert_flag(quiet)
+  pal::assert_pkg("devtools")
+  pal::assert_pkg("pkgload")
   
   # convert `Rmd/*.Rmd` to `R/*.gen.R`
   purl_rmd(path = path,
@@ -254,6 +258,10 @@ process_pkg <- function(path = ".",
     cli::cli_progress_done()
   }
   
+  # determine if pkg is loaded
+  pkg_name <- pkgload::pkg_name(path)
+  is_loaded <- pkg_name %in% loadedNamespaces()
+  
   # build and install package
   if (build_and_install) {
     
@@ -262,8 +270,14 @@ process_pkg <- function(path = ".",
                            msg_done = paste(status_msg, "done"),
                            msg_failed = paste(status_msg, "failed"))
     
+    # unload pkg if it's attached
+    if (is_loaded) {
+      pkgload::unload(package = pkg_name,
+                      quiet = quiet)
+    }
+    
     devtools::install(pkg = path,
-                      reload = reload,
+                      reload = FALSE,
                       args = args,
                       quiet = quiet,
                       dependencies = dependencies,
@@ -496,8 +510,8 @@ lint_rmd <- function(path = ".",
 #' 
 #' The following rules define how the reference index is generated:
 #' 
-#' 1. Headings below a heading named *INTERNAL*, *TEMP* or *TEMPORARY* (case-insensitive, but without any inline formatting) are simply ignored when generating
-#'    the reference index.
+#' 1. Headings below a heading named *INTERNAL*, *NOTES*, *TEMP* or *TEMPORARY* (case-insensitive, but without any inline formatting) are simply ignored when
+#'    generating the reference index.
 #' 2. Every heading that is a) inline-formatted as [verbatim](https://pandoc.org/MANUAL.html#verbatim) and b) doesn't contain any whitespace characters is
 #'    considered to be the name of a help topic (usually the name of a function or dataset) to be included in the reference index. This maps to the `contents`
 #'    key of the reference index' YAML.

@@ -14,7 +14,6 @@ process_pkg(
   restart_r_session = build_and_install,
   quiet = TRUE,
   roclets = NULL,
-  reload = TRUE,
   args = getOption("devtools.install.args"),
   dependencies = NA,
   upgrade = "never",
@@ -48,9 +47,6 @@ RStudio.}
 \item{roclets}{Character vector of roclet names to use with package.
 The default, \code{NULL}, uses the roxygen \code{roclets} option,
 which defaults to \code{c("collate", "namespace", "rd")}.}
-
-\item{reload}{if \code{TRUE} (the default), will automatically reload the
-package after installing.}
 
 \item{args}{An optional character vector of additional command line
 arguments to be passed to \verb{R CMD INSTALL}. This defaults to the
@@ -89,6 +85,8 @@ It defaults to the option \code{"keep.source.pkgs"}.}
 \code{path}, invisibly.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
 Executes all steps to process an R package written in R Markdown format from source to installation in one go:
 \enumerate{
 \item Purl all relevant \verb{Rmd/*.Rmd} files to \verb{R/*.gen.R} files using \code{\link[=purl_rmd]{purl_rmd()}}.

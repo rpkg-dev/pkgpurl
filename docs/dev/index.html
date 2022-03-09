@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">pkgpurl</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9011</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9012</span>
       </span>
     </div>
 
@@ -192,18 +192,17 @@ code.</p>
 <p><strong>Easily toggle code inclusion</strong></p>
 <p>You can put development-only code which never lands in the generated
 R source files (and thus the R package) in separate code chunks with the
-chunk option <a href="https://yihui.org/knitr/options/#extracting-source-code" class="external-link"><code>purl
-= FALSE</code></a>. This turns out to be very convenient in certain
-situations.</p>
+chunk option <a href="https://yihui.org/knitr/options/#extracting-source-code" class="external-link"><code>purl = FALSE</code></a>.
+This turns out to be very convenient in certain situations.</p>
 <p>For example, this is a good way to reproducibly document the
 generation of cleaned versions of <a href="https://r-pkgs.org/data.html#data-data" class="external-link">exported data</a> as well
 as <a href="https://r-pkgs.org/data.html#data-sysdata" class="external-link">internal
 data</a>. This avoids having to outsource the code to separate files
 under <code>data-raw/</code> and adding the directory to
 <code>.Rbuildignore</code>, i.e. no need to use
-<code><a href="https://usethis.r-lib.org/reference/use_data.html" class="external-link">usethis::use_data_raw()</a></code>. Instead, you just set <code>purl =
-FALSE</code> for the relevant code chunk(s). You can (and should) still
-use <a href="https://usethis.r-lib.org/reference/use_data.html" class="external-link"><code>usethis::use_data()</code></a>
+<code><a href="https://usethis.r-lib.org/reference/use_data.html" class="external-link">usethis::use_data_raw()</a></code>. Instead, you just set
+<code>purl = FALSE</code> for the relevant code chunk(s). You can (and
+should) still use <a href="https://usethis.r-lib.org/reference/use_data.html" class="external-link"><code>usethis::use_data()</code></a>
 (optionally with <code>overwrite = TRUE</code>) to generate the files
 under <code>data/</code> holding external package data as well as the
 <code>R/sysdata.rda</code> file (using <code>internal = TRUE</code>)
@@ -214,8 +213,8 @@ holding internal package data.</p>
 <p>If you use <a href="https://styler.r-lib.org/" class="external-link">styler</a> to
 auto-format your code globally by <a href="https://styler.r-lib.org/articles/third-party-integrations.html" class="external-link">setting
 <code>knitr::opts_chunk$set(tidy = "styler")</code></a>, you can still
-opt-out on a per-chunk basis by setting <a href="https://github.com/r-lib/styler/releases/tag/v1.5.1" class="external-link"><code>tidy =
-FALSE</code></a>. This gives pleasant flexibility.</p>
+opt-out on a per-chunk basis by setting <a href="https://github.com/r-lib/styler/releases/tag/v1.5.1" class="external-link"><code>tidy = FALSE</code></a>.
+This gives pleasant flexibility.</p>
 </li>
 </ul>
 <p>Unfortunately, there are also a few notable

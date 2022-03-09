@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pkgpurl</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9011</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9012</span>
       </span>
     </div>
 
@@ -119,7 +119,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Executes all steps to process an R package written in R Markdown format from source to installation in one go:</p><ol>
+    <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p>
+<p>Executes all steps to process an R package written in R Markdown format from source to installation in one go:</p><ol>
 <li><p>Purl all relevant <code>Rmd/*.Rmd</code> files to <code>R/*.gen.R</code> files using <code><a href='purl_rmd.html'>purl_rmd()</a></code>.</p></li>
 <li><p>Re-generate the <a href='https://pkgdown.r-lib.org/reference/build_reference.html#reference-index'>pkgdown reference index</a> based on the package's <a href='main_rmd.html'>main R Markdown file</a> using <code><a href='gen_pkgdown_ref.html'>gen_pkgdown_ref()</a></code> (if <code>gen_pkgdown_ref = TRUE</code>).</p></li>
 <li><p>Re-build the package documentation using <code><a href='https://devtools.r-lib.org/reference/document.html'>devtools::document()</a></code> (if <code>document = TRUE</code>).</p></li>
@@ -139,7 +140,6 @@
   restart_r_session <span class='op'>=</span> <span class='va'>build_and_install</span>,
   quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
   roclets <span class='op'>=</span> <span class='cn'>NULL</span>,
-  reload <span class='op'>=</span> <span class='cn'>TRUE</span>,
   args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"devtools.install.args"</span><span class='op'>)</span>,
   dependencies <span class='op'>=</span> <span class='cn'>NA</span>,
   upgrade <span class='op'>=</span> <span class='st'>"never"</span>,
@@ -193,11 +193,6 @@ RStudio.</p></td>
       <td><p>Character vector of roclet names to use with package.
 The default, <code>NULL</code>, uses the roxygen <code>roclets</code> option,
 which defaults to <code>c("collate", "namespace", "rd")</code>.</p></td>
-    </tr>
-    <tr>
-      <th>reload</th>
-      <td><p>if <code>TRUE</code> (the default), will automatically reload the
-package after installing.</p></td>
     </tr>
     <tr>
       <th>args</th>

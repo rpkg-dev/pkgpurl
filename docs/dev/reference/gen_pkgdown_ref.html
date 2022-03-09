@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pkgpurl</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9011</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9012</span>
       </span>
     </div>
 
@@ -148,7 +148,7 @@ overview:</p><table class='table'>
 <tr><td><strong>Headings</strong></td><td><strong>Meaning</strong></td></tr>
 <tr><td>DESCRIPTION</td><td>Paragraph(s) below this heading, that in turn is hierarchically below a <code>title</code> or <code>subtitle</code> heading, are used as the description for this very (sub)title (<code>desc</code> in the pkgdown reference index).</td></tr>
 <tr><td>EXPORTED</td><td>Will never be used as <code>title</code>/<code>subtitle</code> in the pkgdown reference index (i.e. ignored). Simply serves as a (usually top-level) heading to indicate that the objects defined below it are <a href='https://r-pkgs.org/namespace.html#exports'>exported</a> by the package.</td></tr>
-<tr><td>INTERNAL , TEMPORARY, TEMP</td><td>Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index generation.</td></tr>
+<tr><td>INTERNAL , NOTES    , TEMPORARY, TEMP</td><td>Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index generation.</td></tr>
 </table>
 
 
@@ -158,8 +158,8 @@ overview:</p><table class='table'>
 to the fact that, while (R) Markdown supports up to six heading levels (corresponding to HTML's <code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code> tags), the pkgdown reference index only
 supports up to two (<code>title</code> and <code>subtitle</code>).</p>
 <p>The following rules define how the reference index is generated:</p><ol>
-<li><p>Headings below a heading named <em>INTERNAL</em>, <em>TEMP</em> or <em>TEMPORARY</em> (case-insensitive, but without any inline formatting) are simply ignored when generating
-the reference index.</p></li>
+<li><p>Headings below a heading named <em>INTERNAL</em>, <em>NOTES</em>, <em>TEMP</em> or <em>TEMPORARY</em> (case-insensitive, but without any inline formatting) are simply ignored when
+generating the reference index.</p></li>
 <li><p>Every heading that is a) inline-formatted as <a href='https://pandoc.org/MANUAL.html#verbatim'>verbatim</a> and b) doesn't contain any whitespace characters is
 considered to be the name of a help topic (usually the name of a function or dataset) to be included in the reference index. This maps to the <code>contents</code>
 key of the reference index' YAML.</p></li>
