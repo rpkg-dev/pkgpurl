@@ -97,5 +97,5 @@ Executes all steps to process an R package written in R Markdown format from sou
 }
 }
 \details{
-This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in} allowing RStudio users to assign a custom shortcut to it.
+This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in}, allowing RStudio users to assign a \href{https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE}{custom shortcut} to it or to invoke it from the \href{https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts}{command palette}.
 }

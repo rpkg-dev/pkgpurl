@@ -18,5 +18,5 @@ This is a convenience wrapper around \code{\link[lintr:lint_dir]{lintr::lint_dir
 \details{
 To avoid unnecessary noise, all the the generated \verb{R/*.gen.R} files as well as R Markdown vignettes under \verb{vignettes/*.Rmd} are excluded from linting.
 
-This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in} allowing RStudio users to assign a custom shortcut to it.
+This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in}, allowing RStudio users to assign a \href{https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE}{custom shortcut} to it or to invoke it from the \href{https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts}{command palette}.
 }
