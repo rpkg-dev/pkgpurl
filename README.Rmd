@@ -19,13 +19,13 @@ The [R Markdown](https://rmarkdown.rstudio.com/) format provides several **advan
     It allows the actual code to be freely mixed with explanatory and supplementary information in expressive [Markdown](https://en.wikipedia.org/wiki/Markdown)
     format instead of having to rely on [`#` comments](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Comments) only. In general, this should
     encourage to actually record code-accompanying information because you're able to use the full spectrum of [Pandoc's Markdown
-    syntax](https://pandoc.org/MANUAL.html#pandocs-markdown) like inline formatting, lists, tables, quotations or math[^any-doc-syntax].
+    syntax](https://pandoc.org/MANUAL.html#pandocs-markdown) like inline formatting, lists, tables, quotations or math[^1].
 
     It is especially powerful in combination with the [Visual R Markdown](https://rstudio.github.io/visual-markdown-editing/) feature introduced in RStudio 1.4,
     which -- in addition to the visual editor -- offers a feature whose utility can hardly be overestimated: Pandoc Markdown
-    [canonicalization](https://en.wikipedia.org/wiki/Canonicalization) (on file save[^canon]). For example, it allows paragraphs being wrapped automatically at
-    the desired line width; or to write a minimal sloppy [pipe table](https://pandoc.org/MANUAL.html#extension-pipe_tables) that is automatically normalized to
-    a beautifully formatted and actually readable one.
+    [canonicalization](https://en.wikipedia.org/wiki/Canonicalization) (on file save[^2]). For example, it allows paragraphs being wrapped automatically at the
+    desired line width; or to write a minimal sloppy [pipe table](https://pandoc.org/MANUAL.html#extension-pipe_tables) that is automatically normalized to a
+    beautifully formatted and actually readable one.
 
     The relevant editor options which adjust the canonical Markdown generation can either be set
 
@@ -80,7 +80,8 @@ The [R Markdown](https://rmarkdown.rstudio.com/) format provides several **advan
     standard](https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections) of `.R` files. It makes it easy to find your way around source
     files that are thousands of lines long.
 
-    RStudio's [*Go to File/Function* shortcut](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts) also works for `.Rmd` files.
+    RStudio's [*Go to File/Function* shortcut](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts) works the same for `.Rmd` files as it
+    does for `.R` files.
 
 -   **Improved visual clarity**
 
@@ -115,7 +116,7 @@ Unfortunately, there are also a few notable **drawbacks** of the R Markdown form
     [devtools](https://devtools.r-lib.org/)' functions in the future, so that no additional action has to be taken by the user when relying on RStudio's
     built-in package building infrastructure.
 
-    For the time being, it's recommended to set up a custom shortcut[^custom-shortcut] for one or both of
+    For the time being, it's recommended to set up a custom shortcut[^3] for one or both of
     [`pkgpurl::purl_rmd()`](https://rpkg.dev/pkgpurl/reference/purl_rmd.html) and
     [`pkgpurl::process_pkg()`](https://rpkg.dev/pkgpurl/reference/process_pkg.html) which are registered as [RStudio
     add-ins](https://rstudio.github.io/rstudioaddins/).
@@ -140,19 +141,19 @@ Unfortunately, there are also a few notable **drawbacks** of the R Markdown form
     and its <kbd>Reflow Comment</kbd> command doesn't properly work on them. These are [known
     issues](https://github.com/rstudio/rstudio/issues/5809#issuecomment-932228146) which will hopefully be resolved in the near future.
 
-[^any-doc-syntax]: Actually, you could write anything you like in any syntax outside of R code chunks as long as you don't mind the file to be *knittable*
-(which it doesn't have to be).
-
-[^canon]: It basically sends the (R) Markdown file on a "Pandoc round trip" on every file save.
-
-[^custom-shortcut]: I personally recommend to use the shortcut <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> since it's not occupied yet by any of the
-predefined [RStudio shortcuts](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts).
-
 ```{r, pkgdown, eval = !isTRUE(getOption("pal.build_readme.is_pkgdown")), results = "asis", echo = FALSE}
 pkgsnip::md_snip(name = "pkgdown_notice") %>%
   paste0("## Documentation\n\n", .) %>%
   pal::cat_lines()
 ```
+
+[^1]: Actually, you could write anything you like in any syntax outside of R code chunks as long as you don't mind the file to be *knittable* (which it doesn't
+    have to be).
+
+[^2]: It basically sends the (R) Markdown file on a "Pandoc round trip" on every file save.
+
+[^3]: I personally recommend to use the shortcut <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> since it's not occupied yet by any of the predefined [RStudio
+    shortcuts](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts).
 
 ## Installation
 

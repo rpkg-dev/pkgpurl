@@ -35,7 +35,7 @@ data_special_headings <- tibble::tribble(
   "ignore_content", c("INTERNAL",
                       "NOTES",
                       "TEMPORARY",
-                      "TEMP"),     paste0("Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index ",
+                      "TMP"),      paste0("Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index ",
                                           "generation.")
 )
 ```
@@ -684,8 +684,9 @@ NOTES:
 #' 
 #' The following rules define how the reference index is generated:
 #' 
-#' 1. Headings below a heading named *INTERNAL*, *NOTES*, *TEMP* or *TEMPORARY* (case-insensitive, but without any inline formatting) are simply ignored when
-#'    generating the reference index.
+#' 1. Headings below a heading named
+#'    `r purrr::flatten_chr(dplyr::filter(data_special_headings, type == "ignore_content")$heading_texts) %>% pal::prose_ls(wrap = "*", last_sep = " or ")`
+#'    (case-insensitive, but without any inline formatting) are simply ignored when generating the reference index.
 #' 2. Every heading that is a) inline-formatted as [verbatim](https://pandoc.org/MANUAL.html#verbatim) and b) doesn't contain any whitespace characters is
 #'    considered to be the name of a help topic (usually the name of a function or dataset) to be included in the reference index. This maps to the `contents`
 #'    key of the reference index' YAML.
@@ -693,8 +694,8 @@ NOTES:
 #'    non-help-topic headings *of the highest two levels* above the help topic heading are used as title and subtitle, the rest of the headings above the help
 #'    topic heading is ignored – and a heading named *EXPORTED* (case-insensitive, but without any inline formatting) is always ignored regardless of its
 #'    level. This maps to the `title` and `subtitle` keys of the reference index' YAML.
-#' 4. Paragraph(s) below headings named *DESCRIPTION* (case-insensitive, but without any inline formatting), that in turn are hierarchically below a title or
-#'    subtitle heading, are be used as descriptions for the (sub)titles. This maps to the `desc` key of the reference index' YAML.
+#' 4. Paragraph(s) below a heading named *DESCRIPTION* (case-insensitive, but without any inline formatting), that in turn is hierarchically below a title or
+#'    subtitle heading, are used as the description for the respective (sub)title. This maps to the `desc` key of the reference index' YAML.
 #'
 #' # Parsing example
 #'

@@ -56,7 +56,7 @@ The [R Markdown](https://rmarkdown.rstudio.com/) format provides several **advan
 
     You can rely on RStudio's [code outline](https://rviews.rstudio.com/2016/11/11/easy-tricks-you-mightve-missed/#code-outline) to easily navigate through longer `.Rmd` files. IMHO it provides significantly better usability than the [code section standard](https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections) of `.R` files. It makes it easy to find your way around source files that are thousands of lines long.
 
-    RStudio's [*Go to File/Function* shortcut](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts) also works for `.Rmd` files.
+    RStudio's [*Go to File/Function* shortcut](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts) works the same for `.Rmd` files as it does for `.R` files.
 
 -   **Improved visual clarity**
 

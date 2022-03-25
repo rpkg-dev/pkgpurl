@@ -26,7 +26,7 @@ overview:\tabular{ll}{
    \strong{Headings} \tab \strong{Meaning} \cr
    DESCRIPTION \tab Paragraph(s) below this heading, that in turn is hierarchically below a \code{title} or \code{subtitle} heading, are used as the description for this very (sub)title (\code{desc} in the pkgdown reference index). \cr
    EXPORTED \tab Will never be used as \code{title}/\code{subtitle} in the pkgdown reference index (i.e. ignored). Simply serves as a (usually top-level) heading to indicate that the objects defined below it are \href{https://r-pkgs.org/namespace.html#exports}{exported} by the package. \cr
-   INTERNAL , NOTES    , TEMPORARY, TEMP \tab Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index generation. \cr
+   INTERNAL , NOTES    , TEMPORARY, TMP \tab Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index generation. \cr
 }
 }
 
@@ -37,8 +37,9 @@ supports up to two (\code{title} and \code{subtitle}).
 
 The following rules define how the reference index is generated:
 \enumerate{
-\item Headings below a heading named \emph{INTERNAL}, \emph{NOTES}, \emph{TEMP} or \emph{TEMPORARY} (case-insensitive, but without any inline formatting) are simply ignored when
-generating the reference index.
+\item Headings below a heading named
+\emph{INTERNAL}, \emph{NOTES}, \emph{TEMPORARY} or \emph{TMP}
+(case-insensitive, but without any inline formatting) are simply ignored when generating the reference index.
 \item Every heading that is a) inline-formatted as \href{https://pandoc.org/MANUAL.html#verbatim}{verbatim} and b) doesn't contain any whitespace characters is
 considered to be the name of a help topic (usually the name of a function or dataset) to be included in the reference index. This maps to the \code{contents}
 key of the reference index' YAML.
@@ -46,8 +47,8 @@ key of the reference index' YAML.
 non-help-topic headings \emph{of the highest two levels} above the help topic heading are used as title and subtitle, the rest of the headings above the help
 topic heading is ignored – and a heading named \emph{EXPORTED} (case-insensitive, but without any inline formatting) is always ignored regardless of its
 level. This maps to the \code{title} and \code{subtitle} keys of the reference index' YAML.
-\item Paragraph(s) below headings named \emph{DESCRIPTION} (case-insensitive, but without any inline formatting), that in turn are hierarchically below a title or
-subtitle heading, are be used as descriptions for the (sub)titles. This maps to the \code{desc} key of the reference index' YAML.
+\item Paragraph(s) below a heading named \emph{DESCRIPTION} (case-insensitive, but without any inline formatting), that in turn is hierarchically below a title or
+subtitle heading, are used as the description for the respective (sub)title. This maps to the \code{desc} key of the reference index' YAML.
 }
 }
 
