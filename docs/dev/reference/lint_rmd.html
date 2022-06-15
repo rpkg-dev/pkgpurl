@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pkgpurl</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9012</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9013</span>
       </span>
     </div>
 
@@ -119,11 +119,11 @@
     </div>
 
     <div class="ref-description">
-    <p>This is a convenience wrapper around <code><a href='https://rdrr.io/pkg/lintr/man/lint_dir.html'>lintr::lint_dir()</a></code> which is tailored to a typical R Markdown package. To use this function, the
+    <p>This is a convenience wrapper around <code><a href='https://lintr.r-lib.org/reference/lint.html'>lintr::lint_dir()</a></code> which is tailored to a typical R Markdown package. To use this function, the
 <a href='https://github.com/jimhester/lintr/#readme'>lintr</a> package is required.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>lint_rmd</span><span class='op'>(</span>path <span class='op'>=</span> <span class='st'>"."</span>, exclude_vignettes <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>lint_rmd</span><span class='op'>(</span>path <span class='op'>=</span> <span class='st'>"."</span>, excl_vignettes <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -133,7 +133,7 @@
       <td><p>The path to the root of the package directory.</p></td>
     </tr>
     <tr>
-      <th>exclude_vignettes</th>
+      <th>excl_vignettes</th>
       <td><p>Whether to exclude all <code>.Rmd</code> files under <code>vignettes/</code>. A logical scalar.</p></td>
     </tr>
     </table>

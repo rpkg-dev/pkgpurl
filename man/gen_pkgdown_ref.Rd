@@ -25,7 +25,7 @@ Headings that exactly match certain strings (case-insensitive, but without any i
 overview:\tabular{ll}{
    \strong{Headings} \tab \strong{Meaning} \cr
    DESCRIPTION \tab Paragraph(s) below this heading, that in turn is hierarchically below a \code{title} or \code{subtitle} heading, are used as the description for this very (sub)title (\code{desc} in the pkgdown reference index). \cr
-   EXPORTED \tab Will never be used as \code{title}/\code{subtitle} in the pkgdown reference index (i.e. ignored). Simply serves as a (usually top-level) heading to indicate that the objects defined below it are \href{https://r-pkgs.org/namespace.html#exports}{exported} by the package. \cr
+   EXPORTED \tab Will never be used as \code{title} or \code{subtitle} in the pkgdown reference index (i.e. ignored). Simply serves as a (usually top-level) heading to indicate that the objects defined below it are \href{https://r-pkgs.org/namespace.html#exports}{exported} by the package. \cr
    INTERNAL , NOTES    , TEMPORARY, TMP \tab Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index generation. \cr
 }
 }
@@ -55,7 +55,9 @@ subtitle heading, are used as the description for the respective (sub)title. Thi
 \section{Parsing example}{
 An example might better explain how the parsing rules work than a thousand words, so here's a simplified one.
 
-When fed to \code{gen_pkgdown_ref()}, the following R Markdown content...\if{html}{\out{<div class="sourceCode rmd">}}\preformatted{---
+When fed to \code{gen_pkgdown_ref()}, the following R Markdown content...
+
+\if{html}{\out{<div class="sourceCode rmd">}}\preformatted{---
 editor_options:
   markdown:
     wrap: 80
@@ -135,7 +137,9 @@ yet_another_subgroup_fn <- function(...) \{...\}
 ```
 }\if{html}{\out{</div>}}
 
-...yields this pkgdown index (converted \link[yaml:as.yaml]{to YAML}):\preformatted{reference:
+...yields this pkgdown index (converted \link[yaml:as.yaml]{to YAML}):
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{reference:
 - contents: main_fn
 - title: First group of fns
   desc: The description text for *First group of fns*.
@@ -151,15 +155,14 @@ yet_another_subgroup_fn <- function(...) \{...\}
 - title: Second group of fns
 - subtitle: Yet another subgroup
 - contents: yet_another_subgroup_fn
-}
+}\if{html}{\out{</div>}}
 }
 
 \examples{
-\dontrun{
 pal::gh_text_file(path = "Rmd/pal.Rmd",
                   owner = "salim-b",
                   name = "pal") |>
   pkgpurl::gen_pkgdown_ref() |>
   yaml::as.yaml() |>
-  cat()}
+  cat()
 }

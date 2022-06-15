@@ -1,6 +1,6 @@
 Package: pkgpurl
 Title: Facilitate Authoring R Packages in the R Markdown File Format
-Version: 0.0.9012
+Version: 0.0.9013
 Authors@R: 
     person("Salim", "Brüggemann", , "salim-b@pm.me", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5329-5987"))
@@ -22,7 +22,6 @@ Imports:
     cli (>= 3.0.0),
     dplyr (>= 1.0.7),
     fs (>= 1.4.1),
-    glue (>= 1.4.1),
     knitr (>= 1.28),
     lifecycle (>= 1.0.1),
     magrittr (>= 2.0.0),
@@ -37,9 +36,9 @@ Imports:
 Suggests: 
     desc (>= 1.4.0),
     devtools (>= 2.4.2),
-    lintr (>= 2.0.1),
+    lintr (>= 3.0.0),
     pkgload (>= 1.2.4),
-    pkgsnip (>= 0.0.9026),
+    pkgsnip (>= 0.0.9031),
     rstudioapi (>= 0.13)
 Remotes:
     gitlab::salim_b/r/pkgs/pal,
@@ -47,4 +46,4 @@ Remotes:
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0

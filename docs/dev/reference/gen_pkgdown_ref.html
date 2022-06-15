@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pkgpurl</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9012</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9013</span>
       </span>
     </div>
 
@@ -147,7 +147,7 @@ specially named headings. See below for details.</p>
 overview:</p><table class='table'>
 <tr><td><strong>Headings</strong></td><td><strong>Meaning</strong></td></tr>
 <tr><td>DESCRIPTION</td><td>Paragraph(s) below this heading, that in turn is hierarchically below a <code>title</code> or <code>subtitle</code> heading, are used as the description for this very (sub)title (<code>desc</code> in the pkgdown reference index).</td></tr>
-<tr><td>EXPORTED</td><td>Will never be used as <code>title</code>/<code>subtitle</code> in the pkgdown reference index (i.e. ignored). Simply serves as a (usually top-level) heading to indicate that the objects defined below it are <a href='https://r-pkgs.org/namespace.html#exports'>exported</a> by the package.</td></tr>
+<tr><td>EXPORTED</td><td>Will never be used as <code>title</code> or <code>subtitle</code> in the pkgdown reference index (i.e. ignored). Simply serves as a (usually top-level) heading to indicate that the objects defined below it are <a href='https://r-pkgs.org/namespace.html#exports'>exported</a> by the package.</td></tr>
 <tr><td>INTERNAL , NOTES    , TEMPORARY, TMP</td><td>Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index generation.</td></tr>
 </table>
 
@@ -175,7 +175,8 @@ subtitle heading, are used as the description for the respective (sub)title. Thi
     <h2 class="hasAnchor" id="parsing-example"><a class="anchor" href="#parsing-example"></a>Parsing example</h2>
 
     <p>An example might better explain how the parsing rules work than a thousand words, so here's a simplified one.</p>
-<p>When fed to <code>gen_pkgdown_ref()</code>, the following R Markdown content...<div class="sourceCode rmd"></p><pre>---
+<p>When fed to <code>gen_pkgdown_ref()</code>, the following R Markdown content...</p>
+<p><div class="sourceCode rmd"></p><pre>---
 editor_options:
   markdown:
     wrap: 80
@@ -254,7 +255,8 @@ another_subgroup_fn &lt;- function(...) {...}
 yet_another_subgroup_fn &lt;- function(...) {...}
 ```
 </pre><p></div></p>
-<p>...yields this pkgdown index (converted <a href='https://rdrr.io/pkg/yaml/man/as.yaml.html'>to YAML</a>):</p><pre>reference:
+<p>...yields this pkgdown index (converted <a href='https://rdrr.io/pkg/yaml/man/as.yaml.html'>to YAML</a>):</p>
+<p><div class="sourceCode"></p><pre>reference:
 - contents: main_fn
 - title: First group of fns
   desc: The description text for *First group of fns*.
@@ -270,17 +272,136 @@ yet_another_subgroup_fn &lt;- function(...) {...}
 - title: Second group of fns
 - subtitle: Yet another subgroup
 - contents: yet_another_subgroup_fn
-</pre>
-
+</pre><p></div></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span class='r-in'><span class='fu'>pal</span><span class='fu'>::</span><span class='fu'><a href='https://rpkg.dev/pal/reference/gh_text_file.html'>gh_text_file</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='st'>"Rmd/pal.Rmd"</span>,</span>
+    <pre class="examples"><span class='r-in'><span class='fu'>pal</span><span class='fu'>::</span><span class='fu'><a href='https://rpkg.dev/pal/reference/gh_text_file.html'>gh_text_file</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='st'>"Rmd/pal.Rmd"</span>,</span>
 <span class='r-in'>                  owner <span class='op'>=</span> <span class='st'>"salim-b"</span>,</span>
 <span class='r-in'>                  name <span class='op'>=</span> <span class='st'>"pal"</span><span class='op'>)</span> |&gt;</span>
 <span class='r-in'>  <span class='fu'>pkgpurl</span><span class='fu'>::</span><span class='fu'>gen_pkgdown_ref</span><span class='op'>(</span><span class='op'>)</span> |&gt;</span>
 <span class='r-in'>  <span class='fu'>yaml</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/yaml/man/as.yaml.html'>as.yaml</a></span><span class='op'>(</span><span class='op'>)</span> |&gt;</span>
-<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>}</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> reference:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - title: Statistical computing / numbers</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - safe_seq_len</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - safe_max</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - safe_min</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - round_to</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - stat_mode</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - title: Data frames / Tibbles</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - is_equal_df</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - reduce_df_list</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - title: Lists</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - as_flat_list</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - list_drop</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - list_keep</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - title: Strings</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - subtitle: Vectorized</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - as_chr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - escape_lf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - prettify_nr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - sentenceify</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - wrap_chr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - subtitle: Non-vectorized</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - as_line_feed_chr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - dsv_colnames</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - subtitle: Collapsed into character scalar</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - as_string</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - as_comment_string</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - fuse_regex</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - prose_ls</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - title: Filesystem paths</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   desc: Functions to work with filesystem paths.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - path_mod_time</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - flatten_path_tree</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - draw_path_tree</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - title: Dots</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   desc: |-</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Extending [rlang's *check dots* functions](https://rlang.r-lib.org/reference/index.html#check-dots), making the use of [R's `...` argument</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     placeholder](https://rdrr.io/r/base/dots.html) yet another bit safer.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents: check_dots_named</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - title: R packages</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - ls_pkg</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - assert_pkg</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - is_pkg_installed</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - is_pkg_cran</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - is_pkg_dir</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - is_pkgdown_dir</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - use_pkg</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - subtitle: Package DESCRIPTION</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   desc: Extending the [desc](https://github.com/r-lib/desc#readme) package.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - desc_list</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - desc_value</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - desc_url_git</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - subtitle: Package documentation</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   desc: Extending the [roxygen2](https://roxygen2.r-lib.org/) package.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - roxy_blocks</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - roxy_obj</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - roxy_tag_value</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - title: (Pandoc) Markdown</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - as_md_list</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - as_md_val_list</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - pipe_table</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - strip_md</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - strip_md_footnotes</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - subtitle: CommonMark parsing</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   desc: Extending the [commonmark](https://github.com/r-lib/commonmark#readme) package.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - md_to_xml</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - md_xml_subnode_ix</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - xml_to_md</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - title: R Markdown / knitr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - build_readme</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - knitr_table_format</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - strip_yaml_header</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - subtitle: Output formats</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   desc: |-</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     [Custom R Markdown output formats](https://bookdown.org/yihui/rmarkdown/new-formats.html) which can be used in addition to the [default output</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     formats](https://bookdown.org/yihui/rmarkdown/output-formats.html).</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents: gitlab_document</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - title: GitHub</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   desc: Extending the [gh](https://gh.r-lib.org/) package, leveraging [GitHub's GraphQL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     API](https://docs.github.com/en/graphql).</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - gh_text_file</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - gh_text_files</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - gh_dir_ls</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - title: HTTP</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   desc: Extending the [httr](https://httr.r-lib.org/) package that wraps the [curl](https://jeroen.cran.dev/curl/)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     package.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - assert_mime_type</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - is_http_success</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - title: CLI</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   desc: Extending the [cli](https://cli.r-lib.org/) package.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - cli_qty_lgl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - cli_no_lgl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - cli_process_expr</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - title: System interaction</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - check_cli</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - path_script</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - title: Miscellaneous</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> - contents:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - assert_class_any</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - capture_print</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - cat_lines</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - cols_regex</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - order_by</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - prose_ls_fn_param</span>
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

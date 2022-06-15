@@ -4,15 +4,15 @@
 \alias{lint_rmd}
 \title{Lint R Markdown package}
 \usage{
-lint_rmd(path = ".", exclude_vignettes = TRUE)
+lint_rmd(path = ".", excl_vignettes = TRUE)
 }
 \arguments{
 \item{path}{The path to the root of the package directory.}
 
-\item{exclude_vignettes}{Whether to exclude all \code{.Rmd} files under \verb{vignettes/}. A logical scalar.}
+\item{excl_vignettes}{Whether to exclude all \code{.Rmd} files under \verb{vignettes/}. A logical scalar.}
 }
 \description{
-This is a convenience wrapper around \code{\link[lintr:lint_dir]{lintr::lint_dir()}} which is tailored to a typical R Markdown package. To use this function, the
+This is a convenience wrapper around \code{\link[lintr:lint]{lintr::lint_dir()}} which is tailored to a typical R Markdown package. To use this function, the
 \href{https://github.com/jimhester/lintr/#readme}{lintr} package is required.
 }
 \details{

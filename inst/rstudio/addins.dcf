@@ -11,4 +11,4 @@ Interactive: false
 Name: Lint R Markdown package
 Description: Executes `pkgpurl::lint_rmd()`.
 Binding: lint_rmd
-Interactive: false
+Interactive: true

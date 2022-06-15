@@ -29,8 +29,8 @@ data_special_headings <- tibble::tribble(
   ~type,          ~heading_texts,  ~meaning,
   "description",  "DESCRIPTION",   paste0("Paragraph(s) below this heading, that in turn is hierarchically below a `title` or `subtitle` heading, are used as ",
                                           "the description for this very (sub)title (`desc` in the pkgdown reference index)."),
-  "ignore_title", "EXPORTED",      paste0("Will never be used as `title`/`subtitle` in the pkgdown reference index (i.e. ignored). Simply serves as a (usually",
-                                         " top-level) heading to indicate that the objects defined below it are ",
+  "ignore_title", "EXPORTED",      paste0("Will never be used as `title` or `subtitle` in the pkgdown reference index (i.e. ignored). Simply serves as a ",
+                                         "(usually top-level) heading to indicate that the objects defined below it are ",
                                          "[exported](https://r-pkgs.org/namespace.html#exports) by the package."),
   "ignore_content", c("INTERNAL",
                       "NOTES",
@@ -225,8 +225,9 @@ process_rmd <- function(path_file,
 ```{r}
 rmd_files <- function(path) {
   
-  checkmate::assert_string(path) %>%
-    fs::path("Rmd/") %>%
+  checkmate::assert_string(path)
+  
+  fs::path(path, "Rmd") %>%
     fs::path_abs() %>%
     fs::dir_ls(recurse = TRUE,
                type = "file",
@@ -576,11 +577,6 @@ purl_rmd <- function(path = ".",
 
 ## `lint_rmd`
 
-TODO:
-
--   [ ] For some reason, `lint_rmd()` doesn't properly work when launched from the registered RStudio add-in (the `Markers` tab doesn't open). It works fine
-    though when executed from the console. -\> Investigate!
-
 **Notes:**
 
 -   For some reason, `lintr::lint_dir(".")` excludes all of the generated `.gen.R` files out of the box. Maybe because their first line starts with
@@ -607,17 +603,19 @@ TODO:
 #'
 #' `r pkgsnip::md_snip("rstudio_addin_hint")`
 #'
-#' @param exclude_vignettes Whether to exclude all `.Rmd` files under `vignettes/`. A logical scalar.
+#' @param excl_vignettes Whether to exclude all `.Rmd` files under `vignettes/`. A logical scalar.
 #' @inheritParams purl_rmd
 #'
 #' @export
 lint_rmd <- function(path = ".",
-                     exclude_vignettes = TRUE) {
+                     excl_vignettes = TRUE) {
   
+  checkmate::assert_directory(path,
+                              access = "r")
+  checkmate::assert_flag(excl_vignettes)
   pal::assert_pkg("lintr")
   
-  lintr::lint_dir(path = checkmate::assert_directory(path,
-                                                     access = "r"),
+  lintr::lint_dir(path = path,
                   pattern = "\\.[Rr]([Mm][Dd])?$",
                   exclusions = list(c(list.files(path = "R",
                                                  recursive = TRUE,
@@ -626,21 +624,11 @@ lint_rmd <- function(path = ".",
                                       list.files(path = "vignettes",
                                                  recursive = TRUE,
                                                  full.names = TRUE,
-                                                 pattern = "\\.Rmd$")[!checkmate::assert_flag(exclude_vignettes)])))
+                                                 pattern = "\\.Rmd$")[!excl_vignettes])))
 }
 ```
 
 ## `gen_pkgdown_ref`
-
-TODO:
-
--   Figure out why the example throws the following error during testing:
-
-    ``` error
-    Error: C stack usage  7972020 is too close to the limit
-    ```
-
-    No error occurs when the example is run interactively or via `Rscript`. Maybe it has to do with C++ pointers used in pkg xml2?
 
 NOTES:
 
@@ -724,13 +712,12 @@ NOTES:
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' pal::gh_text_file(path = "Rmd/pal.Rmd",
 #'                   owner = "salim-b",
 #'                   name = "pal") |>
 #'   pkgpurl::gen_pkgdown_ref() |>
 #'   yaml::as.yaml() |>
-#'   cat()}
+#'   cat()
 gen_pkgdown_ref <- function(rmd) {
   
   checkmate::assert_string(rmd)
@@ -934,7 +921,7 @@ gen_pkgdown_ref <- function(rmd) {
           purrr::flatten() %>%
           purrr::compact() %>%
           # move subtitle-less item to the front (the `NA` group is always processed last in `group_map()`)
-          purrr::when(any(is.na(data_title$subtitle)) ~ .[c(length(.), seq_len(length(.) - 1L))],
+          purrr::when(anyNA(data_title$subtitle) ~ .[c(length(.), seq_len(length(.) - 1L))],
                       ~ .)
         
         c(list(item_title),
@@ -943,7 +930,7 @@ gen_pkgdown_ref <- function(rmd) {
       purrr::flatten() %>%
       purrr::compact() %>%
       # move title-less item to the front (the `NA` group is always processed last in `group_map()`)
-      purrr::when(any(is.na(data_ref_i$title)) ~ .[c(length(.), seq_len(length(.) - 1L))],
+      purrr::when(anyNA(data_ref_i$title) ~ .[c(length(.), seq_len(length(.) - 1L))],
                   ~ .)
   }
   
