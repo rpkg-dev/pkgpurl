@@ -48,8 +48,10 @@ rm(pkg_env)
 assemble_copyright_notice <- function(path) {
   
   pal::assert_pkg("desc")
+  if (fs::is_dir(path)) {
+    path <- fs::path(path, "DESCRIPTION")
+  }
   notice <- character()
-  if (fs::is_dir(path)) path <- fs::path(path, "DESCRIPTION")
   
   if (desc::desc_has_fields(keys = "Authors@R",
                             file = path)) {
