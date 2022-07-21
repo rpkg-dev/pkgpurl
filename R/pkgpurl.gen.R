@@ -273,14 +273,13 @@ process_pkg <- function(path = ".",
                            msg_done = paste(status_msg, "done"),
                            msg_failed = paste(status_msg, "failed"))
     
-    # unload pkg if it's attached
+    # unregister pkg if it's attached
     if (is_loaded) {
-      pkgload::unload(package = pkg_name,
-                      quiet = quiet)
+      pkgload::unregister(package = pkg_name)
     }
     
     devtools::install(pkg = path,
-                      reload = FALSE,
+                      reload = TRUE,
                       args = args,
                       quiet = quiet,
                       dependencies = dependencies,

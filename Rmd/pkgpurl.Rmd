@@ -244,41 +244,9 @@ rmd_files <- function(path) {
 
 TODO:
 
--   Figure out why running `process_pkg()` for the *pal* pkg always produces the following error after changing R code (semantic code changes landing in the
-    `R/pal.gen.R` file, excl. documentation/comments/formatting like whitespaces):
-
-    ``` error
-    Error in purl_rmd(path = path, add_copyright_notice = add_copyright_notice,  : 
-      lazy-load database '/home/salim/.by_pkg_mngr/r/pal/R/pal.rdb' is corrupt
-    In addition: Warning messages:
-    1: In purl_rmd(path = path, add_copyright_notice = add_copyright_notice,  :
-      restarting interrupted promise evaluation
-    2: In purl_rmd(path = path, add_copyright_notice = add_copyright_notice,  :
-      internal error -3 in R_decompress1
-    ```
-
-    Seems related to [this SO answer](https://stackoverflow.com/a/10374507/7196903).
-
-    This problem doesn't occur when (re-)processing pkg *pkgpurl*, so some additional complexities in pal must be causing it... simply adding another restart of
-    R after building package doc won't work because it interrupts `process_pkg()` (restarting R is only possible at the end of the fn) 😕
-
-    NOTE that an additional `pkgload::unload()` call before `devtools::install()` doesn't seem to help...
-
 -   Figure out if (and how) it's possible to print `process_pkg()`'s output to RStudio's *Build* pane instead of the console. I couldn't find anything related
     in the [rstudioapi reference](https://rstudio.github.io/rstudioapi/reference/index.html). Maybe ask in the [*package development* section on
     `community.rstudio.com`](https://community.rstudio.com/c/package-development/11)?
-
-NOTES:
-
--   Without restarting the R session (`restart_r_session = FALSE`) when `build_and_install = TRUE`, the following error occurs after running
-    `process_pkg(build_and_install = TRUE, restart_r_session = FALSE)` *twice*:
-
-    ``` error
-    Error in fetch(key) : 
-      lazy-load database '/home/salim/.by_pkg_mngr/r/pkgpurl/help/pkgpurl.rdb' is corrupt
-    ```
-
-    Cf. <https://github.com/r-lib/pkgdown/issues/892#issuecomment-439894975>
 
 ```{r}
 #' Process an R Markdown package from source to installation
@@ -365,14 +333,13 @@ process_pkg <- function(path = ".",
                            msg_done = paste(status_msg, "done"),
                            msg_failed = paste(status_msg, "failed"))
     
-    # unload pkg if it's attached
+    # unregister pkg if it's attached
     if (is_loaded) {
-      pkgload::unload(package = pkg_name,
-                      quiet = quiet)
+      pkgload::unregister(package = pkg_name)
     }
     
     devtools::install(pkg = path,
-                      reload = FALSE,
+                      reload = TRUE,
                       args = args,
                       quiet = quiet,
                       dependencies = dependencies,
