@@ -244,9 +244,8 @@ rmd_files <- function(path) {
 
 TODO:
 
--   Figure out if (and how) it's possible to print `process_pkg()`'s output to RStudio's *Build* pane instead of the console. I couldn't find anything related
-    in the [rstudioapi reference](https://rstudio.github.io/rstudioapi/reference/index.html). Maybe ask in the [*package development* section on
-    `community.rstudio.com`](https://community.rstudio.com/c/package-development/11)?
+-   Once it's possible to [interact with RStudio's *Build* pane via pkg rstudioapihttps://github.com/rstudio/rstudioapi/issues/17, we should test printing
+    `process_pkg()`'s output to it instead of the console.
 
 ```{r}
 #' Process an R Markdown package from source to installation
