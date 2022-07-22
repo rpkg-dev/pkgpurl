@@ -166,3 +166,4 @@ pal::gh_text_file(path = "Rmd/pal.Rmd",
   yaml::as.yaml() |>
   cat()
 }
+\concept{low_lvl}

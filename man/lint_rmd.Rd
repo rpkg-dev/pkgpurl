@@ -7,9 +7,12 @@
 lint_rmd(path = ".", excl_vignettes = TRUE)
 }
 \arguments{
-\item{path}{The path to the root of the package directory.}
+\item{path}{Path to the root of the package directory.}
 
 \item{excl_vignettes}{Whether to exclude all \code{.Rmd} files under \verb{vignettes/}. A logical scalar.}
+}
+\value{
+A list of lint objects.
 }
 \description{
 This is a convenience wrapper around \code{\link[lintr:lint]{lintr::lint_dir()}} which is tailored to a typical R Markdown package. To use this function, the
@@ -20,3 +23,10 @@ To avoid unnecessary noise, all the the generated \verb{R/*.gen.R} files as well
 
 This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in}, allowing RStudio users to assign a \href{https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE}{custom shortcut} to it or to invoke it from the \href{https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts}{command palette}.
 }
+\seealso{
+Other high-level functions:
+\code{\link{process_pkg}()},
+\code{\link{purl_rmd}()},
+\code{\link{run_nopurl_rmd}()}
+}
+\concept{high_lvl}

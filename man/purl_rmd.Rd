@@ -12,7 +12,7 @@ purl_rmd(
 )
 }
 \arguments{
-\item{path}{The path to the root of the package directory.}
+\item{path}{Path to the root of the package directory.}
 
 \item{add_copyright_notice}{Whether or not to add a \strong{copyright notice} at the beginning of the generated \code{.R} files as recommended by e.g. the \href{https://www.gnu.org/licenses/gpl-howto.html}{GNU licenses}. The notice consists of the name and description of the program and the word \code{Copyright (C)},
 followed by the release years and the name(s) of the copyright holder(s), or if not specified, the author(s). The year is always the current year. All the
@@ -60,3 +60,10 @@ The above convention allows for easy exclusion of specific \code{.Rmd} files fro
 under \verb{R/*.R} is generated. For the sake of clarity, it's generally advised to prefer the \code{.nopurl} suffix over hiding files.
 }
 
+\seealso{
+Other high-level functions:
+\code{\link{lint_rmd}()},
+\code{\link{process_pkg}()},
+\code{\link{run_nopurl_rmd}()}
+}
+\concept{high_lvl}

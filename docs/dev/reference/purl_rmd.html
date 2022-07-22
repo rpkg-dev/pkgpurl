@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pkgpurl</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9013</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9014</span>
       </span>
     </div>
 
@@ -123,19 +123,19 @@
 subdirectory using <code><a href='https://rdrr.io/pkg/knitr/man/knit.html'>knitr::purl()</a></code>. It is mainly intended for authoring R packages in the <a href='https://rmarkdown.rstudio.com/'>R Markdown file format</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>purl_rmd</span><span class='op'>(</span>
-  path <span class='op'>=</span> <span class='st'>"."</span>,
-  add_copyright_notice <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"pkgpurl.add_copyright_notice"</span><span class='op'>)</span>,
-  add_license_notice <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"pkgpurl.add_license_notice"</span><span class='op'>)</span>,
-  gen_pkgdown_ref <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"pkgpurl.gen_pkgdown_ref"</span>, default <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span><span class='fu'>purl_rmd</span><span class='op'>(</span></span>
+<span>  path <span class='op'>=</span> <span class='st'>"."</span>,</span>
+<span>  add_copyright_notice <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"pkgpurl.add_copyright_notice"</span><span class='op'>)</span>,</span>
+<span>  add_license_notice <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"pkgpurl.add_license_notice"</span><span class='op'>)</span>,</span>
+<span>  gen_pkgdown_ref <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"pkgpurl.gen_pkgdown_ref"</span>, default <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span><span class='op'>)</span></span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>The path to the root of the package directory.</p></td>
+      <td><p>Path to the root of the package directory.</p></td>
     </tr>
     <tr>
       <th>add_copyright_notice</th>
@@ -182,6 +182,12 @@ with a dot, e.g. <code>Rmd/.playground.Rmd</code>.</p></li>
 
 <p>The above convention allows for easy exclusion of specific <code>.Rmd</code> files from purling. A common case for this are scripts that generate <a href='https://r-pkgs.org/data.html#data-sysdata'>package-internal data</a> from raw sources. Such a script could be stored as <code>Rmd/data.nopurl.Rmd</code>, so that no corresponding file
 under <code>R/*.R</code> is generated. For the sake of clarity, it's generally advised to prefer the <code>.nopurl</code> suffix over hiding files.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other high-level functions:
+<code><a href='lint_rmd.html'>lint_rmd</a>()</code>,
+<code><a href='process_pkg.html'>process_pkg</a>()</code>,
+<code><a href='run_nopurl_rmd.html'>run_nopurl_rmd</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

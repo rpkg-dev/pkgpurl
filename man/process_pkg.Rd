@@ -21,7 +21,7 @@ process_pkg(
 )
 }
 \arguments{
-\item{path}{The path to the root of the package directory.}
+\item{path}{Path to the root of the package directory.}
 
 \item{add_copyright_notice}{Whether or not to add a \strong{copyright notice} at the beginning of the generated \code{.R} files as recommended by e.g. the \href{https://www.gnu.org/licenses/gpl-howto.html}{GNU licenses}. The notice consists of the name and description of the program and the word \code{Copyright (C)},
 followed by the release years and the name(s) of the copyright holder(s), or if not specified, the author(s). The year is always the current year. All the
@@ -99,3 +99,10 @@ Executes all steps to process an R package written in R Markdown format from sou
 \details{
 This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in}, allowing RStudio users to assign a \href{https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE}{custom shortcut} to it or to invoke it from the \href{https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts}{command palette}.
 }
+\seealso{
+Other high-level functions:
+\code{\link{lint_rmd}()},
+\code{\link{purl_rmd}()},
+\code{\link{run_nopurl_rmd}()}
+}
+\concept{high_lvl}

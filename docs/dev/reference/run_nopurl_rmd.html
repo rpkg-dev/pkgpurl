@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Process an R Markdown package from source to installation — process_pkg • pkgpurl</title>
+<title>Run *.nopurl.Rmd files — run_nopurl_rmd • pkgpurl</title>
 
 
 
@@ -42,9 +42,9 @@
 <script src="../pkgdown.js"></script>
 
 
-<meta property="og:title" content="Process an R Markdown package from source to installation — process_pkg" />
-<meta name="description" content="Executes all steps to process an R package written in R Markdown format from source to installation in one go: Purl all relevant Rmd/*.Rmd files to R/*.gen.R files using purl_rmd(). Re-generate the pkgdown reference index based on the package's main R Markdown file using gen_pkgdown_ref() (if gen_pkgdown_ref = TRUE). Re-build the package documentation using devtools::document() (if document = TRUE). Build and install the package using devtools::install() (if build_and_install = TRUE). Restarts the R session using rstudioapi::restartSession() (if restart_r_session = TRUE).">
-<meta property="og:description" content="Executes all steps to process an R package written in R Markdown format from source to installation in one go: Purl all relevant Rmd/*.Rmd files to R/*.gen.R files using purl_rmd(). Re-generate the pkgdown reference index based on the package's main R Markdown file using gen_pkgdown_ref() (if gen_pkgdown_ref = TRUE). Re-build the package documentation using devtools::document() (if document = TRUE). Build and install the package using devtools::install() (if build_and_install = TRUE). Restarts the R session using rstudioapi::restartSession() (if restart_r_session = TRUE)." />
+<meta property="og:title" content="Run *.nopurl.Rmd files — run_nopurl_rmd" />
+<meta name="description" content="Executes .Rmd files which are supposed to contain code not included in the source package, i.e. usually outsourced to separate .Rmd files with the .nopurl suffix in their filenames. Those files are typically used to generate package data. If an error is encountered saying internal error -3 in R_decompress1, restart the R session and run again.">
+<meta property="og:description" content="Executes .Rmd files which are supposed to contain code not included in the source package, i.e. usually outsourced to separate .Rmd files with the .nopurl suffix in their filenames. Those files are typically used to generate package data. If an error is encountered saying internal error -3 in R_decompress1, restart the R session and run again." />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@2BSalim" />
 <meta name="twitter:site" content="@2BSalim" />
@@ -113,31 +113,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Process an R Markdown package from source to installation</h1>
+    <h1>Run <code>*.nopurl.Rmd</code> files</h1>
     <small class="dont-index">Source: <a href='https://gitlab.com/salim_b/r/pkgs/pkgpurl/blob/master/R/pkgpurl.gen.R'><code>R/pkgpurl.gen.R</code></a></small>
-    <div class="hidden name"><code>process_pkg.Rd</code></div>
+    <div class="hidden name"><code>run_nopurl_rmd.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p>
-<p>Executes all steps to process an R package written in R Markdown format from source to installation in one go:</p><ol>
-<li><p>Purl all relevant <code>Rmd/*.Rmd</code> files to <code>R/*.gen.R</code> files using <code><a href='purl_rmd.html'>purl_rmd()</a></code>.</p></li>
-<li><p>Re-generate the <a href='https://pkgdown.r-lib.org/reference/build_reference.html#reference-index'>pkgdown reference index</a> based on the package's <a href='main_rmd.html'>main R Markdown file</a> using <code><a href='gen_pkgdown_ref.html'>gen_pkgdown_ref()</a></code> (if <code>gen_pkgdown_ref = TRUE</code>).</p></li>
-<li><p>Re-build the package documentation using <code><a href='https://devtools.r-lib.org/reference/document.html'>devtools::document()</a></code> (if <code>document = TRUE</code>).</p></li>
-<li><p>Build and install the package using <code><a href='https://devtools.r-lib.org/reference/install.html'>devtools::install()</a></code> (if <code>build_and_install = TRUE</code>).</p></li>
-<li><p>Restarts the R session using <code><a href='https://rdrr.io/pkg/rstudioapi/man/restartSession.html'>rstudioapi::restartSession()</a></code> (if <code>restart_r_session = TRUE</code>).</p></li>
-</ol>
-
+<p>Executes <code>.Rmd</code> files which are supposed to contain code not included in the <a href='https://r-pkgs.org/package-structure-state.html#source-package'>source package</a>, i.e. usually outsourced to separate <code>.Rmd</code> files with the <a href='https://rpkg.dev/pkgpurl/reference/purl_rmd.html#-rmd-files-excluded-from-purling'><code>.nopurl</code> suffix in their filenames</a>. Those files are typically used to generate package data.</p>
+<p>If an error is encountered saying <code>internal error -3 in R_decompress1</code>, restart the R session and run again.</p>
     </div>
 
-    <pre class="usage"><span><span class='fu'>process_pkg</span><span class='op'>(</span></span>
+    <pre class="usage"><span><span class='fu'>run_nopurl_rmd</span><span class='op'>(</span></span>
 <span>  path <span class='op'>=</span> <span class='st'>"."</span>,</span>
-<span>  add_copyright_notice <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"pkgpurl.add_copyright_notice"</span><span class='op'>)</span>,</span>
-<span>  add_license_notice <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"pkgpurl.add_license_notice"</span><span class='op'>)</span>,</span>
-<span>  gen_pkgdown_ref <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"pkgpurl.gen_pkgdown_ref"</span>, default <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,</span>
+<span>  path_rmd <span class='op'>=</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='https://fs.r-lib.org/reference/dir_ls.html'>dir_ls</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='https://fs.r-lib.org/reference/path.html'>path</a></span><span class='op'>(</span><span class='va'>path</span>, <span class='st'>"Rmd"</span><span class='op'>)</span>, recurse <span class='op'>=</span> <span class='cn'>TRUE</span>, type <span class='op'>=</span> <span class='st'>"file"</span>, glob</span>
+<span>    <span class='op'>=</span> <span class='st'>"*.nopurl.Rmd"</span><span class='op'>)</span>,</span>
+<span>  env <span class='op'>=</span> <span class='cn'>NULL</span>,</span>
 <span>  document <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
 <span>  build_and_install <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
-<span>  restart_r_session <span class='op'>=</span> <span class='va'>build_and_install</span>,</span>
+<span>  restart_r_session <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
 <span>  quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
 <span>  roclets <span class='op'>=</span> <span class='cn'>NULL</span>,</span>
 <span>  args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"devtools.install.args"</span><span class='op'>)</span>,</span>
@@ -154,39 +148,29 @@
       <td><p>Path to the root of the package directory.</p></td>
     </tr>
     <tr>
-      <th>add_copyright_notice</th>
-      <td><p>Whether or not to add a <strong>copyright notice</strong> at the beginning of the generated <code>.R</code> files as recommended by e.g. the <a href='https://www.gnu.org/licenses/gpl-howto.html'>GNU licenses</a>. The notice consists of the name and description of the program and the word <code>Copyright (C)</code>,
-followed by the release years and the name(s) of the copyright holder(s), or if not specified, the author(s). The year is always the current year. All the
-other information is extracted from the package's <code>DESCRIPTION</code> file. A logical scalar or <code>NULL</code>. If <code>NULL</code>, the notice will be added only if <code>path</code> <a href='https://rpkg.dev/pal/reference/is_pkg_dir.html'>is actually an R package directory</a>. Defaults to the R option <code>pkgpurl.add_copyright_notice</code>.</p></td>
+      <th>path_rmd</th>
+      <td><p>Path(s) to the <code>.Rmd</code> files to be executed. A character vector.</p></td>
     </tr>
     <tr>
-      <th>add_license_notice</th>
-      <td><p>Whether or not to add a <strong>license notice</strong> at the beginning of the generated <code>.R</code> files as recommended by e.g. the <a href='https://www.gnu.org/licenses/gpl-howto.html'>GNU licenses</a>. The license is determined from the package's <code>DESCRIPTION</code> file and currently only the
-<a href='https://spdx.org/licenses/AGPL-3.0-or-later.html'><code>AGPL-3.0-or-later</code> license</a> is supported. A logical scalar or <code>NULL</code>. If <code>NULL</code>, it will be added only
-if <code>path</code> <a href='https://rpkg.dev/pal/reference/is_pkg_dir.html'>is actually an R package directory</a>. Defaults to the R option <code>pkgpurl.add_license_notice</code>.</p></td>
-    </tr>
-    <tr>
-      <th>gen_pkgdown_ref</th>
-      <td><p>Whether or not to overwrite <a href='https://pkgdown.r-lib.org/reference/pkgdown-package.html'>pkgdown</a>'s <a href='https://pkgdown.r-lib.org/reference/build_reference.html#reference-index'>reference index</a> in the configuration file <code>_pkgdown.yml</code> with an auto-generated one
-based on the main input file as described in <code><a href='gen_pkgdown_ref.html'>gen_pkgdown_ref()</a></code>. A logical scalar. Only applies if <code>path</code> <a href='https://rpkg.dev/pal/reference/is_pkg_dir.html'>is actually an R package directory</a>, <a href='https://rpkg.dev/pal/reference/is_pkgdown_dir.html'>pkgdown is set up</a> and a <a href='main_rmd.html'>main R Markdown file</a> exists. Defaults to the R option
-<code>pkgpurl.gen_pkgdown_ref</code>.</p></td>
+      <th>env</th>
+      <td><p>Environment to evaluate the <code>.Rmd</code> files in. If <code>NULL</code>, the <a href='https://rdrr.io/r/base/environment.html'>global environment</a> is used.</p></td>
     </tr>
     <tr>
       <th>document</th>
-      <td><p>Whether or not to re-build the package documentation after purling <code>Rmd/*.Rmd</code> to <code>R/*.gen.R</code>.</p></td>
+      <td><p>Whether or not to re-build the package documentation after the last <code>.Rmd</code> file is executed.</p></td>
     </tr>
     <tr>
       <th>build_and_install</th>
-      <td><p>Whether or not to build and install the package after purling <code>Rmd/*.Rmd</code> to <code>R/*.gen.R</code>.</p></td>
+      <td><p>Whether or not to build and install the package after each <code>.Rmd</code> file execution.</p></td>
     </tr>
     <tr>
       <th>restart_r_session</th>
-      <td><p>Whether or not to restart the R session. Highly recommended if <code>build_and_install = TRUE</code>, but only possible when R is run within
-RStudio.</p></td>
+      <td><p>Whether or not to restart the R session after the last <code>.Rmd</code> file is executed. Highly recommended if <code>build_and_install = TRUE</code>,
+but only possible when R is run within RStudio.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
-      <td><p>Whether or not to suppress printing status output from internal processing.</p></td>
+      <td><p>if <code>TRUE</code> suppresses output from this function.</p></td>
     </tr>
     <tr>
       <th>roclets</th>
@@ -235,16 +219,13 @@ It defaults to the option <code>"keep.source.pkgs"</code>.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>path</code>, invisibly.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>This function is also registered as an <a href='https://rstudio.github.io/rstudioaddins/'>RStudio add-in</a>, allowing RStudio users to assign a <a href='https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE'>custom shortcut</a> to it or to invoke it from the <a href='https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts'>command palette</a>.</p>
+    <p><code>path_rmd</code>, invisibly.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other high-level functions:
 <code><a href='lint_rmd.html'>lint_rmd</a>()</code>,
-<code><a href='purl_rmd.html'>purl_rmd</a>()</code>,
-<code><a href='run_nopurl_rmd.html'>run_nopurl_rmd</a>()</code></p></div>
+<code><a href='process_pkg.html'>process_pkg</a>()</code>,
+<code><a href='purl_rmd.html'>purl_rmd</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

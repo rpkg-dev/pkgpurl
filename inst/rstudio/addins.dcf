@@ -12,3 +12,8 @@ Name: Lint R Markdown package
 Description: Executes `pkgpurl::lint_rmd()`.
 Binding: lint_rmd
 Interactive: true
+
+Name: Run `*.nopurl.Rmd` files
+Description: Executes `pkgpurl::run_nopurl_rmd()`.
+Binding: run_nopurl_rmd
+Interactive: true

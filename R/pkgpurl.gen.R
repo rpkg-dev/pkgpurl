@@ -123,6 +123,17 @@ assemble_license_notice <- function(path) {
   notice
 }
 
+document_pkg <- function(path,
+                         ...) {
+  
+  cli::cli_progress_step(msg = "Building package documentation")
+  
+  devtools::document(pkg = path,
+                     ...)
+  
+  cli::cli_progress_done()
+}
+
 extract_md_heading_content <- function(x) {
   
   x %>%
@@ -131,6 +142,74 @@ extract_md_heading_content <- function(x) {
     purrr::map_chr(~ {
       if (.x == "") NA_character_ else .x
     })
+}
+
+install_pkg <- function(path,
+                        unload = FALSE,
+                        quiet = FALSE,
+                        ...) {
+  
+  cli::cli_progress_step(msg = "Building and installing package")
+  pkg_name <- pkgload::pkg_name(path)
+  
+  # unregister pkg if it's attached
+  if (pkg_name %in% loadedNamespaces()) {
+    
+    if (unload) {
+      pkgload::unload(package = pkg_name,
+                      quiet = quiet)
+    } else {
+      pkgload::unregister(package = pkg_name)
+    }
+  }
+  
+  devtools::install(pkg = path,
+                    quiet = quiet,
+                    ...)
+  
+  cli::cli_progress_done()
+}
+
+#' Determine a package's main `.Rmd` source file
+#'
+#' Determines which R Markdown file under `Rmd/` in `path` is the package's main source file. If multiple `.Rmd` files are present, the one whose name matches
+#' the package name is selected.
+#'
+#' @inheritParams purl_rmd
+#'
+#' @return A character vector, of length 1 if a main `.Rmd` is found, otherwise of length 0.
+#' @keywords internal
+#' @export
+main_rmd <- function(path = ".") {
+  
+  rmd_file_paths <- rmd_files(path = path)
+  n_rmd_file_paths <- length(rmd_file_paths)
+  
+  if (!n_rmd_file_paths) {
+    
+    cli::cli_abort("No {.file .Rmd} files found under {.arg path}.")
+    
+  } else if (n_rmd_file_paths == 1L) {
+    
+    result <- rmd_file_paths
+    
+  } else {
+    
+    result <-
+      rmd_file_paths %>%
+      fs::path_file() %>%
+      fs::path_ext_remove() %>%
+      magrittr::is_in(pal::desc_value(key = "Package",
+                                      file = path)) %>%
+      which() %>%
+      magrittr::extract(rmd_file_paths, .) %>%
+      purrr::when(length(.) > 1L ~ # this is theoretically possible in case of subdirs under `Rmd/` or for case-sensitive filesystems (both `.Rmd` and `.rmd`)
+                    cli::cli_abort(paste0("Multiple {.file .Rmd} files detected under {.path {fs::path(path, 'Rmd/')}} whose names match the package name: ",
+                                          "{.file {.}}")),
+                  ~ .)
+  }
+  
+  result
 }
 
 normalize_md_lf <- function(x) {
@@ -177,9 +256,22 @@ process_rmd <- function(path_file,
                    path = r_file_path)
 }
 
+restart_r <- function() {
+  
+  pal::assert_pkg("rstudioapi")
+  
+  if (rstudioapi::isAvailable()) {
+    rstudioapi::restartSession()
+  } else {
+    cli::cli_alert_warning("Unable to restart R session because it is running outside of RStudio.")
+  }
+}
+
 rmd_files <- function(path) {
   
-  checkmate::assert_string(path)
+  checkmate::assert_directory_exists(path,
+                                     access = "r")
+  checkmate::assert_scalar(path)
   
   fs::path(path, "Rmd") %>%
     fs::path_abs() %>%
@@ -193,7 +285,7 @@ rmd_files <- function(path) {
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
-#' 
+#'
 #' Executes all steps to process an R package written in R Markdown format from source to installation in one go:
 #'
 #' 1. Purl all relevant `Rmd/*.Rmd` files to `R/*.gen.R` files using [purl_rmd()].
@@ -216,6 +308,7 @@ rmd_files <- function(path) {
 #' @param quiet `r pkgsnip::param_label("quiet")`
 #'
 #' @inherit purl_rmd return
+#' @family high_lvl
 #' @export
 process_pkg <- function(path = ".",
                         add_copyright_notice = getOption("pkgpurl.add_copyright_notice"),
@@ -248,57 +341,28 @@ process_pkg <- function(path = ".",
   
   # build roxygen2 documentation
   if (document) {
-    
-    status_msg <- "Building package documentation..."
-    cli::cli_progress_step(msg = status_msg,
-                           msg_done = paste(status_msg, "done"),
-                           msg_failed = paste(status_msg, "failed"))
-    
-    devtools::document(pkg = path,
-                       roclets = roclets,
-                       quiet = quiet)
-    
-    cli::cli_progress_done()
+    document_pkg(path = path,
+                 roclets = roclets,
+                 quiet = quiet)
   }
-  
-  # determine if pkg is loaded
-  pkg_name <- pkgload::pkg_name(path)
-  is_loaded <- pkg_name %in% loadedNamespaces()
   
   # build and install package
   if (build_and_install) {
-    
-    status_msg <- "Building and installing package..."
-    cli::cli_progress_step(msg = status_msg,
-                           msg_done = paste(status_msg, "done"),
-                           msg_failed = paste(status_msg, "failed"))
-    
-    # unregister pkg if it's attached
-    if (is_loaded) {
-      pkgload::unregister(package = pkg_name)
-    }
-    
-    devtools::install(pkg = path,
-                      reload = TRUE,
-                      args = args,
-                      quiet = quiet,
-                      dependencies = dependencies,
-                      upgrade = upgrade,
-                      keep_source = keep_source)
-    
-    cli::cli_progress_done()
+    install_pkg(path = path,
+                unload = FALSE,
+                quiet = quiet,
+                reload = TRUE,
+                args = args,
+                dependencies = dependencies,
+                upgrade = upgrade,
+                keep_source = keep_source)
   }
   
   if (restart_r_session) {
-    
-    pal::assert_pkg("rstudioapi")
-    
-    if (rstudioapi::isAvailable()) {
-      rstudioapi::restartSession()
-    } else {
-      cli::cli_alert_warning("Unable to restart R session because it is running outside of RStudio.")
-    }
+    restart_r()
   }
+  
+  invisible(path)
 }
 
 #' Purl `Rmd/*.Rmd` to `R/*.gen.R`
@@ -332,7 +396,7 @@ process_pkg <- function(path = ".",
 #' data](https://r-pkgs.org/data.html#data-sysdata) from raw sources. Such a script could be stored as `Rmd/data.nopurl.Rmd`, so that no corresponding file
 #' under `R/*.R` is generated. For the sake of clarity, it's generally advised to prefer the `.nopurl` suffix over hiding files.
 #'
-#' @param path The path to the root of the package directory.
+#' @param path Path to the root of the package directory.
 #' @param add_copyright_notice Whether or not to add a **copyright notice** at the beginning of the generated `.R` files as recommended by e.g. the [GNU
 #'   licenses](https://www.gnu.org/licenses/gpl-howto.html). The notice consists of the name and description of the program and the word `Copyright (C)`,
 #'   followed by the release years and the name(s) of the copyright holder(s), or if not specified, the author(s). The year is always the current year. All the
@@ -349,6 +413,7 @@ process_pkg <- function(path = ".",
 #'   `pkgpurl.gen_pkgdown_ref`.
 #'
 #' @return `path`, invisibly.
+#' @family high_lvl
 #' @export
 purl_rmd <- function(path = ".",
                      add_copyright_notice = getOption("pkgpurl.add_copyright_notice"),
@@ -364,10 +429,7 @@ purl_rmd <- function(path = ".",
   
   if (length(rmd_files)) {
     
-    status_msg <- "Purling {.file Rmd/*.Rmd} to {.file R/*.gen.R}..."
-    cli::cli_progress_step(msg = status_msg,
-                           msg_done = paste(status_msg, "done"),
-                           msg_failed = paste(status_msg, "failed"))
+    cli::cli_progress_step(msg = "Purling {.file Rmd/*.Rmd} to {.file R/*.gen.R}")
     
     r_dir <- fs::path(path, "R/")
     if (!fs::dir_exists(r_dir)) fs::dir_create(r_dir)
@@ -447,6 +509,8 @@ purl_rmd <- function(path = ".",
   } else {
     cli::cli_alert_warning("{.path {path}} does not appear to be an Rmd package directory. Nothing done.")
   }
+  
+  invisible(path)
 }
 
 #' Lint R Markdown package
@@ -461,12 +525,14 @@ purl_rmd <- function(path = ".",
 #' @param excl_vignettes Whether to exclude all `.Rmd` files under `vignettes/`. A logical scalar.
 #' @inheritParams purl_rmd
 #'
+#' @inherit lintr::lint_dir return
+#' @family high_lvl
 #' @export
 lint_rmd <- function(path = ".",
                      excl_vignettes = TRUE) {
   
-  checkmate::assert_directory(path,
-                              access = "r")
+  checkmate::assert_directory_exists(path,
+                                     access = "r")
   checkmate::assert_flag(excl_vignettes)
   pal::assert_pkg("lintr")
   
@@ -480,6 +546,110 @@ lint_rmd <- function(path = ".",
                                                  recursive = TRUE,
                                                  full.names = TRUE,
                                                  pattern = "\\.Rmd$")[!excl_vignettes])))
+}
+
+#' Run `*.nopurl.Rmd` files
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' Executes `.Rmd` files which are supposed to contain code not included in the [source
+#' package](https://r-pkgs.org/package-structure-state.html#source-package), i.e. usually outsourced to separate `.Rmd` files with the [`.nopurl` suffix in
+#' their filenames](https://rpkg.dev/pkgpurl/reference/purl_rmd.html#-rmd-files-excluded-from-purling). Those files are typically used to generate package data.
+#'
+#' If an error is encountered saying `internal error -3 in R_decompress1`, restart the R session and run again.
+#'
+#' @inheritParams purl_rmd
+#' @inheritParams devtools::document
+#' @inheritParams devtools::install
+#' @param path_rmd Path(s) to the `.Rmd` files to be executed. A character vector.
+#' @param env Environment to evaluate the `.Rmd` files in. If `NULL`, the [global environment][globalenv] is used.
+#' @param document Whether or not to re-build the package documentation after the last `.Rmd` file is executed.
+#' @param build_and_install Whether or not to build and install the package after each `.Rmd` file execution.
+#' @param restart_r_session Whether or not to restart the R session after the last `.Rmd` file is executed. Highly recommended if `build_and_install = TRUE`,
+#'   but only possible when R is run within RStudio.
+#'
+#' @return `path_rmd`, invisibly.
+#' @family high_lvl
+#' @export
+run_nopurl_rmd <- function(path = ".",
+                           path_rmd = fs::dir_ls(path = fs::path(path, "Rmd"),
+                                                 recurse = TRUE,
+                                                 type = "file",
+                                                 glob = "*.nopurl.Rmd"),
+                           env = NULL,
+                           document = TRUE,
+                           build_and_install = TRUE,
+                           restart_r_session = TRUE,
+                           quiet = TRUE,
+                           roclets = NULL,
+                           args = getOption("devtools.install.args"),
+                           dependencies = NA,
+                           upgrade = "never",
+                           keep_source = getOption("keep.source.pkgs")) {
+  
+  checkmate::assert_directory_exists(path,
+                                     access = "r")
+  checkmate::assert_scalar(path)
+  checkmate::assert_file_exists(path_rmd,
+                                access = "r",
+                                extension = c("Rmd", "qmd"))
+  checkmate::assert_environment(env,
+                                null.ok = TRUE)
+  checkmate::assert_flag(document)
+  checkmate::assert_flag(build_and_install)
+  checkmate::assert_flag(restart_r_session)
+  
+  path_tmp_purled <-
+    path_rmd %>%
+    purrr::map_chr(~ knitr::purl(input = .x,
+                                 output = fs::file_temp(pattern = fs::path_ext_remove(fs::path_file(.x)),
+                                                        ext = "R"),
+                                 quiet = quiet))
+  
+  for (i in seq_along(path_tmp_purled)) {
+    
+    cli::cli_progress_step(msg = "{.strong Executing file {.file {path_tmp_purled[i]}}}")
+    
+    source(file = path_tmp_purled[i],
+           local = ifelse(is.null(env),
+                          FALSE,
+                          env),
+           echo = FALSE,
+           encoding = "UTF-8")
+    
+    cli::cli_progress_done()
+    
+    is_last_path <- i == length(path_tmp_purled)
+    
+    # build roxygen2 documentation
+    if (document && is_last_path) {
+      document_pkg(path = path,
+                   roclets = roclets,
+                   quiet = quiet)
+    }
+    
+    if (build_and_install) {
+      install_pkg(path = path,
+                  unload = TRUE,
+                  quiet = quiet,
+                  reload = TRUE,
+                  quick = !document || !is_last_path,
+                  build = TRUE,
+                  args = args,
+                  dependencies = dependencies,
+                  upgrade = upgrade,
+                  keep_source = keep_source)
+    }
+  }
+  
+  fs::file_delete(path_tmp_purled)
+  
+  if (restart_r_session) {
+    restart_r()
+  }
+  
+  invisible(path_rmd)
 }
 
 #' Generate pkgdown reference index
@@ -551,6 +721,7 @@ lint_rmd <- function(path = ".",
 #' @param rmd The (R) Markdown file content as a character scalar.
 #'
 #' @return A list.
+#' @family low_lvl
 #' @export
 #'
 #' @examples
@@ -777,46 +948,4 @@ gen_pkgdown_ref <- function(rmd) {
   }
   
   list(reference = result)
-}
-
-#' Determine a package's main `.Rmd` source file
-#'
-#' Determines which R Markdown file under `Rmd/` in `path` is the package's main source file. If multiple `.Rmd` files are present, the one whose name matches
-#' the package name is selected.
-#'
-#' @inheritParams purl_rmd
-#'
-#' @return A character vector, of length 1 if a main `.Rmd` is found, otherwise of length 0.
-#' @keywords internal
-#' @export
-main_rmd <- function(path = ".") {
-  
-  rmd_file_paths <- rmd_files(path = path)
-  n_rmd_file_paths <- length(rmd_file_paths)
-  
-  if (!n_rmd_file_paths) {
-    
-    cli::cli_abort("No {.file .Rmd} files found under {.arg path}.")
-    
-  } else if (n_rmd_file_paths == 1L) {
-    
-    result <- rmd_file_paths
-    
-  } else {
-    
-    result <-
-      rmd_file_paths %>%
-      fs::path_file() %>%
-      fs::path_ext_remove() %>%
-      magrittr::is_in(pal::desc_value(key = "Package",
-                                      file = path)) %>%
-      which() %>%
-      magrittr::extract(rmd_file_paths, .) %>%
-      purrr::when(length(.) > 1L ~ # this is theoretically possible in case of subdirs under `Rmd/` or for case-sensitive filesystems (both `.Rmd` and `.rmd`)
-                    cli::cli_abort(paste0("Multiple {.file .Rmd} files detected under {.path {fs::path(path, 'Rmd/')}} whose names match the package name: ",
-                                          "{.file {.}}")),
-                  ~ .)
-  }
-  
-  result
 }

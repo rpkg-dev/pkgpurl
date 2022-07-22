@@ -7,7 +7,7 @@
 main_rmd(path = ".")
 }
 \arguments{
-\item{path}{The path to the root of the package directory.}
+\item{path}{Path to the root of the package directory.}
 }
 \value{
 A character vector, of length 1 if a main \code{.Rmd} is found, otherwise of length 0.

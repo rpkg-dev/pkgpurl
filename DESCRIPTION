@@ -1,6 +1,6 @@
 Package: pkgpurl
 Title: Facilitate Authoring R Packages in the R Markdown File Format
-Version: 0.0.9013
+Version: 0.0.9014
 Authors@R: 
     person("Salim", "Brüggemann", , "salim-b@pm.me", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5329-5987"))
