@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pkgpurl</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9014</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.0.9015</span>
       </span>
     </div>
 
@@ -125,9 +125,12 @@ subdirectory using <code><a href='https://rdrr.io/pkg/knitr/man/knit.html'>knitr
 
     <pre class="usage"><span><span class='fu'>purl_rmd</span><span class='op'>(</span></span>
 <span>  path <span class='op'>=</span> <span class='st'>"."</span>,</span>
-<span>  add_copyright_notice <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"pkgpurl.add_copyright_notice"</span><span class='op'>)</span>,</span>
-<span>  add_license_notice <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"pkgpurl.add_license_notice"</span><span class='op'>)</span>,</span>
-<span>  gen_pkgdown_ref <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"pkgpurl.gen_pkgdown_ref"</span>, default <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span>  add_copyright_notice <span class='op'>=</span> <span class='fu'>pal</span><span class='fu'>::</span><span class='fu'><a href='https://rpkg.dev/pal/reference/pkg_config_val.html'>pkg_config_val</a></span><span class='op'>(</span>key <span class='op'>=</span> <span class='st'>"add_copyright_notice"</span>, pkg <span class='op'>=</span></span>
+<span>    <span class='va'>this_pkg</span>, default <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,</span>
+<span>  add_license_notice <span class='op'>=</span> <span class='fu'>pal</span><span class='fu'>::</span><span class='fu'><a href='https://rpkg.dev/pal/reference/pkg_config_val.html'>pkg_config_val</a></span><span class='op'>(</span>key <span class='op'>=</span> <span class='st'>"add_license_notice"</span>, pkg <span class='op'>=</span> <span class='va'>this_pkg</span>,</span>
+<span>    default <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,</span>
+<span>  gen_pkgdown_ref <span class='op'>=</span> <span class='fu'>pal</span><span class='fu'>::</span><span class='fu'><a href='https://rpkg.dev/pal/reference/pkg_config_val.html'>pkg_config_val</a></span><span class='op'>(</span>key <span class='op'>=</span> <span class='st'>"gen_pkgdown_ref"</span>, pkg <span class='op'>=</span> <span class='va'>this_pkg</span>, default</span>
+<span>    <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
 <span><span class='op'>)</span></span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -139,21 +142,15 @@ subdirectory using <code><a href='https://rdrr.io/pkg/knitr/man/knit.html'>knitr
     </tr>
     <tr>
       <th>add_copyright_notice</th>
-      <td><p>Whether or not to add a <strong>copyright notice</strong> at the beginning of the generated <code>.R</code> files as recommended by e.g. the <a href='https://www.gnu.org/licenses/gpl-howto.html'>GNU licenses</a>. The notice consists of the name and description of the program and the word <code>Copyright (C)</code>,
-followed by the release years and the name(s) of the copyright holder(s), or if not specified, the author(s). The year is always the current year. All the
-other information is extracted from the package's <code>DESCRIPTION</code> file. A logical scalar or <code>NULL</code>. If <code>NULL</code>, the notice will be added only if <code>path</code> <a href='https://rpkg.dev/pal/reference/is_pkg_dir.html'>is actually an R package directory</a>. Defaults to the R option <code>pkgpurl.add_copyright_notice</code>.</p></td>
+      <td><p>Whether or not to add a <strong>copyright notice</strong> at the beginning of the generated <code>.R</code> files as recommended by e.g. the <a href='https://www.gnu.org/licenses/gpl-howto.html'>GNU licenses</a>. The notice consists of the name and description of the program and the word <code>Copyright (C)</code> followed by the release years and the name(s) of the copyright holder(s), or if not specified, the author(s). The year is always the current year. All the other information is extracted from the package's <code>DESCRIPTION</code> file. A logical scalar. Only applies if <code>path</code> <a href='https://rpkg.dev/pal/reference/is_pkg_dir.html'>is actually an R package directory</a>.</p></td>
     </tr>
     <tr>
       <th>add_license_notice</th>
-      <td><p>Whether or not to add a <strong>license notice</strong> at the beginning of the generated <code>.R</code> files as recommended by e.g. the <a href='https://www.gnu.org/licenses/gpl-howto.html'>GNU licenses</a>. The license is determined from the package's <code>DESCRIPTION</code> file and currently only the
-<a href='https://spdx.org/licenses/AGPL-3.0-or-later.html'><code>AGPL-3.0-or-later</code> license</a> is supported. A logical scalar or <code>NULL</code>. If <code>NULL</code>, it will be added only
-if <code>path</code> <a href='https://rpkg.dev/pal/reference/is_pkg_dir.html'>is actually an R package directory</a>. Defaults to the R option <code>pkgpurl.add_license_notice</code>.</p></td>
+      <td><p>Whether or not to add a <strong>license notice</strong> at the beginning of the generated <code>.R</code> files as recommended by e.g. the <a href='https://www.gnu.org/licenses/gpl-howto.html'>GNU licenses</a>. The license is determined from the package's <code>DESCRIPTION</code> file and currently only the <a href='https://spdx.org/licenses/AGPL-3.0-or-later.html'><code>AGPL-3.0-or-later</code> license</a> is supported. A logical scalar. Only applies if <code>path</code> <a href='https://rpkg.dev/pal/reference/is_pkg_dir.html'>is actually an R package directory</a>.</p></td>
     </tr>
     <tr>
       <th>gen_pkgdown_ref</th>
-      <td><p>Whether or not to overwrite <a href='https://pkgdown.r-lib.org/reference/pkgdown-package.html'>pkgdown</a>'s <a href='https://pkgdown.r-lib.org/reference/build_reference.html#reference-index'>reference index</a> in the configuration file <code>_pkgdown.yml</code> with an auto-generated one
-based on the main input file as described in <code><a href='gen_pkgdown_ref.html'>gen_pkgdown_ref()</a></code>. A logical scalar. Only applies if <code>path</code> <a href='https://rpkg.dev/pal/reference/is_pkg_dir.html'>is actually an R package directory</a>, <a href='https://rpkg.dev/pal/reference/is_pkgdown_dir.html'>pkgdown is set up</a> and a <a href='main_rmd.html'>main R Markdown file</a> exists. Defaults to the R option
-<code>pkgpurl.gen_pkgdown_ref</code>.</p></td>
+      <td><p>Whether or not to overwrite <a href='https://pkgdown.r-lib.org/reference/pkgdown-package.html'>pkgdown</a>'s <a href='https://pkgdown.r-lib.org/reference/build_reference.html#reference-index'>reference index</a> in the configuration file <code>_pkgdown.yml</code> with an auto-generated one based on the main input file as described in <code><a href='gen_pkgdown_ref.html'>gen_pkgdown_ref()</a></code>. A logical scalar. Only applies if <code>path</code> <a href='https://rpkg.dev/pal/reference/is_pkg_dir.html'>is actually an R package directory</a>, <a href='https://rpkg.dev/pal/reference/is_pkgdown_dir.html'>pkgdown is set up</a> and a <a href='main_rmd.html'>main R Markdown file</a> exists.</p></td>
     </tr>
     </table>
 
@@ -186,6 +183,7 @@ under <code>R/*.R</code> is generated. For the sake of clarity, it's generally a
 
     <div class='dont-index'><p>Other high-level functions:
 <code><a href='lint_rmd.html'>lint_rmd</a>()</code>,
+<code><a href='load_pkg.html'>load_pkg</a>()</code>,
 <code><a href='process_pkg.html'>process_pkg</a>()</code>,
 <code><a href='run_nopurl_rmd.html'>run_nopurl_rmd</a>()</code></p></div>
 

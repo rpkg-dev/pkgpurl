@@ -21,6 +21,12 @@ utils::globalVariables(names = c(".",
 
 ## Constants
 
+### `this_pkg`
+
+```{r}
+this_pkg <- utils::packageName()
+```
+
 ### `data_special_headings`
 
 ```{r}
@@ -360,7 +366,7 @@ TODO:
     `process_pkg()`'s output to it instead of the console.
 
 ```{r}
-#' Process an R Markdown package from source to installation
+#' Process R Markdown package from source to installation
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -390,10 +396,15 @@ TODO:
 #' @family high_lvl
 #' @export
 process_pkg <- function(path = ".",
-                        add_copyright_notice = getOption("pkgpurl.add_copyright_notice"),
-                        add_license_notice = getOption("pkgpurl.add_license_notice"),
-                        gen_pkgdown_ref = getOption("pkgpurl.gen_pkgdown_ref",
-                                                    default = TRUE),
+                        add_copyright_notice = pal::pkg_config_val(key = "add_copyright_notice",
+                                                                   pkg = this_pkg,
+                                                                   default = TRUE),
+                        add_license_notice = pal::pkg_config_val(key = "add_license_notice",
+                                                                 pkg = this_pkg,
+                                                                 default = TRUE),
+                        gen_pkgdown_ref = pal::pkg_config_val(key = "gen_pkgdown_ref",
+                                                              pkg = this_pkg,
+                                                              default = TRUE),
                         document = TRUE,
                         build_and_install = TRUE,
                         restart_r_session = build_and_install,
@@ -407,7 +418,6 @@ process_pkg <- function(path = ".",
   checkmate::assert_flag(document)
   checkmate::assert_flag(build_and_install)
   checkmate::assert_flag(restart_r_session)
-  checkmate::assert_flag(gen_pkgdown_ref)
   checkmate::assert_flag(quiet)
   pal::assert_pkg("devtools")
   pal::assert_pkg("pkgload")
@@ -441,6 +451,60 @@ process_pkg <- function(path = ".",
     restart_r()
   }
   
+  invisible(path)
+}
+```
+
+### `load_pkg`
+
+```{r}
+#' Load R Markdown package
+#'
+#' @description
+#' Executes the steps to load an R package written in R Markdown format in one go:
+#'
+#' 1. Purl all relevant `Rmd/*.Rmd` files to `R/*.gen.R` files using [purl_rmd()].
+#' 2. Loads the package using [devtools::load_all()].
+#'
+#' @inheritParams purl_rmd
+#' @inheritParams devtools::load_all
+#'
+#' @inherit purl_rmd return
+#' @family high_lvl
+#' @export
+load_pkg <- function(path = ".",
+                     add_copyright_notice = pal::pkg_config_val(key = "add_copyright_notice",
+                                                                pkg = this_pkg,
+                                                                default = TRUE),
+                     add_license_notice = pal::pkg_config_val(key = "add_license_notice",
+                                                              pkg = this_pkg,
+                                                              default = TRUE),
+                     gen_pkgdown_ref = pal::pkg_config_val(key = "gen_pkgdown_ref",
+                                                           pkg = this_pkg,
+                                                           default = FALSE),
+                     reset = TRUE,
+                     recompile = FALSE,
+                     export_all = TRUE,
+                     helpers = TRUE,
+                     quiet = FALSE,
+                     ...) {
+  
+  pal::assert_pkg("devtools")
+  
+  # convert `Rmd/*.Rmd` to `R/*.gen.R`
+  purl_rmd(path = path,
+           add_copyright_notice = add_copyright_notice,
+           add_license_notice = add_license_notice,
+           gen_pkgdown_ref = gen_pkgdown_ref)
+  
+  # load pkg
+  devtools::load_all(path = path,
+                     reset = reset,
+                     recompile = recompile,
+                     export_all = export_all,
+                     helpers = helpers,
+                     quiet = quiet,
+                     ...)
   invisible(path)
 }
 ```
@@ -510,32 +574,29 @@ TODO:
 #' under `R/*.R` is generated. For the sake of clarity, it's generally advised to prefer the `.nopurl` suffix over hiding files.
 #'
 #' @param path Path to the root of the package directory.
-#' @param add_copyright_notice Whether or not to add a **copyright notice** at the beginning of the generated `.R` files as recommended by e.g. the [GNU
-#'   licenses](https://www.gnu.org/licenses/gpl-howto.html). The notice consists of the name and description of the program and the word `Copyright (C)`,
-#'   followed by the release years and the name(s) of the copyright holder(s), or if not specified, the author(s). The year is always the current year. All the
-#'   other information is extracted from the package's `DESCRIPTION` file. A logical scalar or `NULL`. If `NULL`, the notice will be added only if `path` [is
-#'   actually an R package directory][pal::is_pkg_dir]. Defaults to the R option `pkgpurl.add_copyright_notice`.
-#' @param add_license_notice Whether or not to add a **license notice** at the beginning of the generated `.R` files as recommended by e.g. the [GNU
-#'   licenses](https://www.gnu.org/licenses/gpl-howto.html). The license is determined from the package's `DESCRIPTION` file and currently only the
-#'   [`AGPL-3.0-or-later` license](https://spdx.org/licenses/AGPL-3.0-or-later.html) is supported. A logical scalar or `NULL`. If `NULL`, it will be added only
-#'   if `path` [is actually an R package directory][pal::is_pkg_dir]. Defaults to the R option `pkgpurl.add_license_notice`.
-#' @param gen_pkgdown_ref Whether or not to overwrite [pkgdown][pkgdown::pkgdown-package]'s [reference
-#'   index](https://pkgdown.r-lib.org/reference/build_reference.html#reference-index) in the configuration file `_pkgdown.yml` with an auto-generated one
-#'   based on the main input file as described in [gen_pkgdown_ref()]. A logical scalar. Only applies if `path` [is actually an R package
-#'   directory][pal::is_pkg_dir], [pkgdown is set up][pal::is_pkgdown_dir] and a [main R Markdown file][main_rmd()] exists. Defaults to the R option
-#'   `pkgpurl.gen_pkgdown_ref`.
+#' @param add_copyright_notice `r pkg_config$description[pkg_config$key == "add_copyright_notice"]` A logical scalar. Only applies if `path` [is actually an R
+#'   package directory][pal::is_pkg_dir].
+#' @param add_license_notice `r pkg_config$description[pkg_config$key == "add_license_notice"]` A logical scalar. Only applies if `path` [is actually an R
+#'   package directory][pal::is_pkg_dir].
+#' @param gen_pkgdown_ref `r pkg_config$description[pkg_config$key == "gen_pkgdown_ref"]` A logical scalar. Only applies if `path` [is actually an R package
+#'   directory][pal::is_pkg_dir], [pkgdown is set up][pal::is_pkgdown_dir] and a [main R Markdown file][main_rmd()] exists.
 #'
 #' @return `path`, invisibly.
 #' @family high_lvl
 #' @export
 purl_rmd <- function(path = ".",
-                     add_copyright_notice = getOption("pkgpurl.add_copyright_notice"),
-                     add_license_notice = getOption("pkgpurl.add_license_notice"),
-                     gen_pkgdown_ref = getOption("pkgpurl.gen_pkgdown_ref",
-                                                 default = TRUE)) {
+                     add_copyright_notice = pal::pkg_config_val(key = "add_copyright_notice",
+                                                                pkg = this_pkg,
+                                                                default = TRUE),
+                     add_license_notice = pal::pkg_config_val(key = "add_license_notice",
+                                                              pkg = this_pkg,
+                                                              default = TRUE),
+                     gen_pkgdown_ref = pal::pkg_config_val(key = "gen_pkgdown_ref",
+                                                           pkg = this_pkg,
+                                                           default = TRUE)) {
   
-  checkmate::assert_flag(add_copyright_notice, null.ok = TRUE)
-  checkmate::assert_flag(add_license_notice, null.ok = TRUE)
+  checkmate::assert_flag(add_copyright_notice)
+  checkmate::assert_flag(add_license_notice)
   checkmate::assert_flag(gen_pkgdown_ref)
   
   rmd_files <- rmd_files(path = path)
@@ -590,11 +651,10 @@ purl_rmd <- function(path = ".",
                               "and {.arg {impossible_opts[2L]}} "[n_impossible_opts > 1L],
                               "{qty(n_impossible_opts)} {?was/were both} set to {.val TRUE}, but {.file {path}} does not appear to be an R package ",
                               "directory \u2013 thus cannot extract the necessary information from the package's {.file DESCRIPTION} file."))
-      } else {
-        add_copyright_notice <- FALSE
-        add_license_notice <- FALSE
       }
       
+      add_copyright_notice <- FALSE
+      add_license_notice <- FALSE
       gen_pkgdown_ref <- FALSE
     }
     
@@ -1101,4 +1161,39 @@ gen_pkgdown_ref <- function(rmd) {
   
   list(reference = result)
 }
+```
+
+## Miscellaneous
+
+### `pkg_config`
+
+```{r}
+#' `r this_pkg` package configuration metadata
+#'
+#' A [tibble][tibble::tbl_df] with metadata of all possible `r this_pkg` package configuration options. See [pal::pkg_config_val()] for more information.
+#'
+#' @format `r pkgsnip::return_label("data_cols", cols = colnames(pkg_config))`
+#' @export
+#'
+#' @examples
+#' pkgpurl::pkg_config
+pkg_config <-
+  tibble::tibble(key = character(),
+                 default_value = list(),
+                 description = character()) %>%
+  tibble::add_row(key = "add_copyright_notice",
+                  description = paste0("Whether or not to add a **copyright notice** at the beginning of the generated `.R` files as recommended by e.g. the ",
+                                       "[GNU licenses](https://www.gnu.org/licenses/gpl-howto.html). The notice consists of the name and description of the ",
+                                       "program and the word `Copyright (C)` followed by the release years and the name(s) of the copyright holder(s), or if ",
+                                       "not specified, the author(s). The year is always the current year. All the other information is extracted from the ",
+                                       "package's `DESCRIPTION` file.")) %>%
+  tibble::add_row(key = "add_license_notice",
+                  description = paste0("Whether or not to add a **license notice** at the beginning of the generated `.R` files as recommended by e.g. the ",
+                                       "[GNU licenses](https://www.gnu.org/licenses/gpl-howto.html). The license is determined from the package's ",
+                                       "`DESCRIPTION` file and currently only the [`AGPL-3.0-or-later` ",
+                                       "license](https://spdx.org/licenses/AGPL-3.0-or-later.html) is supported.")) %>%
+  tibble::add_row(key = "gen_pkgdown_ref",
+                  description = paste0("Whether or not to overwrite [pkgdown][pkgdown::pkgdown-package]'s [reference ",
+                                       "index](https://pkgdown.r-lib.org/reference/build_reference.html#reference-index) in the configuration file ",
+                                       "`_pkgdown.yml` with an auto-generated one based on the main input file as described in [gen_pkgdown_ref()]."))
 ```

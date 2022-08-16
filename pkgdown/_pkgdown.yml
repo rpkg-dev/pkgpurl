@@ -17,8 +17,11 @@ reference:
 - title: High-level functions
 - contents:
   - process_pkg
+  - load_pkg
   - purl_rmd
   - lint_rmd
   - run_nopurl_rmd
 - title: Low-level functions
 - contents: gen_pkgdown_ref
+- title: Miscellaneous
+- contents: pkg_config

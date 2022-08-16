@@ -6,25 +6,22 @@
 \usage{
 purl_rmd(
   path = ".",
-  add_copyright_notice = getOption("pkgpurl.add_copyright_notice"),
-  add_license_notice = getOption("pkgpurl.add_license_notice"),
-  gen_pkgdown_ref = getOption("pkgpurl.gen_pkgdown_ref", default = TRUE)
+  add_copyright_notice = pal::pkg_config_val(key = "add_copyright_notice", pkg =
+    this_pkg, default = TRUE),
+  add_license_notice = pal::pkg_config_val(key = "add_license_notice", pkg = this_pkg,
+    default = TRUE),
+  gen_pkgdown_ref = pal::pkg_config_val(key = "gen_pkgdown_ref", pkg = this_pkg, default
+    = TRUE)
 )
 }
 \arguments{
 \item{path}{Path to the root of the package directory.}
 
-\item{add_copyright_notice}{Whether or not to add a \strong{copyright notice} at the beginning of the generated \code{.R} files as recommended by e.g. the \href{https://www.gnu.org/licenses/gpl-howto.html}{GNU licenses}. The notice consists of the name and description of the program and the word \code{Copyright (C)},
-followed by the release years and the name(s) of the copyright holder(s), or if not specified, the author(s). The year is always the current year. All the
-other information is extracted from the package's \code{DESCRIPTION} file. A logical scalar or \code{NULL}. If \code{NULL}, the notice will be added only if \code{path} \link[pal:is_pkg_dir]{is actually an R package directory}. Defaults to the R option \code{pkgpurl.add_copyright_notice}.}
+\item{add_copyright_notice}{Whether or not to add a \strong{copyright notice} at the beginning of the generated \code{.R} files as recommended by e.g. the \href{https://www.gnu.org/licenses/gpl-howto.html}{GNU licenses}. The notice consists of the name and description of the program and the word \code{Copyright (C)} followed by the release years and the name(s) of the copyright holder(s), or if not specified, the author(s). The year is always the current year. All the other information is extracted from the package's \code{DESCRIPTION} file. A logical scalar. Only applies if \code{path} \link[pal:is_pkg_dir]{is actually an R package directory}.}
 
-\item{add_license_notice}{Whether or not to add a \strong{license notice} at the beginning of the generated \code{.R} files as recommended by e.g. the \href{https://www.gnu.org/licenses/gpl-howto.html}{GNU licenses}. The license is determined from the package's \code{DESCRIPTION} file and currently only the
-\href{https://spdx.org/licenses/AGPL-3.0-or-later.html}{\code{AGPL-3.0-or-later} license} is supported. A logical scalar or \code{NULL}. If \code{NULL}, it will be added only
-if \code{path} \link[pal:is_pkg_dir]{is actually an R package directory}. Defaults to the R option \code{pkgpurl.add_license_notice}.}
+\item{add_license_notice}{Whether or not to add a \strong{license notice} at the beginning of the generated \code{.R} files as recommended by e.g. the \href{https://www.gnu.org/licenses/gpl-howto.html}{GNU licenses}. The license is determined from the package's \code{DESCRIPTION} file and currently only the \href{https://spdx.org/licenses/AGPL-3.0-or-later.html}{\code{AGPL-3.0-or-later} license} is supported. A logical scalar. Only applies if \code{path} \link[pal:is_pkg_dir]{is actually an R package directory}.}
 
-\item{gen_pkgdown_ref}{Whether or not to overwrite \link[pkgdown:pkgdown-package]{pkgdown}'s \href{https://pkgdown.r-lib.org/reference/build_reference.html#reference-index}{reference index} in the configuration file \verb{_pkgdown.yml} with an auto-generated one
-based on the main input file as described in \code{\link[=gen_pkgdown_ref]{gen_pkgdown_ref()}}. A logical scalar. Only applies if \code{path} \link[pal:is_pkg_dir]{is actually an R package directory}, \link[pal:is_pkgdown_dir]{pkgdown is set up} and a \link[=main_rmd]{main R Markdown file} exists. Defaults to the R option
-\code{pkgpurl.gen_pkgdown_ref}.}
+\item{gen_pkgdown_ref}{Whether or not to overwrite \link[pkgdown:pkgdown-package]{pkgdown}'s \href{https://pkgdown.r-lib.org/reference/build_reference.html#reference-index}{reference index} in the configuration file \verb{_pkgdown.yml} with an auto-generated one based on the main input file as described in \code{\link[=gen_pkgdown_ref]{gen_pkgdown_ref()}}. A logical scalar. Only applies if \code{path} \link[pal:is_pkg_dir]{is actually an R package directory}, \link[pal:is_pkgdown_dir]{pkgdown is set up} and a \link[=main_rmd]{main R Markdown file} exists.}
 }
 \value{
 \code{path}, invisibly.
@@ -63,6 +60,7 @@ under \verb{R/*.R} is generated. For the sake of clarity, it's generally advised
 \seealso{
 Other high-level functions:
 \code{\link{lint_rmd}()},
+\code{\link{load_pkg}()},
 \code{\link{process_pkg}()},
 \code{\link{run_nopurl_rmd}()}
 }

@@ -25,6 +25,7 @@ This function is also registered as an \href{https://rstudio.github.io/rstudioad
 }
 \seealso{
 Other high-level functions:
+\code{\link{load_pkg}()},
 \code{\link{process_pkg}()},
 \code{\link{purl_rmd}()},
 \code{\link{run_nopurl_rmd}()}

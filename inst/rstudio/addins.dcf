@@ -3,6 +3,11 @@ Description: Executes `pkgpurl::process_pkg()`.
 Binding: process_pkg
 Interactive: true
 
+Name: Load R Markdown package
+Description: Executes `pkgpurl::load_pkg()`.
+Binding: load_pkg
+Interactive: true
+
 Name: Purl `Rmd/`
 Description: Executes `pkgpurl::purl_rmd()`.
 Binding: purl_rmd

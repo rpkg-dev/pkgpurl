@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Process R Markdown package from source to installation — process_pkg • pkgpurl</title>
+<title>Load R Markdown package — load_pkg • pkgpurl</title>
 
 
 
@@ -42,9 +42,9 @@
 <script src="../pkgdown.js"></script>
 
 
-<meta property="og:title" content="Process R Markdown package from source to installation — process_pkg" />
-<meta name="description" content="Executes all steps to process an R package written in R Markdown format from source to installation in one go: Purl all relevant Rmd/*.Rmd files to R/*.gen.R files using purl_rmd(). Re-generate the pkgdown reference index based on the package's main R Markdown file using gen_pkgdown_ref() (if gen_pkgdown_ref = TRUE). Re-build the package documentation using devtools::document() (if document = TRUE). Build and install the package using devtools::install() (if build_and_install = TRUE). Restarts the R session using rstudioapi::restartSession() (if restart_r_session = TRUE).">
-<meta property="og:description" content="Executes all steps to process an R package written in R Markdown format from source to installation in one go: Purl all relevant Rmd/*.Rmd files to R/*.gen.R files using purl_rmd(). Re-generate the pkgdown reference index based on the package's main R Markdown file using gen_pkgdown_ref() (if gen_pkgdown_ref = TRUE). Re-build the package documentation using devtools::document() (if document = TRUE). Build and install the package using devtools::install() (if build_and_install = TRUE). Restarts the R session using rstudioapi::restartSession() (if restart_r_session = TRUE)." />
+<meta property="og:title" content="Load R Markdown package — load_pkg" />
+<meta name="description" content="Executes the steps to load an R package written in R Markdown format in one go: Purl all relevant Rmd/*.Rmd files to R/*.gen.R files using purl_rmd(). Loads the package using devtools::load_all().">
+<meta property="og:description" content="Executes the steps to load an R package written in R Markdown format in one go: Purl all relevant Rmd/*.Rmd files to R/*.gen.R files using purl_rmd(). Loads the package using devtools::load_all()." />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@2BSalim" />
 <meta name="twitter:site" content="@2BSalim" />
@@ -113,40 +113,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Process R Markdown package from source to installation</h1>
+    <h1>Load R Markdown package</h1>
     <small class="dont-index">Source: <a href='https://gitlab.com/salim_b/r/pkgs/pkgpurl/blob/master/R/pkgpurl.gen.R'><code>R/pkgpurl.gen.R</code></a></small>
-    <div class="hidden name"><code>process_pkg.Rd</code></div>
+    <div class="hidden name"><code>load_pkg.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p>
-<p>Executes all steps to process an R package written in R Markdown format from source to installation in one go:</p><ol>
+    <p>Executes the steps to load an R package written in R Markdown format in one go:</p><ol>
 <li><p>Purl all relevant <code>Rmd/*.Rmd</code> files to <code>R/*.gen.R</code> files using <code><a href='purl_rmd.html'>purl_rmd()</a></code>.</p></li>
-<li><p>Re-generate the <a href='https://pkgdown.r-lib.org/reference/build_reference.html#reference-index'>pkgdown reference index</a> based on the package's <a href='main_rmd.html'>main R Markdown file</a> using <code><a href='gen_pkgdown_ref.html'>gen_pkgdown_ref()</a></code> (if <code>gen_pkgdown_ref = TRUE</code>).</p></li>
-<li><p>Re-build the package documentation using <code><a href='https://devtools.r-lib.org/reference/document.html'>devtools::document()</a></code> (if <code>document = TRUE</code>).</p></li>
-<li><p>Build and install the package using <code><a href='https://devtools.r-lib.org/reference/install.html'>devtools::install()</a></code> (if <code>build_and_install = TRUE</code>).</p></li>
-<li><p>Restarts the R session using <code><a href='https://rdrr.io/pkg/rstudioapi/man/restartSession.html'>rstudioapi::restartSession()</a></code> (if <code>restart_r_session = TRUE</code>).</p></li>
+<li><p>Loads the package using <code><a href='https://devtools.r-lib.org/reference/load_all.html'>devtools::load_all()</a></code>.</p></li>
 </ol>
 
     </div>
 
-    <pre class="usage"><span><span class='fu'>process_pkg</span><span class='op'>(</span></span>
+    <pre class="usage"><span><span class='fu'>load_pkg</span><span class='op'>(</span></span>
 <span>  path <span class='op'>=</span> <span class='st'>"."</span>,</span>
 <span>  add_copyright_notice <span class='op'>=</span> <span class='fu'>pal</span><span class='fu'>::</span><span class='fu'><a href='https://rpkg.dev/pal/reference/pkg_config_val.html'>pkg_config_val</a></span><span class='op'>(</span>key <span class='op'>=</span> <span class='st'>"add_copyright_notice"</span>, pkg <span class='op'>=</span></span>
 <span>    <span class='va'>this_pkg</span>, default <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,</span>
 <span>  add_license_notice <span class='op'>=</span> <span class='fu'>pal</span><span class='fu'>::</span><span class='fu'><a href='https://rpkg.dev/pal/reference/pkg_config_val.html'>pkg_config_val</a></span><span class='op'>(</span>key <span class='op'>=</span> <span class='st'>"add_license_notice"</span>, pkg <span class='op'>=</span> <span class='va'>this_pkg</span>,</span>
 <span>    default <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,</span>
 <span>  gen_pkgdown_ref <span class='op'>=</span> <span class='fu'>pal</span><span class='fu'>::</span><span class='fu'><a href='https://rpkg.dev/pal/reference/pkg_config_val.html'>pkg_config_val</a></span><span class='op'>(</span>key <span class='op'>=</span> <span class='st'>"gen_pkgdown_ref"</span>, pkg <span class='op'>=</span> <span class='va'>this_pkg</span>, default</span>
-<span>    <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,</span>
-<span>  document <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
-<span>  build_and_install <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
-<span>  restart_r_session <span class='op'>=</span> <span class='va'>build_and_install</span>,</span>
-<span>  quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
-<span>  roclets <span class='op'>=</span> <span class='cn'>NULL</span>,</span>
-<span>  args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"devtools.install.args"</span><span class='op'>)</span>,</span>
-<span>  dependencies <span class='op'>=</span> <span class='cn'>NA</span>,</span>
-<span>  upgrade <span class='op'>=</span> <span class='st'>"never"</span>,</span>
-<span>  keep_source <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"keep.source.pkgs"</span><span class='op'>)</span></span>
+<span>    <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>,</span>
+<span>  reset <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
+<span>  recompile <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span>  export_all <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
+<span>  helpers <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
+<span>  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span>  <span class='va'>...</span></span>
 <span><span class='op'>)</span></span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -169,78 +162,47 @@
       <td><p>Whether or not to overwrite <a href='https://pkgdown.r-lib.org/reference/pkgdown-package.html'>pkgdown</a>'s <a href='https://pkgdown.r-lib.org/reference/build_reference.html#reference-index'>reference index</a> in the configuration file <code>_pkgdown.yml</code> with an auto-generated one based on the main input file as described in <code><a href='gen_pkgdown_ref.html'>gen_pkgdown_ref()</a></code>. A logical scalar. Only applies if <code>path</code> <a href='https://rpkg.dev/pal/reference/is_pkg_dir.html'>is actually an R package directory</a>, <a href='https://rpkg.dev/pal/reference/is_pkgdown_dir.html'>pkgdown is set up</a> and a <a href='main_rmd.html'>main R Markdown file</a> exists.</p></td>
     </tr>
     <tr>
-      <th>document</th>
-      <td><p>Whether or not to re-build the package documentation after purling <code>Rmd/*.Rmd</code> to <code>R/*.gen.R</code>.</p></td>
+      <th>reset</th>
+      <td><p>clear package environment and reset file cache before loading
+any pieces of the package. This largely equivalent to running
+<code><a href='https://pkgload.r-lib.org/reference/unload.html'>unload()</a></code>, however the old namespaces are not completely removed and no
+<code>.onUnload()</code> hooks are called. Use <code>reset = FALSE</code> may be faster for
+large code bases, but is a significantly less accurate approximation.</p></td>
     </tr>
     <tr>
-      <th>build_and_install</th>
-      <td><p>Whether or not to build and install the package after purling <code>Rmd/*.Rmd</code> to <code>R/*.gen.R</code>.</p></td>
+      <th>recompile</th>
+      <td><p>DEPRECATED. force a recompile of DLL from source code, if
+present. This is equivalent to running <code><a href='https://rdrr.io/pkg/pkgbuild/man/clean_dll.html'>pkgbuild::clean_dll()</a></code> before
+<code>load_all</code></p></td>
     </tr>
     <tr>
-      <th>restart_r_session</th>
-      <td><p>Whether or not to restart the R session. Highly recommended if <code>build_and_install = TRUE</code>, but only possible when R is run within
-RStudio.</p></td>
+      <th>export_all</th>
+      <td><p>If <code>TRUE</code> (the default), export all objects.
+If <code>FALSE</code>, export only the objects that are listed as exports
+in the NAMESPACE file.</p></td>
+    </tr>
+    <tr>
+      <th>helpers</th>
+      <td><p>if <code>TRUE</code> loads <span class="pkg">testthat</span> test helpers.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
-      <td><p>Whether or not to suppress printing status output from internal processing.</p></td>
+      <td><p>if <code>TRUE</code> suppresses output from this function.</p></td>
     </tr>
     <tr>
-      <th>roclets</th>
-      <td><p>Character vector of roclet names to use with package.
-The default, <code>NULL</code>, uses the roxygen <code>roclets</code> option,
-which defaults to <code>c("collate", "namespace", "rd")</code>.</p></td>
-    </tr>
-    <tr>
-      <th>args</th>
-      <td><p>An optional character vector of additional command line
-arguments to be passed to <code>R CMD INSTALL</code>. This defaults to the
-value of the option <code>"devtools.install.args"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>dependencies</th>
-      <td><p>Which dependencies do you want to check?
-Can be a character vector (selecting from "Depends", "Imports",
-"LinkingTo", "Suggests", or "Enhances"), or a logical vector.</p>
-<p><code>TRUE</code> is shorthand for "Depends", "Imports", "LinkingTo" and
-"Suggests". <code>NA</code> is shorthand for "Depends", "Imports" and "LinkingTo"
-and is the default. <code>FALSE</code> is shorthand for no dependencies (i.e.
-just check this package, not its dependencies).</p>
-<p>The value "soft" means the same as <code>TRUE</code>, "hard" means the same as <code>NA</code>.</p>
-<p>You can also specify dependencies from one or more additional fields,
-common ones include:</p><ul>
-<li><p>Config/Needs/website - for dependencies used in building the pkgdown site.</p></li>
-<li><p>Config/Needs/coverage for dependencies used in calculating test coverage.</p></li>
-</ul></td>
-    </tr>
-    <tr>
-      <th>upgrade</th>
-      <td><p>Should package dependencies be upgraded? One of "default", "ask", "always", or "never". "default"
-respects the value of the <code>R_REMOTES_UPGRADE</code> environment variable if set,
-and falls back to "ask" if unset. "ask" prompts the user for which out of
-date packages to upgrade. For non-interactive sessions "ask" is equivalent
-to "always". <code>TRUE</code> and <code>FALSE</code> are also accepted and correspond to
-"always" and "never" respectively.</p></td>
-    </tr>
-    <tr>
-      <th>keep_source</th>
-      <td><p>If <code>TRUE</code> will keep the srcrefs from an installed
-package. This is useful for debugging (especially inside of RStudio).
-It defaults to the option <code>"keep.source.pkgs"</code>.</p></td>
+      <th>...</th>
+      <td><p>Additional arguments passed to <code><a href='https://pkgload.r-lib.org/reference/load_all.html'>pkgload::load_all()</a></code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>path</code>, invisibly.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>This function is also registered as an <a href='https://rstudio.github.io/rstudioaddins/'>RStudio add-in</a>, allowing RStudio users to assign a <a href='https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE'>custom shortcut</a> to it or to invoke it from the <a href='https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts'>command palette</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other high-level functions:
 <code><a href='lint_rmd.html'>lint_rmd</a>()</code>,
-<code><a href='load_pkg.html'>load_pkg</a>()</code>,
+<code><a href='process_pkg.html'>process_pkg</a>()</code>,
 <code><a href='purl_rmd.html'>purl_rmd</a>()</code>,
 <code><a href='run_nopurl_rmd.html'>run_nopurl_rmd</a>()</code></p></div>
 

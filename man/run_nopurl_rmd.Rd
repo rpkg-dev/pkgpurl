@@ -86,6 +86,7 @@ If an error is encountered saying \verb{internal error -3 in R_decompress1}, res
 \seealso{
 Other high-level functions:
 \code{\link{lint_rmd}()},
+\code{\link{load_pkg}()},
 \code{\link{process_pkg}()},
 \code{\link{purl_rmd}()}
 }

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Lint R Markdown package — lint_rmd • pkgpurl</title>
+<title>pkgpurl package configuration metadata — pkg_config • pkgpurl</title>
 
 
 
@@ -42,9 +42,9 @@
 <script src="../pkgdown.js"></script>
 
 
-<meta property="og:title" content="Lint R Markdown package — lint_rmd" />
-<meta name="description" content="This is a convenience wrapper around lintr::lint_dir() which is tailored to a typical R Markdown package. To use this function, the lintr package is required.">
-<meta property="og:description" content="This is a convenience wrapper around lintr::lint_dir() which is tailored to a typical R Markdown package. To use this function, the lintr package is required." />
+<meta property="og:title" content="pkgpurl package configuration metadata — pkg_config" />
+<meta name="description" content="A tibble with metadata of all possible pkgpurl package configuration options. See pal::pkg_config_val() for more information.">
+<meta property="og:description" content="A tibble with metadata of all possible pkgpurl package configuration options. See pal::pkg_config_val() for more information." />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@2BSalim" />
 <meta name="twitter:site" content="@2BSalim" />
@@ -113,46 +113,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Lint R Markdown package</h1>
+    <h1>pkgpurl package configuration metadata</h1>
     <small class="dont-index">Source: <a href='https://gitlab.com/salim_b/r/pkgs/pkgpurl/blob/master/R/pkgpurl.gen.R'><code>R/pkgpurl.gen.R</code></a></small>
-    <div class="hidden name"><code>lint_rmd.Rd</code></div>
+    <div class="hidden name"><code>pkg_config.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This is a convenience wrapper around <code><a href='https://lintr.r-lib.org/reference/lint.html'>lintr::lint_dir()</a></code> which is tailored to a typical R Markdown package. To use this function, the
-<a href='https://github.com/jimhester/lintr/#readme'>lintr</a> package is required.</p>
+    <p>A <a href='https://tibble.tidyverse.org/reference/tbl_df-class.html'>tibble</a> with metadata of all possible pkgpurl package configuration options. See <code><a href='https://rpkg.dev/pal/reference/pkg_config_val.html'>pal::pkg_config_val()</a></code> for more information.</p>
     </div>
 
-    <pre class="usage"><span><span class='fu'>lint_rmd</span><span class='op'>(</span>path <span class='op'>=</span> <span class='st'>"."</span>, excl_vignettes <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span></pre>
+    <pre class="usage"><span><span class='va'>pkg_config</span></span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>path</th>
-      <td><p>Path to the root of the package directory.</p></td>
-    </tr>
-    <tr>
-      <th>excl_vignettes</th>
-      <td><p>Whether to exclude all <code>.Rmd</code> files under <code>vignettes/</code>. A logical scalar.</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A list of lint objects.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <p>A <a href='https://tibble.tidyverse.org/reference/tbl_df-class.html'>tibble</a> with the columns <code>key</code>, <code>default_value</code> and <code>description</code>.</p>
 
-    <p>To avoid unnecessary noise, all the the generated <code>R/*.gen.R</code> files as well as R Markdown vignettes under <code>vignettes/*.Rmd</code> are excluded from linting.</p>
-<p>This function is also registered as an <a href='https://rstudio.github.io/rstudioaddins/'>RStudio add-in</a>, allowing RStudio users to assign a <a href='https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE'>custom shortcut</a> to it or to invoke it from the <a href='https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts'>command palette</a>.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other high-level functions:
-<code><a href='load_pkg.html'>load_pkg</a>()</code>,
-<code><a href='process_pkg.html'>process_pkg</a>()</code>,
-<code><a href='purl_rmd.html'>purl_rmd</a>()</code>,
-<code><a href='run_nopurl_rmd.html'>run_nopurl_rmd</a>()</code></p></div>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='r-in'><span><span class='fu'>pkgpurl</span><span class='fu'>::</span><span class='va'>pkg_config</span></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 3 × 3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   key                  default_value description                                </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                                      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> add_copyright_notice <span style='color: #949494;'>&lt;NULL&gt;</span>        Whether or not to add a **copyright notice…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> add_license_notice   <span style='color: #949494;'>&lt;NULL&gt;</span>        Whether or not to add a **license notice**…</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> gen_pkgdown_ref      <span style='color: #949494;'>&lt;NULL&gt;</span>        Whether or not to overwrite [pkgdown][pkgd…</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -1,8 +1,8 @@
-pandoc: '2.18'
+pandoc: '2.19'
 pkgdown: 1.6.1.9000
 pkgdown_sha: 7e9bb083e7d476e27baaad7e5328ec0ae94f8c36
 articles: {}
-last_built: 2022-07-22T21:33Z
+last_built: 2022-08-16T17:50Z
 urls:
   reference: https://rpkg.dev/pkgpurl/reference
   article: https://rpkg.dev/pkgpurl/articles
