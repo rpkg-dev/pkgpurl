@@ -4,7 +4,7 @@
 
 pkgpurl facilitates R package authoring using a literate programming approach. The main idea behind this is to write all of the R source code in R Markdown files (`Rmd/*.Rmd`), which allows the actual code to be freely mixed with explanatory and supplementary information in expressive Markdown format. The main object of pkgpurl is to provide a standardized way to compile the bare `.R` files from the prose-enhanced and thus more human-oriented `.Rmd` files.
 
-The basic idea behind the concept this package implements originates from Yihui Xie. See his blog post [*Write An R Package Using Literate Programming Techniques*](https://yihui.org/rlp/) for more details, it's definitively worth reading. This package's function [`pkgpurl::purl_rmd()`](https://rpkg.dev/pkgpurl/reference/purl_rmd.html) is just a less cumbersome alternative to the Makefile approach outlined by him.
+The basic idea behind the concept this package implements originates from Yihui Xie. See his blog post [*Write An R Package Using Literate Programming Techniques*](https://yihui.org/rlp/) for more details, it's definitively worth reading. This package's function [`pkgpurl::purl_rmd()`](https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.html) is just a less cumbersome alternative to the Makefile approach outlined by him.
 
 ## Details
 
@@ -50,9 +50,9 @@ The [R Markdown](https://rmarkdown.rstudio.com/) format provides several **advan
 
     I think this is just ridiculous.
 
-    Instead, I encourage you to keep all your code (as far as possible) in a single file `Rmd/PACKAGE_NAME.Rmd` and structure it according to the [rules described here](https://rpkg.dev/pkgpurl/reference/gen_pkgdown_ref.html#details), which even allows the [pkgdown `Reference:` index](https://pkgdown.r-lib.org/reference/build_reference.html#reference-index) to be automatically in sync with the source code structure. As a result, you re-organize (and thus most likely improve) your package's code structure whenever you intend to improve the pkgdown reference -- and vice versa.
+    Instead, I encourage you to keep all your code (as far as possible) in a single file `Rmd/PACKAGE_NAME.Rmd` and structure it according to the [rules described here](https://pkgpurl.rpkg.dev/dev/reference/gen_pkgdown_ref.html#details), which even allows the [pkgdown `Reference:` index](https://pkgdown.r-lib.org/reference/build_reference.html#reference-index) to be automatically in sync with the source code structure. As a result, you re-organize (and thus most likely improve) your package's code structure whenever you intend to improve the pkgdown reference -- and vice versa.
 
-    Keeping all code in a single file frees you from the traditional hassle of finding a viable (but in the end still unsatisfactory) way to organize your R source code across multiple files. Of course, there are still good reasons to outsource code into separate files *in certain situations*, which nothing is stopping you from doing. You can also [exclude whole `.Rmd` files from purling using the `.nopurl.Rmd` filename suffix](https://rpkg.dev/pkgpurl/reference/purl_rmd.html#-rmd-files-excluded-from-purling).
+    Keeping all code in a single file frees you from the traditional hassle of finding a viable (but in the end still unsatisfactory) way to organize your R source code across multiple files. Of course, there are still good reasons to outsource code into separate files *in certain situations*, which nothing is stopping you from doing. You can also [exclude whole `.Rmd` files from purling using the `.nopurl.Rmd` filename suffix](https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.html#-rmd-files-excluded-from-purling).
 
 -   **Improved overview and navigation**
 
@@ -78,9 +78,9 @@ Unfortunately, there are also a few notable **drawbacks** of the R Markdown form
 
 -   **Additional workflow step**
 
-    The pkgpurl approach on writing R packages in the R Markdown format introduces *one* additional step at the very beginning of typical package development workflows: Running [`pkgpurl::purl_rmd()`](https://rpkg.dev/pkgpurl/reference/purl_rmd.html) to generate the `R/*.gen.R` files from the original `Rmd/*.Rmd` sources before documenting/checking/testing/building the package. Given sufficient user demand, this could probably be integrated into [devtools](https://devtools.r-lib.org/)' functions in the future, so that no additional action has to be taken by the user when relying on RStudio's built-in package building infrastructure.
+    The pkgpurl approach on writing R packages in the R Markdown format introduces *one* additional step at the very beginning of typical package development workflows: Running [`pkgpurl::purl_rmd()`](https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.html) to generate the `R/*.gen.R` files from the original `Rmd/*.Rmd` sources before documenting/checking/testing/building the package. Given sufficient user demand, this could probably be integrated into [devtools](https://devtools.r-lib.org/)' functions in the future, so that no additional action has to be taken by the user when relying on RStudio's built-in package building infrastructure.
 
-    For the time being, it's recommended to set up a custom shortcut[^3] for one or both of [`pkgpurl::purl_rmd()`](https://rpkg.dev/pkgpurl/reference/purl_rmd.html) and [`pkgpurl::process_pkg()`](https://rpkg.dev/pkgpurl/reference/process_pkg.html) which are registered as [RStudio add-ins](https://rstudio.github.io/rstudioaddins/).
+    For the time being, it's recommended to set up a custom shortcut[^3] for one or both of [`pkgpurl::purl_rmd()`](https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.html) and [`pkgpurl::process_pkg()`](https://pkgpurl.rpkg.dev/dev/reference/process_pkg.html) which are registered as [RStudio add-ins](https://rstudio.github.io/rstudioaddins/).
 
 -   **Differing setup**
 
@@ -119,7 +119,7 @@ The (function) reference is found [here](reference).
 
 This package's source code is written in the [R Markdown](https://rmarkdown.rstudio.com/) file format to facilitate practices commonly referred to as [*literate programming*](https://en.wikipedia.org/wiki/Literate_programming). It allows the actual code to be freely mixed with explanatory and supplementary information in expressive Markdown format instead of having to rely on [`#` comments](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Comments) only.
 
-All the `.gen.R` suffixed R source code found under [`R/`](R/) is generated from the respective R Markdown counterparts under [`Rmd/`](Rmd/) using [`pkgpurl::purl_rmd()`](https://rpkg.dev/pkgpurl/reference/purl_rmd.html)[^4]. Always make changes only to the `.Rmd` files -- never the `.R` files -- and then run `pkgpurl::purl_rmd()` to regenerate the R source files.
+All the `.gen.R` suffixed R source code found under [`R/`](R/) is generated from the respective R Markdown counterparts under [`Rmd/`](Rmd/) using [`pkgpurl::purl_rmd()`](https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.html)[^4]. Always make changes only to the `.Rmd` files -- never the `.R` files -- and then run `pkgpurl::purl_rmd()` to regenerate the R source files.
 
 ### Coding style
 

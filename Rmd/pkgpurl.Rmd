@@ -752,7 +752,8 @@ lint_rmd <- function(path = ".",
 #'
 #' Executes `.Rmd` files which are supposed to contain code not included in the [source
 #' package](https://r-pkgs.org/package-structure-state.html#source-package), i.e. usually outsourced to separate `.Rmd` files with the [`.nopurl` suffix in
-#' their filenames](https://rpkg.dev/pkgpurl/reference/purl_rmd.html#-rmd-files-excluded-from-purling). Those files are typically used to generate package data.
+#' their filenames](https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.html#-rmd-files-excluded-from-purling). Those files are typically used to generate package
+#' data.
 #'
 #' If an error is encountered saying `internal error -3 in R_decompress1`, restart the R session and run again.
 #'

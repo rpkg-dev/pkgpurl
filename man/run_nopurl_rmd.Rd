@@ -79,7 +79,8 @@ It defaults to the option \code{"keep.source.pkgs"}.}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-Executes \code{.Rmd} files which are supposed to contain code not included in the \href{https://r-pkgs.org/package-structure-state.html#source-package}{source package}, i.e. usually outsourced to separate \code{.Rmd} files with the \href{https://rpkg.dev/pkgpurl/reference/purl_rmd.html#-rmd-files-excluded-from-purling}{\code{.nopurl} suffix in their filenames}. Those files are typically used to generate package data.
+Executes \code{.Rmd} files which are supposed to contain code not included in the \href{https://r-pkgs.org/package-structure-state.html#source-package}{source package}, i.e. usually outsourced to separate \code{.Rmd} files with the \href{https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.html#-rmd-files-excluded-from-purling}{\code{.nopurl} suffix in their filenames}. Those files are typically used to generate package
+data.
 
 If an error is encountered saying \verb{internal error -3 in R_decompress1}, restart the R session and run again.
 }
