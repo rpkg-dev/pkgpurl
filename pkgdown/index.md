@@ -1,5 +1,7 @@
 # pkgpurl: Facilitate Authoring R Packages in the R Markdown File Format
 
+[![CRAN Status](https://r-pkg.org/badges/version/pkgpurl)](https://cran.r-project.org/package=pkgpurl){.pkgdown-release}
+
 pkgpurl facilitates R package authoring using a literate programming approach. The main idea behind this is to write all of the R source code in R Markdown files (`Rmd/*.Rmd`), which allows the actual code to be freely mixed with explanatory and supplementary information in expressive Markdown format. The main object of pkgpurl is to provide a standardized way to compile the bare `.R` files from the prose-enhanced and thus more human-oriented `.Rmd` files.
 
 The basic idea behind the concept this package implements originates from Yihui Xie. See his blog post [*Write An R Package Using Literate Programming Techniques*](https://yihui.org/rlp/) for more details, it's definitively worth reading. This package's function [`pkgpurl::purl_rmd()`](https://rpkg.dev/pkgpurl/reference/purl_rmd.html) is just a less cumbersome alternative to the Makefile approach outlined by him.
@@ -106,6 +108,10 @@ if (!("remotes" %in% rownames(installed.packages()))) {
 
 remotes::install_gitlab(repo = "salim_b/r/pkgs/pkgpurl")
 ```
+
+## Usage
+
+The (function) reference is found [here](reference).
 
 ## Development
 

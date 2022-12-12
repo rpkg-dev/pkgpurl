@@ -72,7 +72,7 @@ assemble_copyright_notice <- function(path) {
       format(include = c("given", "family")) %>%
       pal::prose_ls()
     
-    if (length(authors)) {
+    if (length(authors) > 0L) {
       
       notice <- c(paste0(pkg, ": ", desc),
                   paste0("Copyright (C) ", format(Sys.Date(), "%Y"), "  ", authors))
@@ -246,10 +246,10 @@ process_rmd <- function(path_file,
                            sep_paragraphs = FALSE) %>%
     # add copyright and license notices if indicated
     paste0("\n",
-           if (length(copyright_notice)) {
+           if (length(copyright_notice) > 0L) {
              copyright_notice %>% pal::as_comment_string("", sep_paragraphs = FALSE)
            },
-           if (length(license_notice)) {
+           if (length(license_notice) > 0L) {
              license_notice %>% pal::as_comment_string() %>% paste0("\n")
            },
            brio::read_file(path = r_file_path))
@@ -480,7 +480,7 @@ purl_rmd <- function(path = ".",
   
   rmd_files <- rmd_files(path = path)
   
-  if (length(rmd_files)) {
+  if (length(rmd_files) > 0L) {
     
     cli::cli_progress_step(msg = "Purling {.file Rmd/*.Rmd} to {.file R/*.gen.R}")
     
@@ -549,7 +549,7 @@ purl_rmd <- function(path = ".",
         brio::read_file() %>%
         gen_pkgdown_ref()
       
-      if (length(ref$reference)) {
+      if (length(ref$reference) > 0L) {
         
         yaml::read_yaml(file = pkgdown_config_file) %>%
           pal::list_drop(drop = "reference") %>%

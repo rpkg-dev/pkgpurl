@@ -1,33 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://rpkg.dev/pkgpurl/index.html</loc>
+    <loc>https://pkgpurl.rpkg.dev/dev/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://rpkg.dev/pkgpurl/reference/gen_pkgdown_ref.html</loc>
+    <loc>https://pkgpurl.rpkg.dev/dev/TODO.html</loc>
   </url>
   <url>
-    <loc>https://rpkg.dev/pkgpurl/reference/lint_rmd.html</loc>
+    <loc>https://pkgpurl.rpkg.dev/dev/authors.html</loc>
   </url>
   <url>
-    <loc>https://rpkg.dev/pkgpurl/reference/load_pkg.html</loc>
+    <loc>https://pkgpurl.rpkg.dev/dev/index.html</loc>
   </url>
   <url>
-    <loc>https://rpkg.dev/pkgpurl/reference/main_rmd.html</loc>
+    <loc>https://pkgpurl.rpkg.dev/dev/reference/gen_pkgdown_ref.html</loc>
   </url>
   <url>
-    <loc>https://rpkg.dev/pkgpurl/reference/pkg_config.html</loc>
+    <loc>https://pkgpurl.rpkg.dev/dev/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://rpkg.dev/pkgpurl/reference/pkgpurl-package.html</loc>
+    <loc>https://pkgpurl.rpkg.dev/dev/reference/lint_rmd.html</loc>
   </url>
   <url>
-    <loc>https://rpkg.dev/pkgpurl/reference/process_pkg.html</loc>
+    <loc>https://pkgpurl.rpkg.dev/dev/reference/load_pkg.html</loc>
   </url>
   <url>
-    <loc>https://rpkg.dev/pkgpurl/reference/purl_rmd.html</loc>
+    <loc>https://pkgpurl.rpkg.dev/dev/reference/main_rmd.html</loc>
   </url>
   <url>
-    <loc>https://rpkg.dev/pkgpurl/reference/run_nopurl_rmd.html</loc>
+    <loc>https://pkgpurl.rpkg.dev/dev/reference/pkg_config.html</loc>
+  </url>
+  <url>
+    <loc>https://pkgpurl.rpkg.dev/dev/reference/pkgpurl-package.html</loc>
+  </url>
+  <url>
+    <loc>https://pkgpurl.rpkg.dev/dev/reference/process_pkg.html</loc>
+  </url>
+  <url>
+    <loc>https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.html</loc>
+  </url>
+  <url>
+    <loc>https://pkgpurl.rpkg.dev/dev/reference/run_nopurl_rmd.html</loc>
   </url>
 </urlset>
