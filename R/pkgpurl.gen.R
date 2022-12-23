@@ -66,9 +66,9 @@ assemble_copyright_notice <- function(path) {
     authors <-
       desc::desc_get_authors(file = path) %>%
       # reduce to copyright holders or otherwise authors
-      purrr::when(any(purrr::map_lgl(., ~ "cph" %in% .x$role)) ~ purrr::keep(., ~ "cph" %in% .x$role),
-                  any(purrr::map_lgl(., ~ "aut" %in% .x$role)) ~ purrr::keep(., ~ "aut" %in% .x$role),
-                  ~ .) %>%
+      pal::when(any(purrr::map_lgl(., ~ "cph" %in% .x$role)) ~ purrr::keep(., ~ "cph" %in% .x$role),
+                any(purrr::map_lgl(., ~ "aut" %in% .x$role)) ~ purrr::keep(., ~ "aut" %in% .x$role),
+                ~ .) %>%
       format(include = c("given", "family")) %>%
       pal::prose_ls()
     
@@ -205,10 +205,10 @@ main_rmd <- function(path = ".") {
                                       file = path)) %>%
       which() %>%
       magrittr::extract(rmd_file_paths, .) %>%
-      purrr::when(length(.) > 1L ~ # this is theoretically possible in case of subdirs under `Rmd/` or for case-sensitive filesystems (both `.Rmd` and `.rmd`)
-                    cli::cli_abort(paste0("Multiple {.file .Rmd} files detected under {.path {fs::path(path, 'Rmd/')}} whose names match the package name: ",
-                                          "{.file {.}}")),
-                  ~ .)
+      pal::when(length(.) > 1L ~ # this is theoretically possible in case of subdirs under `Rmd/` or for case-sensitive filesystems (both `.Rmd` and `.rmd`)
+                  cli::cli_abort(paste0("Multiple {.file .Rmd} files detected under {.path {fs::path(path, 'Rmd/')}} whose names match the package name: ",
+                                        "{.file {.}}")),
+                ~ .)
   }
   
   result
@@ -920,8 +920,8 @@ gen_pkgdown_ref <- function(rmd) {
                                                               magrittr::extract(rmd_xml, .) %>%
                                                               purrr::map_chr(pal::xml_to_md) %>%
                                                               stringr::str_trim() %>%
-                                                              purrr::when(length(.) > 0L ~ paste0(., collapse = "\n\n"),
-                                                                          ~ NA_character_))),
+                                                              pal::when(length(.) > 0L ~ paste0(., collapse = "\n\n"),
+                                                                        ~ NA_character_))),
                        by = "i_title") %>%
       dplyr::left_join(y = tibble::tibble(i_subtitle =
                                             .$i_subtitle %>%
@@ -943,8 +943,8 @@ gen_pkgdown_ref <- function(rmd) {
                                                               magrittr::extract(rmd_xml, .) %>%
                                                               purrr::map_chr(pal::xml_to_md) %>%
                                                               stringr::str_trim() %>%
-                                                              purrr::when(length(.) > 0L ~ paste0(., collapse = "\n\n"),
-                                                                          ~ NA_character_))),
+                                                              pal::when(length(.) > 0L ~ paste0(., collapse = "\n\n"),
+                                                                        ~ NA_character_))),
                        by = "i_subtitle")
     
     # assemble result list that can easily be converted to YAML using `yaml::as.yaml()`
@@ -987,8 +987,8 @@ gen_pkgdown_ref <- function(rmd) {
           purrr::flatten() %>%
           purrr::compact() %>%
           # move subtitle-less item to the front (the `NA` group is always processed last in `group_map()`)
-          purrr::when(anyNA(data_title$subtitle) ~ .[c(length(.), seq_len(length(.) - 1L))],
-                      ~ .)
+          pal::when(anyNA(data_title$subtitle) ~ .[c(length(.), seq_len(length(.) - 1L))],
+                    ~ .)
         
         c(list(item_title),
           items_subtitle)
@@ -996,8 +996,8 @@ gen_pkgdown_ref <- function(rmd) {
       purrr::flatten() %>%
       purrr::compact() %>%
       # move title-less item to the front (the `NA` group is always processed last in `group_map()`)
-      purrr::when(anyNA(data_ref_i$title) ~ .[c(length(.), seq_len(length(.) - 1L))],
-                  ~ .)
+      pal::when(anyNA(data_ref_i$title) ~ .[c(length(.), seq_len(length(.) - 1L))],
+                ~ .)
   }
   
   list(reference = result)

@@ -127,6 +127,24 @@ This package borrows a lot of the [Tidyverse](https://www.tidyverse.org/) design
 
 -   Line width is limited to **160 characters**, double the [limit proposed by the TSG](https://style.tidyverse.org/syntax.html#long-lines) (80 characters is ridiculously little given today's high-resolution wide screen monitors).
 
+    Furthermore, the preferred style for breaking long lines differs. Instead of wrapping directly after an expression's opening bracket as [suggested by the TSG](https://style.tidyverse.org/syntax.html#long-lines), we prefer two fewer line breaks and indent subsequent lines within the expression by its opening bracket:
+
+    ``` r
+    # TSG proposes this
+    do_something_very_complicated(
+      something = "that",
+      requires = many,
+      arguments = "some of which may be long"
+    )
+
+    # we prefer this
+    do_something_very_complicated(something = "that",
+                                  requires = many,
+                                  arguments = "some of which may be long")
+    ```
+
+    This results in less vertical and more horizontal spread of the code and better readability in pipes.
+
 -   Usage of [magrittr's compound assignment pipe-operator `%<>%`](https://magrittr.tidyverse.org/reference/compound.html) is desirable[^5].
 
 -   Usage of [R's right-hand assignment operator `->`](https://rdrr.io/r/base/assignOps.html) is not allowed[^6].
