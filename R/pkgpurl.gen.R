@@ -43,7 +43,8 @@ pkg_env <- rlang::current_env()
 data_special_headings %>%
   dplyr::group_split(type) %>%
   purrr::walk(~ assign(x = paste0("heading_texts_", .x$type),
-                       value = purrr::flatten_chr(.x$heading_texts),
+                       value = purrr::list_c(.x$heading_texts,
+                                             ptype = character()),
                        envir = pkg_env))
 rm(pkg_env)
 
@@ -738,7 +739,7 @@ run_nopurl_rmd <- function(path = ".",
 #' The following rules define how the reference index is generated:
 #' 
 #' 1. Headings below a heading named
-#'    `r purrr::flatten_chr(dplyr::filter(data_special_headings, type == "ignore_content")$heading_texts) %>% pal::prose_ls(wrap = "*", last_sep = " or ")`
+#'    `r purrr::list_c(dplyr::filter(data_special_headings, type == "ignore_content")$heading_texts, ptype = character()) %>% pal::prose_ls(wrap = "*", last_sep = " or ")`
 #'    (case-insensitive, but without any inline formatting) are simply ignored when generating the reference index.
 #' 2. Every heading that is a) inline-formatted as [verbatim](https://pandoc.org/MANUAL.html#verbatim) and b) doesn't contain any whitespace characters is
 #'    considered to be the name of a help topic (usually the name of a function or dataset) to be included in the reference index. This maps to the `contents`
@@ -916,7 +917,7 @@ gen_pkgdown_ref <- function(rmd) {
                                                               dplyr::filter(is_description_heading
                                                                             & heading_lvl == hierarchy$heading_lvl[.y] + 1L) %$%
                                                               subnode_ix %>%
-                                                              purrr::flatten_int() %>%
+                                                              purrr::list_c(ptype = integer()) %>%
                                                               magrittr::extract(rmd_xml, .) %>%
                                                               purrr::map_chr(pal::xml_to_md) %>%
                                                               stringr::str_trim() %>%
@@ -939,7 +940,7 @@ gen_pkgdown_ref <- function(rmd) {
                                                               dplyr::filter(is_description_heading
                                                                             & heading_lvl == hierarchy$heading_lvl[.y] + 1L) %$%
                                                               subnode_ix %>%
-                                                              purrr::flatten_int() %>%
+                                                              purrr::list_c(ptype = integer()) %>%
                                                               magrittr::extract(rmd_xml, .) %>%
                                                               purrr::map_chr(pal::xml_to_md) %>%
                                                               stringr::str_trim() %>%
@@ -984,7 +985,7 @@ gen_pkgdown_ref <- function(rmd) {
             c(list(item_subtitle),
               list(list(contents = contents)))
           }) %>%
-          purrr::flatten() %>%
+          purrr::list_flatten() %>%
           purrr::compact() %>%
           # move subtitle-less item to the front (the `NA` group is always processed last in `group_map()`)
           pal::when(anyNA(data_title$subtitle) ~ .[c(length(.), seq_len(length(.) - 1L))],
@@ -993,7 +994,7 @@ gen_pkgdown_ref <- function(rmd) {
         c(list(item_title),
           items_subtitle)
       }) %>%
-      purrr::flatten() %>%
+      purrr::list_flatten() %>%
       purrr::compact() %>%
       # move title-less item to the front (the `NA` group is always processed last in `group_map()`)
       pal::when(anyNA(data_ref_i$title) ~ .[c(length(.), seq_len(length(.) - 1L))],
