@@ -552,7 +552,7 @@ purl_rmd <- function(path = ".",
       if (length(ref$reference) > 0L) {
         
         yaml::read_yaml(file = pkgdown_config_file) %>%
-          pal::list_drop(drop = "reference") %>%
+          purrr::discard_at(at = "reference") %>%
           c(ref) %>%
           yaml::write_yaml(file = pkgdown_config_file)
       }

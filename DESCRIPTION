@@ -26,7 +26,7 @@ Imports:
     lifecycle (>= 1.0.1),
     magrittr (>= 2.0.0),
     pal (>= 0.0.9091),
-    purrr (>= 0.3.4),
+    purrr (>= 1.0.0),
     rlang (>= 0.4.11),
     stringr (>= 1.4.0),
     tibble (>= 3.1.4),
