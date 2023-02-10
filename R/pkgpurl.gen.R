@@ -2,7 +2,7 @@
 # See `README.md#r-markdown-format` for more information on the literate programming approach used applying the R Markdown format.
 
 # pkgpurl: Facilitate Authoring R Packages in the R Markdown File Format
-# Copyright (C) 2022 Salim Brüggemann
+# Copyright (C) 2023 Salim Brüggemann
 # 
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or any later version.
@@ -1004,9 +1004,9 @@ gen_pkgdown_ref <- function(rmd) {
   list(reference = result)
 }
 
-#' `r this_pkg` package configuration metadata
+#' `r pkgsnip::title_label("pkg_config", pkg = "pkgpurl")`
 #'
-#' A [tibble][tibble::tbl_df] with metadata of all possible `r this_pkg` package configuration options. See [pal::pkg_config_val()] for more information.
+#' `r pkgsnip::description_label("pkg_config", pkg = "pkgpurl")`
 #'
 #' @format `r pkgsnip::return_label("data_cols", cols = colnames(pkg_config))`
 #' @export

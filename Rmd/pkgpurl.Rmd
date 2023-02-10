@@ -1170,9 +1170,9 @@ gen_pkgdown_ref <- function(rmd) {
 ### `pkg_config`
 
 ```{r}
-#' `r this_pkg` package configuration metadata
+#' `r pkgsnip::title_label("pkg_config", pkg = "pkgpurl")`
 #'
-#' A [tibble][tibble::tbl_df] with metadata of all possible `r this_pkg` package configuration options. See [pal::pkg_config_val()] for more information.
+#' `r pkgsnip::description_label("pkg_config", pkg = "pkgpurl")`
 #'
 #' @format `r pkgsnip::return_label("data_cols", cols = colnames(pkg_config))`
 #' @export
