@@ -45,6 +45,6 @@ X-XSS-Protection = "1; mode=block"
 # ------- REDIRECTS -------
 # Redirect rules are processed [from top to bottom](https://docs.netlify.com/routing/redirects/#rule-processing-order), i.e. first matching one has priority
 [[redirects]]
-from = "/"
-to = "/dev"
+from = "/*"
+to = "/dev/:splat"
 status = 302
