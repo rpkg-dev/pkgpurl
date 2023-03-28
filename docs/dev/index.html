@@ -8,8 +8,8 @@
 <meta name="description" content="pkgpurl facilitates R package authoring using a literate programming approach. The main idea behind this is to write all of the R source code in R Markdown files (`Rmd/*.Rmd`), which allows the actual code to be freely mixed with explanatory and supplementary information in expressive Markdown format. The main object of pkgpurl is to provide a standardized way to compile the bare `.R` files from the prose-enhanced and thus more human-oriented `.Rmd` files.">
 <title>Facilitate Authoring R Packages in the R Markdown File Format • pkgpurl</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link rel="stylesheet" href="deps/all.min.css">
+<link href="deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link rel="stylesheet" href="deps/all.min.css">
 <link rel="stylesheet" href="deps/v4-shims.min.css">
 <script src="deps/bootstrap-toc.min.js"></script><script src="deps/headroom.min.js"></script><script src="deps/jQuery.headroom.min.js"></script><script src="deps/clipboard.min.js"></script><script src="deps/fuse.js"></script><script src="deps/autocomplete.jquery.min.js"></script><script src="deps/mark.min.js"></script><script src="deps/MathJax.js"></script><script src="deps/TeX-AMS-MML_HTMLorMML.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Facilitate Authoring R Packages in the R Markdown File Format">
 <meta property="og:description" content="pkgpurl facilitates R package authoring using a literate programming approach. The main idea behind this is to write all of the R source code in R Markdown files (`Rmd/*.Rmd`), which allows the actual code to be freely mixed with explanatory and supplementary information in expressive Markdown format. The main object of pkgpurl is to provide a standardized way to compile the bare `.R` files from the prose-enhanced and thus more human-oriented `.Rmd` files.">
@@ -20,7 +20,7 @@
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><script src="https://rpkg.dev/counter-dev.js" data-id="4c4963fe-9fcf-4d81-95bb-2135e114b85b" data-utcoffset="1"></script>
+<![endif]--><script src="https://rpkg.dev/counter-dev.min.js" data-id="4c4963fe-9fcf-4d81-95bb-2135e114b85b" data-utcoffset="1"></script>
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -91,10 +91,10 @@ editor_options:
 </li>
 <li>
 <p>or <a href="https://rstudio.github.io/visual-markdown-editing/#/options?id=project-options" class="external-link">per project</a> in the usual <code>PACKAGE_NAME.Rproj</code> file, e.g.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">MarkdownWrap: Column</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">MarkdownWrapAtColumn: 160</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">MarkdownReferences: Section</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">MarkdownCanonical: Yes</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="dt">MarkdownWrap: Column</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="dt">MarkdownWrapAtColumn: 160</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="dt">MarkdownReferences: Section</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="dt">MarkdownCanonical: Yes</span></span></code></pre></div>
 <p>(I’d recommend to set them <em>per project</em>, so they apply to the whole package including any <code>.Rmd</code> vignettes.)</p>
 </li>
 </ul>
