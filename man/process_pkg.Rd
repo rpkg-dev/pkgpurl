@@ -15,6 +15,7 @@ process_pkg(
   document = TRUE,
   build_and_install = TRUE,
   restart_r_session = build_and_install,
+  use_rstudio_api = NULL,
   quiet = TRUE,
   roclets = NULL,
   args = getOption("devtools.install.args"),
@@ -37,7 +38,10 @@ process_pkg(
 \item{build_and_install}{Whether or not to build and install the package after purling \verb{Rmd/*.Rmd} to \verb{R/*.gen.R}.}
 
 \item{restart_r_session}{Whether or not to restart the R session. Highly recommended if \code{build_and_install = TRUE}, but only possible when R is run within
-RStudio.}
+RStudio. Note that the R session is always restarted if \code{use_rstudio_api = TRUE}.}
+
+\item{use_rstudio_api}{Whether or not to rely on the RStudio API to install the built package (which also triggers an R session restart). If \code{NULL}, it is
+automatically set based on whether RStudio is running (\code{TRUE}) or not (\code{FALSE}).}
 
 \item{quiet}{Whether or not to suppress printing status output from internal processing.}
 

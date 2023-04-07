@@ -216,6 +216,16 @@ install_pkg <- function(path,
 }
 ```
 
+### `install_pkg_rstudio_api`
+
+```{r}
+install_pkg_rstudio_api <- function(quiet = FALSE) {
+  
+  rstudioapi::executeCommand(commandId = "buildFull",
+                             quiet = quiet)
+}
+```
+
 ### `main_rmd`
 
 ```{r}
@@ -390,7 +400,9 @@ TODO:
 #' @param document Whether or not to re-build the package documentation after purling `Rmd/*.Rmd` to `R/*.gen.R`.
 #' @param build_and_install Whether or not to build and install the package after purling `Rmd/*.Rmd` to `R/*.gen.R`.
 #' @param restart_r_session Whether or not to restart the R session. Highly recommended if `build_and_install = TRUE`, but only possible when R is run within
-#'   RStudio.
+#'   RStudio. Note that the R session is always restarted if `use_rstudio_api = TRUE`.
+#' @param use_rstudio_api Whether or not to rely on the RStudio API to install the built package (which also triggers an R session restart). If `NULL`, it is
+#'   automatically set based on whether RStudio is running (`TRUE`) or not (`FALSE`).
 #' @param quiet `r pkgsnip::param_label("quiet")`
 #'
 #' @inherit purl_rmd return
@@ -409,6 +421,7 @@ process_pkg <- function(path = ".",
                         document = TRUE,
                         build_and_install = TRUE,
                         restart_r_session = build_and_install,
+                        use_rstudio_api = NULL,
                         quiet = TRUE,
                         roclets = NULL,
                         args = getOption("devtools.install.args"),
@@ -419,9 +432,17 @@ process_pkg <- function(path = ".",
   checkmate::assert_flag(document)
   checkmate::assert_flag(build_and_install)
   checkmate::assert_flag(restart_r_session)
+  checkmate::assert_flag(use_rstudio_api,
+                         null.ok = TRUE)
   checkmate::assert_flag(quiet)
   pal::assert_pkg("devtools")
   pal::assert_pkg("pkgload")
+  
+  if (is.null(use_rstudio_api) && nzchar(system.file(package = "rstudioapi")) && rstudioapi::isAvailable()) {
+    use_rstudio_api <- TRUE
+  } else {
+    use_rstudio_api <- use_rstudio_api %||% FALSE
+  }
   
   # convert `Rmd/*.Rmd` to `R/*.gen.R`
   purl_rmd(path = path,
@@ -438,18 +459,23 @@ process_pkg <- function(path = ".",
   
   # build and install package
   if (build_and_install) {
-    install_pkg(path = path,
-                unload = FALSE,
-                quiet = quiet,
-                reload = TRUE,
-                args = args,
-                dependencies = dependencies,
-                upgrade = upgrade,
-                keep_source = keep_source)
-  }
-  
-  if (restart_r_session) {
-    restart_r()
+    
+    if (use_rstudio_api) {
+      install_pkg_rstudio_api(quiet = quiet)
+    } else {
+      install_pkg(path = path,
+                  unload = FALSE,
+                  quiet = quiet,
+                  reload = TRUE,
+                  args = args,
+                  dependencies = dependencies,
+                  upgrade = upgrade,
+                  keep_source = keep_source)
+      
+      if (restart_r_session) {
+        restart_r()
+      }
+    }
   }
   
   invisible(path)
