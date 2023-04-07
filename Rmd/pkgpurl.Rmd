@@ -373,8 +373,13 @@ rmd_files <- function(path) {
 
 TODO:
 
--   Once it's possible to [interact with RStudio's *Build* pane via pkg rstudioapihttps://github.com/rstudio/rstudioapi/issues/17, we should test printing
+-   Once it's possible to [interact with RStudio's *Build* pane via pkg rstudioapi](https://github.com/rstudio/rstudioapi/issues/17), we should test printing
     `process_pkg()`'s output to it instead of the console.
+
+NOTES:
+
+-   There's a [longstanding bug in R](https://bugs.r-project.org/show_bug.cgi?id=16644) that causes `process_pkg()` to fail with an error "lazy-load database
+    ... is corrupt".
 
 ```{r}
 #' Process R Markdown package from source to installation
