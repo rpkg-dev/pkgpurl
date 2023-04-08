@@ -93,7 +93,9 @@ Executes all steps to process an R package written in R Markdown format from sou
 \item Purl all relevant \verb{Rmd/*.Rmd} files to \verb{R/*.gen.R} files using \code{\link[=purl_rmd]{purl_rmd()}}.
 \item Re-generate the \href{https://pkgdown.r-lib.org/reference/build_reference.html#reference-index}{pkgdown reference index} based on the package's \link[=main_rmd]{main R Markdown file} using \code{\link[=gen_pkgdown_ref]{gen_pkgdown_ref()}} (if \code{gen_pkgdown_ref = TRUE}).
 \item Re-build the package documentation using \code{\link[devtools:document]{devtools::document()}} (if \code{document = TRUE}).
-\item Build and install the package using \code{\link[devtools:install]{devtools::install()}} (if \code{build_and_install = TRUE}).
+\item Build and install the package (if \code{build_and_install = TRUE}). This is done either using
+\code{\link[rstudioapi:executeCommand]{rstudioapi::executeCommand(commandId = "buildFull")}} (if \code{use_rstudio_api = TRUE}) or using \code{\link[devtools:install]{devtools::install()}} (if
+\code{use_rstudio_api = FALSE})
 \item Restarts the R session using \code{\link[rstudioapi:restartSession]{rstudioapi::restartSession()}} (if \code{restart_r_session = TRUE}).
 }
 }

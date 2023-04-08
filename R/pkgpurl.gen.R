@@ -175,6 +175,8 @@ install_pkg <- function(path,
 
 install_pkg_rstudio_api <- function(quiet = FALSE) {
   
+  cli::cli_alert_info("Building and installing package via RStudio API (see the {.strong Build} pane)")
+  
   rstudioapi::executeCommand(commandId = "buildFull",
                              quiet = quiet)
 }
@@ -301,7 +303,9 @@ rmd_files <- function(path) {
 #' 2. Re-generate the [pkgdown reference index](https://pkgdown.r-lib.org/reference/build_reference.html#reference-index) based on the package's [main R
 #'    Markdown file][main_rmd()] using [gen_pkgdown_ref()] (if `gen_pkgdown_ref = TRUE`).
 #' 3. Re-build the package documentation using [devtools::document()] (if `document = TRUE`).
-#' 4. Build and install the package using [devtools::install()] (if `build_and_install = TRUE`).
+#' 4. Build and install the package (if `build_and_install = TRUE`). This is done either using
+#'    [`rstudioapi::executeCommand(commandId = "buildFull")`][rstudioapi::executeCommand] (if `use_rstudio_api = TRUE`) or using [devtools::install()] (if
+#'    `use_rstudio_api = FALSE`)
 #' 5. Restarts the R session using [rstudioapi::restartSession()] (if `restart_r_session = TRUE`).
 #'
 #' @details
