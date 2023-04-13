@@ -6,11 +6,11 @@ pkgpurl facilitates R package authoring using a literate programming approach. T
 
 The basic idea behind the concept this package implements originates from Yihui Xie. See his blog post [*Write An R Package Using Literate Programming Techniques*](https://yihui.org/rlp/) for more details, it’s definitively worth reading. This package’s function [`pkgpurl::purl_rmd()`](https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.html) is just a less cumbersome alternative to the Makefile approach outlined by him.
 
-## Details
+## Pros and cons
 
 The [R Markdown](https://rmarkdown.rstudio.com/) format provides several **advantages** over the bare R source format when developing an R package:
 
--   **Mix Markdown and Code**
+-   👍 **Mix Markdown and Code**
 
     It allows the actual code to be freely mixed with explanatory and supplementary information in expressive [Markdown](https://en.wikipedia.org/wiki/Markdown) format instead of having to rely on [`#` comments](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Comments) only. In general, this should encourage to actually record code-accompanying information because you’re able to use the full spectrum of [Pandoc’s Markdown syntax](https://pandoc.org/MANUAL.html#pandocs-markdown) like inline formatting, lists, tables, quotations or math[^1].
 
@@ -42,9 +42,9 @@ The [R Markdown](https://rmarkdown.rstudio.com/) format provides several **advan
 
         (I’d recommend to set them *per project*, so they apply to the whole package including any `.Rmd` vignettes.)
 
--   **All your code in a single, well-structured file**
+-   👍 **All your code in a single, well-structured file**
 
-    The [traditional recommendation](https://style.tidyverse.org/package-files.html) to not lose overview of your package’s R source code is to split it over multiple files. The popular (and very useful) book *R Packages* [gives the following advice](https://r-pkgs.org/r.html#code-organising):
+    The [traditional recommendation](https://style.tidyverse.org/package-files.html) to not lose overview of your package’s R source code is to split it over multiple files. The popular (and very useful) book *R Packages* [gives the following advice](https://r-pkgs.org/code.html#sec-code-organising):
 
     > If it’s very hard to predict which file a function lives in, that suggests it’s time to separate your functions into more files or reconsider how you are naming your functions and/or files.
 
@@ -54,45 +54,45 @@ The [R Markdown](https://rmarkdown.rstudio.com/) format provides several **advan
 
     Keeping all code in a single file frees you from the traditional hassle of finding a viable (but in the end still unsatisfactory) way to organize your R source code across multiple files. Of course, there are still good reasons to outsource code into separate files *in certain situations*, which nothing is stopping you from doing. You can also [exclude whole `.Rmd` files from purling using the `.nopurl.Rmd` filename suffix](https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.html#-rmd-files-excluded-from-purling).
 
--   **Improved overview and navigation**
+-   👍 **Improved overview and navigation**
 
-    You can rely on RStudio’s [code outline](https://rviews.rstudio.com/2016/11/11/easy-tricks-you-mightve-missed/#code-outline) to easily navigate through longer `.Rmd` files. IMHO it provides significantly better usability than the [code section standard](https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections) of `.R` files. It makes it easy to find your way around source files that are thousands of lines long.
+    You can rely on RStudio’s [code outline](https://rviews.rstudio.com/2016/11/11/easy-tricks-you-mightve-missed/#code-outline) to easily navigate through longer `.Rmd` files. IMHO it provides significantly better usability than the [code section standard](https://support.posit.co/hc/en-us/articles/200484568-Code-Folding-and-Sections) of `.R` files. It makes it easy to find your way around source files that are thousands of lines long.
 
-    RStudio’s [*Go to File/Function* shortcut](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts) works the same for `.Rmd` files as it does for `.R` files.
+    RStudio’s [*Go to File/Function* shortcut](https://support.posit.co/hc/en-us/articles/200711853-Keyboard-Shortcuts) works the same for `.Rmd` files as it does for `.R` files.
 
--   **Improved visual clarity**
+-   👍 **Improved visual clarity**
 
     If you use RStudio or any other editor with proper R Markdown syntax highlighting, you will probably like the gained visual clarity for distinguishing individual functions/code parts (by putting them in separate R code chunks). This also facilitates creating a meaningful document structure (in Markdown) alongside the actual R source code.
 
--   **Easily toggle code inclusion**
+-   👍 **Easily toggle code inclusion**
 
     You can put development-only code which never lands in the generated R source files (and thus the R package) in separate code chunks with the chunk option [`purl = FALSE`](https://yihui.org/knitr/options/#extracting-source-code). This turns out to be very convenient in certain situations.
 
-    For example, this is a good way to reproducibly document the generation of cleaned versions of [exported data](https://r-pkgs.org/data.html#data-data) as well as [internal data](https://r-pkgs.org/data.html#data-sysdata). This avoids having to outsource the code to separate files under `data-raw/` and adding the directory to `.Rbuildignore`, i.e. no need to use `usethis::use_data_raw()`. Instead, you just set `purl = FALSE` for the relevant code chunk(s). You can (and should) still use [`usethis::use_data()`](https://usethis.r-lib.org/reference/use_data.html) (optionally with `overwrite = TRUE`) to generate the files under `data/` holding external package data as well as the `R/sysdata.rda` file (using `internal = TRUE`) holding internal package data.
+    For example, this is a good way to reproducibly document the generation of cleaned versions of [exported data](https://r-pkgs.org/data.html#sec-data-data) as well as [internal data](https://r-pkgs.org/data.html#sec-data-sysdata). This avoids having to outsource the code to separate files under `data-raw/` and adding the directory to `.Rbuildignore`, i.e. no need to use `usethis::use_data_raw()`. Instead, you just set `purl = FALSE` for the relevant code chunk(s). You can (and should) still use [`usethis::use_data()`](https://usethis.r-lib.org/reference/use_data.html) (optionally with `overwrite = TRUE`) to generate the files under `data/` holding external package data as well as the `R/sysdata.rda` file (using `internal = TRUE`) holding internal package data.
 
--   **Easily toggle styler**
+-   👍 **Easily toggle styler**
 
     If you use [styler](https://styler.r-lib.org/) to auto-format your code globally by [setting `knitr::opts_chunk$set(tidy = "styler")`](https://styler.r-lib.org/articles/third-party-integrations.html), you can still opt-out on a per-chunk basis by setting [`tidy = FALSE`](https://github.com/r-lib/styler/releases/tag/v1.5.1). This gives pleasant flexibility.
 
 Unfortunately, there are also a few notable **drawbacks** of the R Markdown format:
 
--   **Additional workflow step**
+-   👎 **Additional workflow step**
 
     The pkgpurl approach on writing R packages in the R Markdown format introduces *one* additional step at the very beginning of typical package development workflows: Running [`pkgpurl::purl_rmd()`](https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.html) to generate the `R/*.gen.R` files from the original `Rmd/*.Rmd` sources before documenting/checking/testing/building the package. Given sufficient user demand, this could probably be integrated into [devtools](https://devtools.r-lib.org/)’ functions in the future, so that no additional action has to be taken by the user when relying on RStudio’s built-in package building infrastructure.
 
     For the time being, it’s recommended to set up a custom shortcut[^3] for one or both of [`pkgpurl::purl_rmd()`](https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.html) and [`pkgpurl::process_pkg()`](https://pkgpurl.rpkg.dev/dev/reference/process_pkg.html) which are registered as [RStudio add-ins](https://rstudio.github.io/rstudioaddins/).
 
--   **Differing setup**
+-   👎 **Differing setup**
 
     Setting up a new project to write an R package in the R Markdown differs slightly from the classic approach. A suitable convenience function like `create_rmd_package()` to set up all the necessary parts could probably be added to [usethis](https://usethis.r-lib.org/) in the future.
 
     For the time being, you can use my ready-to-go [R Markdown Package Development Template](https://gitlab.com/salim_b/r/pkg-dev-tpl) as a starting point for creating new R packages in the R Markdown format.
 
--   **Unwieldy debugging**
+-   👎 **Unwieldy debugging**
 
     Debugging can be a bit more laborious since line numbers in warning and error messages always refer to the generated `R/*.gen.R` file(s), not the underlying `Rmd/*.Rmd` source code file(s). If need be, you first have to look up the line numbers in the `R/*.gen.R` file(s) to understand which function / code parts cause the issue in order to know where to fix it in the `Rmd/*.Rmd` source(s).
 
--   **Missing roxygen2 auto-completion**
+-   👎 **Missing roxygen2 auto-completion**
 
     Other than in `.R` files, RStudio currently doesn’t support auto-completion of [roxygen2 tags](https://roxygen2.r-lib.org/articles/rd.html) in `.Rmd` files and its <kbd>Reflow Comment</kbd> command doesn’t properly work on them. These are [known issues](https://github.com/rstudio/rstudio/issues/5809#issuecomment-932228146) which will hopefully be resolved in the near future.
 
@@ -165,7 +165,7 @@ pkgpurl::lint_rmd()
 
 [^2]: It basically sends the (R) Markdown file on a “Pandoc round trip” on every file save.
 
-[^3]: I personally recommend to use the shortcut <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> since it’s not occupied yet by any of the predefined [RStudio shortcuts](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts).
+[^3]: I personally recommend to use the shortcut <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> since it’s not occupied yet by any of the predefined [RStudio shortcuts](https://support.posit.co/hc/en-us/articles/200711853-Keyboard-Shortcuts).
 
 [^4]: This naming convention as well as the very idea to leverage the R Markdown format to author R packages was originally proposed by Yihui Xie. See his excellent [blog post](https://yihui.name/rlp/) for more detailed information about the benefits of literate programming techniques and some practical examples. Note that using `pkgpurl::purl_rmd()` is a less cumbersome alternative to the Makefile approach outlined by him.
 
