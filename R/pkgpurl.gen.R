@@ -29,7 +29,7 @@ data_special_headings <- tibble::tribble(
                                           "the description for this very (sub)title (`desc` in the pkgdown reference index)."),
   "ignore_title", "EXPORTED",      paste0("Will never be used as `title` or `subtitle` in the pkgdown reference index (i.e. ignored). Simply serves as a ",
                                          "(usually top-level) heading to indicate that the objects defined below it are ",
-                                         "[exported](https://r-pkgs.org/namespace.html#exports) by the package."),
+                                         "[exported](https://r-pkgs.org/dependencies-in-practice.html#exports) by the package."),
   "ignore_content", c("INTERNAL",
                       "NOTES",
                       "TEMPORARY",
@@ -476,7 +476,7 @@ load_pkg <- function(path = ".",
 #'    with a dot, e.g. `Rmd/.playground.Rmd`.
 #' 
 #' The above convention allows for easy exclusion of specific `.Rmd` files from purling. A common case for this are scripts that generate [package-internal
-#' data](https://r-pkgs.org/data.html#data-sysdata) from raw sources. Such a script could be stored as `Rmd/data.nopurl.Rmd`, so that no corresponding file
+#' data](https://r-pkgs.org/data.html#sec-data-sysdata) from raw sources. Such a script could be stored as `Rmd/data.nopurl.Rmd`, so that no corresponding file
 #' under `R/*.R` is generated. For the sake of clarity, it's generally advised to prefer the `.nopurl` suffix over hiding files.
 #'
 #' @param path Path to the root of the package directory.
@@ -632,9 +632,9 @@ lint_rmd <- function(path = ".",
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
-#' Executes `.Rmd` files which are supposed to contain code not included in the [source
-#' package](https://r-pkgs.org/package-structure-state.html#source-package), i.e. usually outsourced to separate `.Rmd` files with the [`.nopurl` suffix in
-#' their filenames](https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.html#-rmd-files-excluded-from-purling). Those files are typically used to generate package
+#' Executes `.Rmd` files which are supposed to contain code not included in the [source package](https://r-pkgs.org/structure.html#sec-source-package), i.e.
+#' usually outsourced to separate `.Rmd` files with the [`.nopurl` suffix in their
+#' filenames](https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.html#-rmd-files-excluded-from-purling). Those files are typically used to generate package
 #' data.
 #'
 #' If an error is encountered saying `internal error -3 in R_decompress1`, restart the R session and run again.

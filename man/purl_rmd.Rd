@@ -53,7 +53,7 @@ purling:
 with a dot, e.g. \code{Rmd/.playground.Rmd}.
 }
 
-The above convention allows for easy exclusion of specific \code{.Rmd} files from purling. A common case for this are scripts that generate \href{https://r-pkgs.org/data.html#data-sysdata}{package-internal data} from raw sources. Such a script could be stored as \code{Rmd/data.nopurl.Rmd}, so that no corresponding file
+The above convention allows for easy exclusion of specific \code{.Rmd} files from purling. A common case for this are scripts that generate \href{https://r-pkgs.org/data.html#sec-data-sysdata}{package-internal data} from raw sources. Such a script could be stored as \code{Rmd/data.nopurl.Rmd}, so that no corresponding file
 under \verb{R/*.R} is generated. For the sake of clarity, it's generally advised to prefer the \code{.nopurl} suffix over hiding files.
 }
 

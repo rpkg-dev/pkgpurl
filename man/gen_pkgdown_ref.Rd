@@ -25,7 +25,7 @@ Headings that exactly match certain strings (case-insensitive, but without any i
 overview:\tabular{ll}{
    \strong{Headings} \tab \strong{Meaning} \cr
    DESCRIPTION \tab Paragraph(s) below this heading, that in turn is hierarchically below a \code{title} or \code{subtitle} heading, are used as the description for this very (sub)title (\code{desc} in the pkgdown reference index). \cr
-   EXPORTED \tab Will never be used as \code{title} or \code{subtitle} in the pkgdown reference index (i.e. ignored). Simply serves as a (usually top-level) heading to indicate that the objects defined below it are \href{https://r-pkgs.org/namespace.html#exports}{exported} by the package. \cr
+   EXPORTED \tab Will never be used as \code{title} or \code{subtitle} in the pkgdown reference index (i.e. ignored). Simply serves as a (usually top-level) heading to indicate that the objects defined below it are \href{https://r-pkgs.org/dependencies-in-practice.html#exports}{exported} by the package. \cr
    INTERNAL , NOTES    , TEMPORARY, TMP \tab Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index generation. \cr
 }
 }
