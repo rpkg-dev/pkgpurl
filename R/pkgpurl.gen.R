@@ -785,16 +785,16 @@ run_nopurl_rmd <- function(path = ".",
 #'
 #' ```{r, results = "asis", echo = FALSE}
 #' brio::read_lines("snippets/simplified_example.Rmd") %>%
-#'   c(paste(pal::as_string(rep("`", 4L)), "rmd"), ., pal::as_string(rep("`", 4L))) %>%
+#'   c(paste(pal::as_string(rep("`", 4L)), "md"), ., pal::as_string(rep("`", 4L))) %>%
 #'   pal::cat_lines()
 #' ```
 #'
 #' ...yields this pkgdown index (converted [to YAML][yaml::as.yaml()]):
 #'
 #' ```{r, comment = "", echo = FALSE}
-#' brio::read_file("snippets/simplified_example.Rmd") %>%
-#'   gen_pkgdown_ref() %>%
-#'   yaml::as.yaml() %>%
+#' brio::read_file("snippets/simplified_example.Rmd") |>
+#'   gen_pkgdown_ref() |>
+#'   yaml::as.yaml() |>
 #'   cat()
 #' ```
 #'

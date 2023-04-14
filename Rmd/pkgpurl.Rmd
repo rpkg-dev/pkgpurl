@@ -891,6 +891,11 @@ run_nopurl_rmd <- function(path = ".",
 
 ### `gen_pkgdown_ref`
 
+TODO:
+
+-   Once [issue #2298](https://github.com/r-lib/pkgdown/issues/2298) is fixed, change the code block lang ID in the "Parsing example" below from `md` back to
+    `rmd`.
+
 NOTES:
 
 -   The pkgdown reference supports a max. of 2 hierarchy levels.
@@ -954,16 +959,16 @@ NOTES:
 #'
 #' ```{r, results = "asis", echo = FALSE}
 #' brio::read_lines("snippets/simplified_example.Rmd") %>%
-#'   c(paste(pal::as_string(rep("`", 4L)), "rmd"), ., pal::as_string(rep("`", 4L))) %>%
+#'   c(paste(pal::as_string(rep("`", 4L)), "md"), ., pal::as_string(rep("`", 4L))) %>%
 #'   pal::cat_lines()
 #' ```
 #'
 #' ...yields this pkgdown index (converted [to YAML][yaml::as.yaml()]):
 #'
 #' ```{r, comment = "", echo = FALSE}
-#' brio::read_file("snippets/simplified_example.Rmd") %>%
-#'   gen_pkgdown_ref() %>%
-#'   yaml::as.yaml() %>%
+#' brio::read_file("snippets/simplified_example.Rmd") |>
+#'   gen_pkgdown_ref() |>
+#'   yaml::as.yaml() |>
 #'   cat()
 #' ```
 #'

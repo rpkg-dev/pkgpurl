@@ -82,7 +82,84 @@
     <h2 id="parsing-example">Parsing example<a class="anchor" aria-label="anchor" href="#parsing-example"></a></h2>
     <p>An example might better explain how the parsing rules work than a thousand words, so here's a simplified one.</p>
 <p>When fed to <code>gen_pkgdown_ref()</code>, the following R Markdown content...</p>
-<p></p><div class="sourceCode rmd"><pre><code></code></pre><p></p></div>
+<p></p><div class="sourceCode md"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="an">editor_options:</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">  markdown:</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">    wrap: 80</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu"># `main_fn`</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>The fn below is under no title or subtitle in the pkgdown index.</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="in">main_fn &lt;- function(...) {...}</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="fu"># First group of fns</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="fu">## DESCRIPTION</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>The description text for *First group of fns*.</span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="fu">## `group_wide_fn`</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>The fn below is only under a title, but no subtitle in the pkgdown index.</span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="in">group_wide_fn &lt;- function(...) {...}</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="fu">## Some subgroup</span></span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a>The fns below are both under a title and subtitle in the pkgdown index.</span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a><span class="fu">### `subgroup_fn_1`</span></span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a><span class="in">subgroup_fn_1 &lt;- function(...) {...}</span></span>
+<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-38"><a href="#cb1-38" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" tabindex="-1"></a><span class="fu">### `subgroup_fn_2`</span></span>
+<span id="cb1-40"><a href="#cb1-40" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-42"><a href="#cb1-42" tabindex="-1"></a><span class="in">subgroup_fn_2 &lt;- function(...) {...}</span></span>
+<span id="cb1-43"><a href="#cb1-43" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-44"><a href="#cb1-44" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" tabindex="-1"></a><span class="fu">### Sub-subgroup</span></span>
+<span id="cb1-46"><a href="#cb1-46" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" tabindex="-1"></a>The above *Sub-subgroup* heading is ignored for the pkgdown index because the</span>
+<span id="cb1-48"><a href="#cb1-48" tabindex="-1"></a>latter only supports up to two heading levels.</span>
+<span id="cb1-49"><a href="#cb1-49" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" tabindex="-1"></a>The fn below thus moves one hierarchy level up in the pkgdown index.</span>
+<span id="cb1-51"><a href="#cb1-51" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" tabindex="-1"></a><span class="fu">#### `sub_subgroup_fn`</span></span>
+<span id="cb1-53"><a href="#cb1-53" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-55"><a href="#cb1-55" tabindex="-1"></a><span class="in">sub_subgroup_fn &lt;- function(...) {...}</span></span>
+<span id="cb1-56"><a href="#cb1-56" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-57"><a href="#cb1-57" tabindex="-1"></a></span>
+<span id="cb1-58"><a href="#cb1-58" tabindex="-1"></a><span class="fu">## Another subgroup</span></span>
+<span id="cb1-59"><a href="#cb1-59" tabindex="-1"></a></span>
+<span id="cb1-60"><a href="#cb1-60" tabindex="-1"></a><span class="fu">### DESCRIPTION</span></span>
+<span id="cb1-61"><a href="#cb1-61" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" tabindex="-1"></a>The description text for *Another subgroup*.</span>
+<span id="cb1-63"><a href="#cb1-63" tabindex="-1"></a></span>
+<span id="cb1-64"><a href="#cb1-64" tabindex="-1"></a><span class="fu">### `another_subgroup_fn`</span></span>
+<span id="cb1-65"><a href="#cb1-65" tabindex="-1"></a></span>
+<span id="cb1-66"><a href="#cb1-66" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-67"><a href="#cb1-67" tabindex="-1"></a><span class="in">another_subgroup_fn &lt;- function(...) {...}</span></span>
+<span id="cb1-68"><a href="#cb1-68" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-69"><a href="#cb1-69" tabindex="-1"></a></span>
+<span id="cb1-70"><a href="#cb1-70" tabindex="-1"></a><span class="fu"># Second group of fns</span></span>
+<span id="cb1-71"><a href="#cb1-71" tabindex="-1"></a></span>
+<span id="cb1-72"><a href="#cb1-72" tabindex="-1"></a><span class="fu">## Yet another subgroup</span></span>
+<span id="cb1-73"><a href="#cb1-73" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" tabindex="-1"></a><span class="fu">### `yet_another_subgroup_fn`</span></span>
+<span id="cb1-75"><a href="#cb1-75" tabindex="-1"></a></span>
+<span id="cb1-76"><a href="#cb1-76" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-77"><a href="#cb1-77" tabindex="-1"></a><span class="in">yet_another_subgroup_fn &lt;- function(...) {...}</span></span>
+<span id="cb1-78"><a href="#cb1-78" tabindex="-1"></a><span class="in">```</span></span></code></pre><p></p></div>
 <p>...yields this pkgdown index (converted <a href="https://rdrr.io/pkg/yaml/man/as.yaml.html" class="external-link">to YAML</a>):</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>reference<span class="sc">:</span></span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="sc">-</span> contents<span class="sc">:</span> main_fn</span>
