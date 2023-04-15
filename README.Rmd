@@ -181,6 +181,20 @@ pkgsnip::md_snip(name = "usage_notice") %>%
   pal::cat_lines()
 ```
 
+## Package configuration
+
+```{r}
+#| label: pkg-config
+#| echo: false
+#| results: "asis"
+
+pkgsnip::md_snip(name = "pkg_config",
+                 pkg = "pkgpurl")
+cat("\n\n::: {.table-wide}\n ")
+pal::print_pkg_config("pkgpurl")
+cat("\n :::")
+```
+
 ## Development
 
 ### R Markdown format

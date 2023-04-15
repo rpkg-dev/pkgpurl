@@ -2,7 +2,7 @@ pandoc: 3.1.2
 pkgdown: 2.0.7.9000
 pkgdown_sha: 6d0ea3bb120104e64983f53c4d4a33f4cdac8c37
 articles: {}
-last_built: 2023-04-14T17:17Z
+last_built: 2023-04-15T02:29Z
 urls:
   reference: https://pkgpurl.rpkg.dev/reference
   article: https://pkgpurl.rpkg.dev/articles
