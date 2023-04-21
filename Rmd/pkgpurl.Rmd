@@ -893,8 +893,8 @@ run_nopurl_rmd <- function(path = ".",
 
 TODO:
 
--   Once [issue #2298](https://github.com/r-lib/pkgdown/issues/2298) is fixed, change the code block lang ID in the "Parsing example" below from `md` back to
-    `rmd`.
+-   Once pkgdown 2.0.8+ containing [PR #2300](https://github.com/r-lib/pkgdown/pull/2300) is released, change the code block lang ID in the "Parsing example"
+    below from `md` back to `rmd`.
 
 NOTES:
 
