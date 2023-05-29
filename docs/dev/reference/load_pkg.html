@@ -3,7 +3,7 @@
 Purl all relevant Rmd/*.Rmd files to R/*.gen.R files using purl_rmd().
 Loads the package using devtools::load_all().
 
-"><title>Load R Markdown package — load_pkg • pkgpurl</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link rel="stylesheet" href="../deps/all.min.css"><link rel="stylesheet" href="../deps/v4-shims.min.css"><script src="../deps/bootstrap-toc.min.js"></script><script src="../deps/headroom.min.js"></script><script src="../deps/jQuery.headroom.min.js"></script><script src="../deps/clipboard.min.js"></script><script src="../deps/fuse.js"></script><script src="../deps/autocomplete.jquery.min.js"></script><script src="../deps/mark.min.js"></script><script src="../deps/MathJax.js"></script><script src="../deps/TeX-AMS-MML_HTMLorMML.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet"><meta property="og:title" content="Load R Markdown package — load_pkg"><meta property="og:description" content="Executes the steps to load an R package written in R Markdown format in one go:
+"><title>Load R Markdown package — load_pkg • pkgpurl</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link rel="stylesheet" href="../deps/all.min.css"><link rel="stylesheet" href="../deps/v4-shims.min.css"><script src="../deps/bootstrap-toc.min.js"></script><script src="../deps/headroom.min.js"></script><script src="../deps/jQuery.headroom.min.js"></script><script src="../deps/clipboard.min.js"></script><script src="../deps/fuse.min.js"></script><script src="../deps/autocomplete.jquery.min.js"></script><script src="../deps/mark.min.js"></script><script src="../deps/MathJax.js"></script><script src="../deps/TeX-AMS-MML_HTMLorMML.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet"><meta property="og:title" content="Load R Markdown package — load_pkg"><meta property="og:description" content="Executes the steps to load an R package written in R Markdown format in one go:
 Purl all relevant Rmd/*.Rmd files to R/*.gen.R files using purl_rmd().
 Loads the package using devtools::load_all().
 
@@ -93,15 +93,23 @@ Loads the package using devtools::load_all().
 
 
 <dt>reset</dt>
-<dd><p>clear package environment and reset file cache before loading any pieces of the package. This largely equivalent to running <code><a href="https://pkgload.r-lib.org/reference/unload.html" class="external-link">unload()</a></code>, however the old namespaces are not completely removed and no <code>.onUnload()</code> hooks are called. Use <code>reset = FALSE</code> may be faster for large code bases, but is a significantly less accurate approximation.</p></dd>
+<dd><p>clear package environment and reset file cache before loading
+any pieces of the package. This largely equivalent to running
+<code><a href="https://pkgload.r-lib.org/reference/unload.html" class="external-link">unload()</a></code>, however the old namespaces are not completely removed and no
+<code>.onUnload()</code> hooks are called. Use <code>reset = FALSE</code> may be faster for
+large code bases, but is a significantly less accurate approximation.</p></dd>
 
 
 <dt>recompile</dt>
-<dd><p>DEPRECATED. force a recompile of DLL from source code, if present. This is equivalent to running <code><a href="https://r-lib.github.io/pkgbuild/reference/clean_dll.html" class="external-link">pkgbuild::clean_dll()</a></code> before <code>load_all</code></p></dd>
+<dd><p>DEPRECATED. force a recompile of DLL from source code, if
+present. This is equivalent to running <code><a href="https://r-lib.github.io/pkgbuild/reference/clean_dll.html" class="external-link">pkgbuild::clean_dll()</a></code> before
+<code>load_all</code></p></dd>
 
 
 <dt>export_all</dt>
-<dd><p>If <code>TRUE</code> (the default), export all objects. If <code>FALSE</code>, export only the objects that are listed as exports in the NAMESPACE file.</p></dd>
+<dd><p>If <code>TRUE</code> (the default), export all objects.
+If <code>FALSE</code>, export only the objects that are listed as exports
+in the NAMESPACE file.</p></dd>
 
 
 <dt>helpers</dt>
@@ -124,7 +132,11 @@ Loads the package using devtools::load_all().
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other high-level functions: <code><a href="lint_rmd.html">lint_rmd</a>()</code>, <code><a href="process_pkg.html">process_pkg</a>()</code>, <code><a href="purl_rmd.html">purl_rmd</a>()</code>, <code><a href="run_nopurl_rmd.html">run_nopurl_rmd</a>()</code></p></div>
+    <div class="dont-index"><p>Other high-level functions:
+<code><a href="lint_rmd.html">lint_rmd</a>()</code>,
+<code><a href="process_pkg.html">process_pkg</a>()</code>,
+<code><a href="purl_rmd.html">purl_rmd</a>()</code>,
+<code><a href="run_nopurl_rmd.html">run_nopurl_rmd</a>()</code></p></div>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
