@@ -708,7 +708,9 @@ purl_rmd <- function(path = ".",
       
       if (length(ref$reference) > 0L) {
         
-        yaml::read_yaml(file = pkgdown_config_file) %>%
+        yaml::read_yaml(file = pkgdown_config_file,
+                        # avoid default array simplification
+                        handlers = list(seq = \(x) x)) %>%
           purrr::discard_at(at = "reference") %>%
           c(ref) %>%
           yaml::write_yaml(file = pkgdown_config_file)
