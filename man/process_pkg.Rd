@@ -40,8 +40,9 @@ process_pkg(
 \item{restart_r_session}{Whether or not to restart the R session. Highly recommended if \code{build_and_install = TRUE}, but only possible when R is run within
 RStudio. Note that the R session is always restarted if \code{use_rstudio_api = TRUE}.}
 
-\item{use_rstudio_api}{Whether or not to rely on the RStudio API to install the built package (which also triggers an R session restart). If \code{NULL}, it is
-automatically set based on whether RStudio is running (\code{TRUE}) or not (\code{FALSE}).}
+\item{use_rstudio_api}{Whether or not to rely on the RStudio API to install the built package (which always triggers an R session restart regardless of
+\code{restart_r_session}). If \code{NULL}, the RStudio API is automatically used if possible, i.e. RStudio is running. Note that installation without the RStudio API
+has known issues, see section \emph{Details} below for further information.}
 
 \item{quiet}{Whether or not to suppress printing status output from internal processing.}
 
@@ -95,11 +96,15 @@ Executes all steps to process an R package written in R Markdown format from sou
 \item Re-build the package documentation using \code{\link[devtools:document]{devtools::document()}} (if \code{document = TRUE}).
 \item Build and install the package (if \code{build_and_install = TRUE}). This is done either using
 \code{\link[rstudioapi:executeCommand]{rstudioapi::executeCommand(commandId = "buildFull")}} (if \code{use_rstudio_api = TRUE}) or using \code{\link[devtools:install]{devtools::install()}} (if
-\code{use_rstudio_api = FALSE})
-\item Restarts the R session using \code{\link[rstudioapi:restartSession]{rstudioapi::restartSession()}} (if \code{restart_r_session = TRUE}).
+\code{use_rstudio_api = FALSE}).
+\item Restarts the R session using \code{\link[rstudioapi:restartSession]{rstudioapi::restartSession()}} (if either \code{restart_r_session = TRUE} or \code{use_rstudio_api = TRUE}).
 }
 }
 \details{
+Note that the installation via \code{\link[devtools:install]{devtools::install()}} (i.e. \code{use_rstudio_api = FALSE}) is known to fail in certain situations (lazy-load database corruption)
+due to \href{https://bugs.r-project.org/show_bug.cgi?id=16644}{unresolved deficiencies} in \R's namespace unloading. If you encounter an error, simply restart the
+\R session and try again.
+
 This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in}, allowing RStudio users to assign a \href{https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE}{custom shortcut} to it or to invoke it from the \href{https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts}{command palette}.
 }
 \seealso{

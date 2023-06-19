@@ -6,8 +6,8 @@ Re-generate the pkgdown reference index based on the package's main R Markdown f
 Re-build the package documentation using devtools::document() (if document = TRUE).
 Build and install the package (if build_and_install = TRUE). This is done either using
 rstudioapi::executeCommand(commandId = &quot;buildFull&quot;) (if use_rstudio_api = TRUE) or using devtools::install() (if
-use_rstudio_api = FALSE)
-Restarts the R session using rstudioapi::restartSession() (if restart_r_session = TRUE).
+use_rstudio_api = FALSE).
+Restarts the R session using rstudioapi::restartSession() (if either restart_r_session = TRUE or use_rstudio_api = TRUE).
 
 "><title>Process R Markdown package from source to installation — process_pkg • pkgpurl</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link rel="stylesheet" href="../deps/all.min.css"><link rel="stylesheet" href="../deps/v4-shims.min.css"><script src="../deps/bootstrap-toc.min.js"></script><script src="../deps/headroom.min.js"></script><script src="../deps/jQuery.headroom.min.js"></script><script src="../deps/clipboard.min.js"></script><script src="../deps/fuse.min.js"></script><script src="../deps/autocomplete.jquery.min.js"></script><script src="../deps/mark.min.js"></script><script src="../deps/MathJax.js"></script><script src="../deps/TeX-AMS-MML_HTMLorMML.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet"><meta property="og:title" content="Process R Markdown package from source to installation — process_pkg"><meta property="og:description" content="
 Executes all steps to process an R package written in R Markdown format from source to installation in one go:
@@ -16,8 +16,8 @@ Re-generate the pkgdown reference index based on the package's main R Markdown f
 Re-build the package documentation using devtools::document() (if document = TRUE).
 Build and install the package (if build_and_install = TRUE). This is done either using
 rstudioapi::executeCommand(commandId = &quot;buildFull&quot;) (if use_rstudio_api = TRUE) or using devtools::install() (if
-use_rstudio_api = FALSE)
-Restarts the R session using rstudioapi::restartSession() (if restart_r_session = TRUE).
+use_rstudio_api = FALSE).
+Restarts the R session using rstudioapi::restartSession() (if either restart_r_session = TRUE or use_rstudio_api = TRUE).
 
 "><meta name="twitter:card" content="summary"><meta name="twitter:creator" content="@2BSalim"><meta name="twitter:site" content="@2BSalim"><meta name="robots" content="noindex"><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -69,8 +69,8 @@ Restarts the R session using rstudioapi::restartSession() (if restart_r_session 
 <li><p>Re-build the package documentation using <code><a href="https://devtools.r-lib.org/reference/document.html" class="external-link">devtools::document()</a></code> (if <code>document = TRUE</code>).</p></li>
 <li><p>Build and install the package (if <code>build_and_install = TRUE</code>). This is done either using
 <code><a href="https://rstudio.github.io/rstudioapi/reference/executeCommand.html" class="external-link">rstudioapi::executeCommand(commandId = "buildFull")</a></code> (if <code>use_rstudio_api = TRUE</code>) or using <code><a href="https://devtools.r-lib.org/reference/install.html" class="external-link">devtools::install()</a></code> (if
-<code>use_rstudio_api = FALSE</code>)</p></li>
-<li><p>Restarts the R session using <code><a href="https://rstudio.github.io/rstudioapi/reference/restartSession.html" class="external-link">rstudioapi::restartSession()</a></code> (if <code>restart_r_session = TRUE</code>).</p></li>
+<code>use_rstudio_api = FALSE</code>).</p></li>
+<li><p>Restarts the R session using <code><a href="https://rstudio.github.io/rstudioapi/reference/restartSession.html" class="external-link">rstudioapi::restartSession()</a></code> (if either <code>restart_r_session = TRUE</code> or <code>use_rstudio_api = TRUE</code>).</p></li>
 </ol></div>
 
     <div class="section level2">
@@ -128,8 +128,9 @@ RStudio. Note that the R session is always restarted if <code>use_rstudio_api = 
 
 
 <dt>use_rstudio_api</dt>
-<dd><p>Whether or not to rely on the RStudio API to install the built package (which also triggers an R session restart). If <code>NULL</code>, it is
-automatically set based on whether RStudio is running (<code>TRUE</code>) or not (<code>FALSE</code>).</p></dd>
+<dd><p>Whether or not to rely on the RStudio API to install the built package (which always triggers an R session restart regardless of
+<code>restart_r_session</code>). If <code>NULL</code>, the RStudio API is automatically used if possible, i.e. RStudio is running. Note that installation without the RStudio API
+has known issues, see section <em>Details</em> below for further information.</p></dd>
 
 
 <dt>quiet</dt>
@@ -186,7 +187,10 @@ It defaults to the option <code>"keep.source.pkgs"</code>.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This function is also registered as an <a href="https://rstudio.github.io/rstudioaddins/" class="external-link">RStudio add-in</a>, allowing RStudio users to assign a <a href="https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE" class="external-link">custom shortcut</a> to it or to invoke it from the <a href="https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts" class="external-link">command palette</a>.</p>
+    <p>Note that the installation via <code><a href="https://devtools.r-lib.org/reference/install.html" class="external-link">devtools::install()</a></code> (i.e. <code>use_rstudio_api = FALSE</code>) is known to fail in certain situations (lazy-load database corruption)
+due to <a href="https://bugs.r-project.org/show_bug.cgi?id=16644" class="external-link">unresolved deficiencies</a> in <span style="R">R</span>'s namespace unloading. If you encounter an error, simply restart the
+<span style="R">R</span> session and try again.</p>
+<p>This function is also registered as an <a href="https://rstudio.github.io/rstudioaddins/" class="external-link">RStudio add-in</a>, allowing RStudio users to assign a <a href="https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE" class="external-link">custom shortcut</a> to it or to invoke it from the <a href="https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts" class="external-link">command palette</a>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

@@ -14,6 +14,7 @@ utils::globalVariables(names = c(".",
                                  "heading_lvl",
                                  "i_subtitle",
                                  "i_title",
+                                 "is_description_heading",
                                  "is_heading_ignored",
                                  "is_help_topic",
                                  "subnode_ix"))
@@ -30,34 +31,40 @@ this_pkg <- utils::packageName()
 ### `data_special_headings`
 
 ```{r}
-data_special_headings <- tibble::tribble(
-  
-  ~type,          ~heading_texts,  ~meaning,
-  "description",  "DESCRIPTION",   paste0("Paragraph(s) below this heading, that in turn is hierarchically below a `title` or `subtitle` heading, are used as ",
-                                          "the description for this very (sub)title (`desc` in the pkgdown reference index)."),
-  "ignore_title", "EXPORTED",      paste0("Will never be used as `title` or `subtitle` in the pkgdown reference index (i.e. ignored). Simply serves as a ",
-                                         "(usually top-level) heading to indicate that the objects defined below it are ",
-                                         "[exported](https://r-pkgs.org/dependencies-in-practice.html#exports) by the package."),
-  "ignore_content", c("INTERNAL",
-                      "NOTES",
-                      "TEMPORARY",
-                      "TMP"),      paste0("Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index ",
-                                          "generation.")
-)
+data_special_headings <-
+  tibble::tibble(type = character(),
+                 heading_texts = list(),
+                 meaning = character()) |>
+  tibble::add_row(type = "description",
+                  heading_texts = list("DESCRIPTION"),
+                  meaning = paste0("Paragraph(s) below this heading, which in turn is hierarchically below a `title` or `subtitle` heading, are used as the ",
+                                   "description for this very (sub)title (`desc` in the pkgdown reference index).")) |>
+  tibble::add_row(type = "ignore_title",
+                  heading_texts = list("EXPORTED"),
+                  meaning = paste0("Will never be used as `title` or `subtitle` in the pkgdown reference index (i.e. ignored). Simply serves as a (usually ",
+                                   "top-level) heading to indicate that the objects defined below it are ",
+                                   "[exported](https://r-pkgs.org/dependencies-in-practice.html#exports) by the package.")) |>
+  tibble::add_row(type = "ignore_content",
+                  heading_texts = list(c("INTERNAL",
+                                         "NOTES",
+                                         "TEMPORARY",
+                                         "TMP")),
+                  meaning = paste0("Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index ",
+                                   "generation."))
 ```
 
 Pre-assign each heading type to a character vector variable for optimal performance.
 
 ```{r}
-# somehow `envir = parent.frame(4)` doesn't assign in the right environment, so we explicitly provide it
+# `envir = parent.frame(5L)` doesn't assign in the right environment for some reason, so we explicitly provide the env
 pkg_env <- rlang::current_env()
 
-data_special_headings %>%
-  dplyr::group_split(type) %>%
-  purrr::walk(~ assign(x = paste0("heading_texts_", .x$type),
-                       value = purrr::list_c(.x$heading_texts,
-                                             ptype = character()),
-                       envir = pkg_env))
+data_special_headings |>
+  dplyr::group_split(type) |>
+  purrr::walk(\(x) assign(x = paste0("heading_texts_", x$type),
+                          value = purrr::list_c(x$heading_texts,
+                                                ptype = character()),
+                          envir = pkg_env))
 rm(pkg_env)
 ```
 
@@ -85,12 +92,12 @@ assemble_copyright_notice <- function(path) {
                             default = "",
                             file = path)
     authors <-
-      desc::desc_get_authors(file = path) %>%
+      desc::desc_get_authors(file = path) |>
       # reduce to copyright holders or otherwise authors
-      pal::when(any(purrr::map_lgl(., ~ "cph" %in% .x$role)) ~ purrr::keep(., ~ "cph" %in% .x$role),
-                any(purrr::map_lgl(., ~ "aut" %in% .x$role)) ~ purrr::keep(., ~ "aut" %in% .x$role),
-                ~ .) %>%
-      format(include = c("given", "family")) %>%
+      pal::when(any(purrr::map_lgl(., \(x) "cph" %in% x$role)) ~ purrr::keep(., \(x) "cph" %in% x$role),
+                any(purrr::map_lgl(., \(x) "aut" %in% x$role)) ~ purrr::keep(., \(x) "aut" %in% x$role),
+                ~ .) |>
+      format(include = c("given", "family")) |>
       pal::prose_ls()
     
     if (length(authors) > 0L) {
@@ -177,11 +184,11 @@ Removes leading `#`s and trailing newlines.
 ```{r}
 extract_md_heading_content <- function(x) {
   
-  x %>%
-    stringr::str_remove(pattern = "^#+") %>%
-    stringr::str_trim() %>%
-    purrr::map_chr(~ {
-      if (.x == "") NA_character_ else .x
+  x |>
+    stringr::str_remove(pattern = "^#+") |>
+    stringr::str_trim() |>
+    purrr::map_chr(\(x) {
+      if (x == "") NA_character_ else x
     })
 }
 ```
@@ -213,6 +220,8 @@ install_pkg <- function(path,
                     ...)
   
   cli::cli_progress_done()
+  
+  invisible(path)
 }
 ```
 
@@ -257,13 +266,13 @@ main_rmd <- function(path = ".") {
   } else {
     
     result <-
-      rmd_file_paths %>%
-      fs::path_file() %>%
-      fs::path_ext_remove() %>%
+      rmd_file_paths |>
+      fs::path_file() |>
+      fs::path_ext_remove() |>
       magrittr::is_in(pal::desc_value(key = "Package",
-                                      file = path)) %>%
+                                      file = path)) |>
       which() %>%
-      magrittr::extract(rmd_file_paths, .) %>%
+      magrittr::extract(rmd_file_paths, .) |>
       pal::when(length(.) > 1L ~ # this is theoretically possible in case of subdirs under `Rmd/` or for case-sensitive filesystems (both `.Rmd` and `.rmd`)
                   cli::cli_abort(paste0("Multiple {.file .Rmd} files detected under {.path {fs::path(path, 'Rmd/')}} whose names match the package name: ",
                                         "{.file {.}}")),
@@ -302,8 +311,8 @@ process_rmd <- function(path_file,
                         license_notice,
                         line_width = 160L) {
   r_file_path <-
-    path_file %>%
-    fs::path_file() %>%
+    path_file |>
+    fs::path_file() |>
     fs::path_ext_set(ext = ".gen.R") %>%
     fs::path(path_pkg, "R", .)
   
@@ -316,16 +325,18 @@ process_rmd <- function(path_file,
   result <-
     path_file %>%
     fs::path_rel(start = fs::path_dir(fs::path_dir(.))) %>%
-    paste0("DO NOT EDIT THIS FILE BY HAND! Instead edit the R Markdown source file `", ., "` and run `pkgpurl::purl_rmd()`.") %>%
+    paste0("DO NOT EDIT THIS FILE BY HAND! Instead edit the R Markdown source file `", ., "` and run `pkgpurl::purl_rmd()`.") |>
     pal::as_comment_string("See `README.md#r-markdown-format` for more information on the literate programming approach used applying the R Markdown format.",
-                           sep_paragraphs = FALSE) %>%
+                           sep_paragraphs = FALSE) |>
     # add copyright and license notices if indicated
     paste0("\n",
            if (length(copyright_notice) > 0L) {
-             copyright_notice %>% pal::as_comment_string("", sep_paragraphs = FALSE)
+             pal::as_comment_string(copyright_notice, "",
+                                    sep_paragraphs = FALSE)
            },
            if (length(license_notice) > 0L) {
-             license_notice %>% pal::as_comment_string() %>% paste0("\n")
+             paste0(pal::as_comment_string(license_notice),
+                    "\n")
            },
            brio::read_file(path = r_file_path))
   
@@ -358,8 +369,8 @@ rmd_files <- function(path) {
                                      access = "r")
   checkmate::assert_scalar(path)
   
-  fs::path(path, "Rmd") %>%
-    fs::path_abs() %>%
+  fs::path(path, "Rmd") |>
+    fs::path_abs() |>
     fs::dir_ls(recurse = TRUE,
                type = "file",
                regexp = "(?<!\\.nopurl)\\.[Rr]md$",
@@ -397,10 +408,14 @@ NOTES:
 #' 3. Re-build the package documentation using [devtools::document()] (if `document = TRUE`).
 #' 4. Build and install the package (if `build_and_install = TRUE`). This is done either using
 #'    [`rstudioapi::executeCommand(commandId = "buildFull")`][rstudioapi::executeCommand] (if `use_rstudio_api = TRUE`) or using [devtools::install()] (if
-#'    `use_rstudio_api = FALSE`)
-#' 5. Restarts the R session using [rstudioapi::restartSession()] (if `restart_r_session = TRUE`).
+#'    `use_rstudio_api = FALSE`).
+#' 5. Restarts the R session using [rstudioapi::restartSession()] (if either `restart_r_session = TRUE` or `use_rstudio_api = TRUE`).
 #'
 #' @details
+#' Note that the installation via [devtools::install()] (i.e. `use_rstudio_api = FALSE`) is known to fail in certain situations (lazy-load database corruption)
+#' due to [unresolved deficiencies](https://bugs.r-project.org/show_bug.cgi?id=16644) in \R's namespace unloading. If you encounter an error, simply restart the
+#' \R session and try again.
+#' 
 #' `r pkgsnip::md_snip("rstudio_addin_hint")`
 #'
 #' @inheritParams purl_rmd
@@ -410,8 +425,9 @@ NOTES:
 #' @param build_and_install Whether or not to build and install the package after purling `Rmd/*.Rmd` to `R/*.gen.R`.
 #' @param restart_r_session Whether or not to restart the R session. Highly recommended if `build_and_install = TRUE`, but only possible when R is run within
 #'   RStudio. Note that the R session is always restarted if `use_rstudio_api = TRUE`.
-#' @param use_rstudio_api Whether or not to rely on the RStudio API to install the built package (which also triggers an R session restart). If `NULL`, it is
-#'   automatically set based on whether RStudio is running (`TRUE`) or not (`FALSE`).
+#' @param use_rstudio_api Whether or not to rely on the RStudio API to install the built package (which always triggers an R session restart regardless of
+#'   `restart_r_session`). If `NULL`, the RStudio API is automatically used if possible, i.e. RStudio is running. Note that installation without the RStudio API
+#'   has known issues, see section *Details* below for further information.
 #' @param quiet `r pkgsnip::param_label("quiet")`
 #'
 #' @inherit purl_rmd return
@@ -663,9 +679,9 @@ purl_rmd <- function(path = ".",
             "pkgdown/_pkgdown.yaml",
             "inst/_pkgdown.yml",
             "inst/_pkgdown.yaml") %>%
-          fs::path(path, .) %>%
+          fs::path(path, .) |>
           fs::file_exists() %>%
-          magrittr::extract(which(.)[1L]) %>%
+          magrittr::extract(which(.)[1L]) |>
           names()
         
         # determine main input file for pkgdown reference generation
@@ -702,17 +718,17 @@ purl_rmd <- function(path = ".",
     if (gen_pkgdown_ref) {
       
       ref <-
-        main_rmd_file %>%
-        brio::read_file() %>%
+        main_rmd_file |>
+        brio::read_file() |>
         gen_pkgdown_ref()
       
       if (length(ref$reference) > 0L) {
         
         yaml::read_yaml(file = pkgdown_config_file,
-                        # avoid default array simplification
-                        handlers = list(seq = \(x) x)) %>%
-          purrr::discard_at(at = "reference") %>%
-          c(ref) %>%
+                        # avoid default YAML sequence simplification, cf. https://github.com/vubiostat/r-yaml/issues/69
+                        handlers = list(seq = \(x) x)) |>
+          purrr::discard_at(at = "reference") |>
+          c(ref) |>
           yaml::write_yaml(file = pkgdown_config_file)
       }
     }
@@ -836,13 +852,11 @@ run_nopurl_rmd <- function(path = ".",
   checkmate::assert_flag(build_and_install)
   checkmate::assert_flag(restart_r_session)
   
-  path_tmp_purled <-
-    path_rmd %>%
-    purrr::map_chr(~ knitr::purl(input = .x,
-                                 output = fs::file_temp(pattern = fs::path_ext_remove(fs::path_file(.x)),
-                                                        ext = "R"),
-                                 quiet = quiet))
-  
+  path_tmp_purled <- purrr::map_chr(path_rmd,
+                                    \(x) knitr::purl(input = x,
+                                                     output = fs::file_temp(pattern = fs::path_ext_remove(fs::path_file(x)),
+                                                                            ext = "R"),
+                                                     quiet = quiet))
   for (i in seq_along(path_tmp_purled)) {
     
     cli::cli_progress_step(msg = "{.strong Executing file {.file {path_tmp_purled[i]}}}")
@@ -941,7 +955,7 @@ NOTES:
 #' The following rules define how the reference index is generated:
 #' 
 #' 1. Headings below a heading named
-#'    `r purrr::list_c(dplyr::filter(data_special_headings, type == "ignore_content")$heading_texts, ptype = character()) %>% pal::prose_ls(wrap = "*", last_sep = " or ")`
+#'    `r purrr::list_c(dplyr::filter(data_special_headings, type == "ignore_content")$heading_texts, ptype = character()) |> pal::prose_ls(wrap = "*", last_sep = " or ")`
 #'    (case-insensitive, but without any inline formatting) are simply ignored when generating the reference index.
 #' 2. Every heading that is a) inline-formatted as [verbatim](https://pandoc.org/MANUAL.html#verbatim) and b) doesn't contain any whitespace characters is
 #'    considered to be the name of a help topic (usually the name of a function or dataset) to be included in the reference index. This maps to the `contents`
@@ -981,20 +995,22 @@ NOTES:
 #' @export
 #'
 #' @examples
-#' pal::gh_text_file(path = "Rmd/pal.Rmd",
-#'                   owner = "salim-b",
-#'                   name = "pal") |>
-#'   pkgpurl::gen_pkgdown_ref() |>
-#'   yaml::as.yaml() |>
-#'   cat()
+#' if (pal::is_pkg_installed("tinkr")) {
+#'   pal::gh_text_file(path = "Rmd/pal.Rmd",
+#'                     owner = "salim-b",
+#'                     name = "pal") |>
+#'     pkgpurl::gen_pkgdown_ref() |>
+#'     yaml::as.yaml() |>
+#'     cat()
+#' }
 gen_pkgdown_ref <- function(rmd) {
   
   checkmate::assert_string(rmd)
   pal::assert_pkg("xml2")
   
   rmd_xml <-
-    rmd %>%
-    pal::md_to_xml(strip_xml_ns = FALSE) %>%
+    rmd |>
+    pal::md_to_xml(strip_xml_ns = FALSE) |>
     xml2::xml_contents()
   
   # assemble necessary Markdown heading hierarchy information (one row for each node of `rmd_xml`)
@@ -1002,51 +1018,42 @@ gen_pkgdown_ref <- function(rmd) {
     tibble::tibble(subnode_ix = pal::md_xml_subnode_ix(xml = rmd_xml),
                    # is *relevant* heading
                    is_heading =
-                     subnode_ix %>%
-                     purrr::map_int(length) %>%
-                     magrittr::is_greater_than(0L)) %>%
+                     subnode_ix |>
+                     purrr::map_int(length) |>
+                     magrittr::is_greater_than(0L)) |>
     tibble::rowid_to_column(var = "i") %>%
     # add variables that are relevant for heading nodes only
     dplyr::left_join(y = tibble::tibble(i = .$i[.$is_heading],
                                         heading_lvl =
-                                          rmd_xml[i] %>%
+                                          rmd_xml[i] |>
                                           purrr::map_chr(xml2::xml_attr,
-                                                         attr = "level") %>%
+                                                         attr = "level") |>
                                           as.integer(),
                                         is_help_topic =
                                           xml2::xml_length(rmd_xml[i]) == 1L
-                                        & rmd_xml[i] %>%
-                                          xml2::xml_child(search = "d1:code") %>%
-                                          xml2::xml_text() %>%
+                                        & rmd_xml[i] |>
+                                          xml2::xml_child(search = "d1:code") |>
+                                          xml2::xml_text() |>
                                           stringr::str_detect(pattern = "^[^\\s`]+$"),
                                         is_description_heading =
                                           xml2::xml_length(rmd_xml[i]) == 1L
-                                        & rmd_xml[i] %>%
-                                          xml2::xml_child(search = "d1:text") %>%
-                                          xml2::xml_text(trim = TRUE) %>%
-                                          stringr::str_detect(pattern =
-                                                                heading_texts_description %>%
-                                                                pal::fuse_regex() %>%
-                                                                paste0("^(?i)", ., "$")),
+                                        & rmd_xml[i] |>
+                                          xml2::xml_child(search = "d1:text") |>
+                                          xml2::xml_text(trim = TRUE) |>
+                                          stringr::str_detect(pattern = paste0("^(?i)", pal::fuse_regex(heading_texts_description), "$")),
                                         is_ignored =
                                           xml2::xml_length(rmd_xml[i]) == 1L
-                                        & rmd_xml[i] %>%
-                                          xml2::xml_child(search = "d1:text") %>%
-                                          xml2::xml_text(trim = TRUE) %>%
-                                          stringr::str_detect(pattern =
-                                                                heading_texts_ignore_content %>%
-                                                                pal::fuse_regex() %>%
-                                                                paste0("^(?i)", ., "$")),
+                                        & rmd_xml[i] |>
+                                          xml2::xml_child(search = "d1:text") |>
+                                          xml2::xml_text(trim = TRUE) |>
+                                          stringr::str_detect(pattern = paste0("^(?i)", pal::fuse_regex(heading_texts_ignore_content), "$")),
                                         is_heading_ignored =
                                           xml2::xml_length(rmd_xml[i]) == 1L
-                                        & rmd_xml[i] %>%
-                                          xml2::xml_child(search = "d1:text") %>%
-                                          xml2::xml_text(trim = TRUE) %>%
-                                          stringr::str_detect(pattern =
-                                                                heading_texts_ignore_title %>%
-                                                                pal::fuse_regex() %>%
-                                                                paste0("^(?i)", ., "$"))),
-                     by = "i") %>%
+                                        & rmd_xml[i] |>
+                                          xml2::xml_child(search = "d1:text") |>
+                                          xml2::xml_text(trim = TRUE) |>
+                                          stringr::str_detect(pattern = paste0("^(?i)", pal::fuse_regex(heading_texts_ignore_title), "$"))),
+                     by = "i") |>
     tidyr::replace_na(replace = list(is_help_topic = FALSE,
                                      is_description_heading = FALSE))
   ## complete `is_ignored`
@@ -1078,22 +1085,23 @@ gen_pkgdown_ref <- function(rmd) {
     for (i in hierarchy$i[hierarchy$is_help_topic]) {
       
       hierarchy_subset <-
-        hierarchy %>%
+        hierarchy |>
         dplyr::filter(!is_help_topic
                       & !is_heading_ignored
-                      & hierarchy$subnode_ix %>% purrr::map_lgl(~ !!i %in% .x))
+                      & purrr::map_lgl(hierarchy$subnode_ix,
+                                       \(x) !!i %in% x))
       
       title_lvl <- pal::safe_min(hierarchy_subset$heading_lvl)
       
       data_ref_i %<>% tibble::add_row(i_title =
-                                        hierarchy_subset %>%
+                                        hierarchy_subset |>
                                         dplyr::filter(heading_lvl == title_lvl) %$%
                                         ifelse(length(i) > 0L,
                                                as.integer(i),
                                                NA_integer_),
                                       i_subtitle =
-                                        hierarchy_subset %>%
-                                        dplyr::filter(heading_lvl > title_lvl) %>%
+                                        hierarchy_subset |>
+                                        dplyr::filter(heading_lvl > title_lvl) |>
                                         dplyr::filter(heading_lvl == pal::safe_min(heading_lvl)) %$%
                                         ifelse(length(i) > 0L,
                                                as.integer(i),
@@ -1104,57 +1112,57 @@ gen_pkgdown_ref <- function(rmd) {
     # add actual (sub)titles and their descriptions
     data_ref_i %<>%
       dplyr::left_join(y = tibble::tibble(i_title =
-                                            .$i_title %>%
-                                            unique() %>%
+                                            .$i_title |>
+                                            unique() |>
                                             setdiff(NA_integer_),
                                           title =
-                                            rmd_xml[i_title] %>%
-                                            purrr::map_chr(pal::xml_to_md) %>%
+                                            rmd_xml[i_title] |>
+                                            purrr::map_chr(pal::xml_to_md) |>
                                             extract_md_heading_content(),
                                           title_description =
-                                            hierarchy$subnode_ix[i_title] %>%
+                                            hierarchy$subnode_ix[i_title] |>
                                             purrr::map2_chr(.y = i_title,
-                                                            .f = ~
-                                                              hierarchy[.x, ] %>%
+                                                            .f = \(x, y)
+                                                              hierarchy[x, ] |>
                                                               dplyr::filter(is_description_heading
-                                                                            & heading_lvl == hierarchy$heading_lvl[.y] + 1L) %$%
-                                                              subnode_ix %>%
+                                                                            & heading_lvl == hierarchy$heading_lvl[y] + 1L) %$%
+                                                              subnode_ix |>
                                                               purrr::list_c(ptype = integer()) %>%
-                                                              magrittr::extract(rmd_xml, .) %>%
-                                                              purrr::map_chr(pal::xml_to_md) %>%
-                                                              stringr::str_trim() %>%
+                                                              magrittr::extract(rmd_xml, .) |>
+                                                              purrr::map_chr(pal::xml_to_md) |>
+                                                              stringr::str_trim() |>
                                                               pal::when(length(.) > 0L ~ paste0(., collapse = "\n\n"),
                                                                         ~ NA_character_))),
                        by = "i_title") %>%
       dplyr::left_join(y = tibble::tibble(i_subtitle =
-                                            .$i_subtitle %>%
-                                            unique() %>%
+                                            .$i_subtitle |>
+                                            unique() |>
                                             setdiff(NA_integer_),
                                           subtitle =
-                                            rmd_xml[i_subtitle] %>%
-                                            purrr::map_chr(pal::xml_to_md) %>%
+                                            rmd_xml[i_subtitle] |>
+                                            purrr::map_chr(pal::xml_to_md) |>
                                             extract_md_heading_content(),
                                           subtitle_description =
-                                            hierarchy$subnode_ix[i_subtitle] %>%
+                                            hierarchy$subnode_ix[i_subtitle] |>
                                             purrr::map2_chr(.y = i_subtitle,
-                                                            .f = ~
-                                                              hierarchy[.x, ] %>%
+                                                            .f = \(x, y)
+                                                              hierarchy[x, ] |>
                                                               dplyr::filter(is_description_heading
-                                                                            & heading_lvl == hierarchy$heading_lvl[.y] + 1L) %$%
-                                                              subnode_ix %>%
+                                                                            & heading_lvl == hierarchy$heading_lvl[y] + 1L) %$%
+                                                              subnode_ix |>
                                                               purrr::list_c(ptype = integer()) %>%
-                                                              magrittr::extract(rmd_xml, .) %>%
-                                                              purrr::map_chr(pal::xml_to_md) %>%
-                                                              stringr::str_trim() %>%
+                                                              magrittr::extract(rmd_xml, .) |>
+                                                              purrr::map_chr(pal::xml_to_md) |>
+                                                              stringr::str_trim() |>
                                                               pal::when(length(.) > 0L ~ paste0(., collapse = "\n\n"),
                                                                         ~ NA_character_))),
                        by = "i_subtitle")
     
     # assemble result list that can easily be converted to YAML using `yaml::as.yaml()`
     result <-
-      data_ref_i %>%
-      dplyr::group_by(i_title) %>%
-      dplyr::group_map(function(data_title, key) {
+      data_ref_i |>
+      dplyr::group_by(i_title) |>
+      dplyr::group_map(\(data_title, key) {
         
         title <- data_title$title[1L]
         title_description <- data_title$title_description[1L]
@@ -1168,9 +1176,9 @@ gen_pkgdown_ref <- function(rmd) {
         }
         
         items_subtitle <-
-          data_title %>%
-          dplyr::group_by(i_subtitle) %>%
-          dplyr::group_map(function(data_subtitle, key) {
+          data_title |>
+          dplyr::group_by(i_subtitle) |>
+          dplyr::group_map(\(data_subtitle, key) {
             
             subtitle <- data_subtitle$subtitle[1L]
             subtitle_description <- data_subtitle$subtitle_description[1L]
@@ -1186,18 +1194,18 @@ gen_pkgdown_ref <- function(rmd) {
             
             c(list(item_subtitle),
               list(list(contents = contents)))
-          }) %>%
-          purrr::list_flatten() %>%
-          purrr::compact() %>%
+          }) |>
+          purrr::list_flatten() |>
+          purrr::compact() |>
           # move subtitle-less item to the front (the `NA` group is always processed last in `group_map()`)
           pal::when(anyNA(data_title$subtitle) ~ .[c(length(.), seq_len(length(.) - 1L))],
                     ~ .)
         
         c(list(item_title),
           items_subtitle)
-      }) %>%
-      purrr::list_flatten() %>%
-      purrr::compact() %>%
+      }) |>
+      purrr::list_flatten() |>
+      purrr::compact() |>
       # move title-less item to the front (the `NA` group is always processed last in `group_map()`)
       pal::when(anyNA(data_ref_i$title) ~ .[c(length(.), seq_len(length(.) - 1L))],
                 ~ .)
@@ -1224,18 +1232,18 @@ gen_pkgdown_ref <- function(rmd) {
 pkg_config <-
   tibble::tibble(key = character(),
                  default_value = list(),
-                 description = character()) %>%
+                 description = character()) |>
   tibble::add_row(key = "add_copyright_notice",
                   description = paste0("Whether or not to add a **copyright notice** at the beginning of the generated `.R` files as recommended by e.g. the ",
                                        "[GNU licenses](https://www.gnu.org/licenses/gpl-howto.html). The notice consists of the name and description of the ",
                                        "program and the word `Copyright (C)` followed by the release years and the name(s) of the copyright holder(s), or if ",
                                        "not specified, the author(s). The year is always the current year. All the other information is extracted from the ",
-                                       "package's `DESCRIPTION` file.")) %>%
+                                       "package's `DESCRIPTION` file.")) |>
   tibble::add_row(key = "add_license_notice",
                   description = paste0("Whether or not to add a **license notice** at the beginning of the generated `.R` files as recommended by e.g. the ",
                                        "[GNU licenses](https://www.gnu.org/licenses/gpl-howto.html). The license is determined from the package's ",
                                        "`DESCRIPTION` file and currently only the [`AGPL-3.0-or-later` ",
-                                       "license](https://spdx.org/licenses/AGPL-3.0-or-later.html) is supported.")) %>%
+                                       "license](https://spdx.org/licenses/AGPL-3.0-or-later.html) is supported.")) |>
   tibble::add_row(key = "gen_pkgdown_ref",
                   description = paste0("Whether or not to overwrite [pkgdown][pkgdown::pkgdown-package]'s [reference ",
                                        "index](https://pkgdown.r-lib.org/reference/build_reference.html#reference-index) in the configuration file ",

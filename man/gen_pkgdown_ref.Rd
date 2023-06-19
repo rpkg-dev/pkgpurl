@@ -24,7 +24,7 @@ specially named headings. See below for details.
 Headings that exactly match certain strings (case-insensitive, but without any inline formatting or additional text) are treated specially. Here's an
 overview:\tabular{ll}{
    \strong{Headings} \tab \strong{Meaning} \cr
-   DESCRIPTION \tab Paragraph(s) below this heading, that in turn is hierarchically below a \code{title} or \code{subtitle} heading, are used as the description for this very (sub)title (\code{desc} in the pkgdown reference index). \cr
+   DESCRIPTION \tab Paragraph(s) below this heading, which in turn is hierarchically below a \code{title} or \code{subtitle} heading, are used as the description for this very (sub)title (\code{desc} in the pkgdown reference index). \cr
    EXPORTED \tab Will never be used as \code{title} or \code{subtitle} in the pkgdown reference index (i.e. ignored). Simply serves as a (usually top-level) heading to indicate that the objects defined below it are \href{https://r-pkgs.org/dependencies-in-practice.html#exports}{exported} by the package. \cr
    INTERNAL , NOTES    , TEMPORARY, TMP \tab Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index generation. \cr
 }
@@ -159,11 +159,13 @@ yet_another_subgroup_fn <- function(...) \{...\}
 }
 
 \examples{
-pal::gh_text_file(path = "Rmd/pal.Rmd",
-                  owner = "salim-b",
-                  name = "pal") |>
-  pkgpurl::gen_pkgdown_ref() |>
-  yaml::as.yaml() |>
-  cat()
+if (pal::is_pkg_installed("tinkr")) {
+  pal::gh_text_file(path = "Rmd/pal.Rmd",
+                    owner = "salim-b",
+                    name = "pal") |>
+    pkgpurl::gen_pkgdown_ref() |>
+    yaml::as.yaml() |>
+    cat()
+}
 }
 \concept{low_lvl}
