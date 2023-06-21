@@ -57,10 +57,11 @@ rm(pkg_env)
 
 assemble_copyright_notice <- function(path) {
   
-  pal::assert_pkg("desc")
   if (fs::is_dir(path)) {
     path <- fs::path(path, "DESCRIPTION")
   }
+  rlang::check_installed("desc",
+                         reason = pal::reason_pkg_required())
   notice <- character()
   
   if (desc::desc_has_fields(keys = "Authors@R",
@@ -101,7 +102,8 @@ assemble_copyright_notice <- function(path) {
 
 assemble_license_notice <- function(path) {
   
-  pal::assert_pkg("desc")
+  rlang::check_installed("desc",
+                         reason = pal::reason_pkg_required())
   notice <- character()
   if (fs::is_dir(path)) path <- fs::path(path, "DESCRIPTION")
   
@@ -280,7 +282,8 @@ process_rmd <- function(path_file,
 
 restart_r <- function() {
   
-  pal::assert_pkg("rstudioapi")
+  rlang::check_installed("rstudioapi",
+                         reason = pal::reason_pkg_required())
   
   if (rstudioapi::isAvailable()) {
     rstudioapi::restartSession()
@@ -368,8 +371,10 @@ process_pkg <- function(path = ".",
   checkmate::assert_flag(use_rstudio_api,
                          null.ok = TRUE)
   checkmate::assert_flag(quiet)
-  pal::assert_pkg("devtools")
-  pal::assert_pkg("pkgload")
+  rlang::check_installed("devtools",
+                         reason = pal::reason_pkg_required())
+  rlang::check_installed("pkgload",
+                         reason = pal::reason_pkg_required())
   
   if (is.null(use_rstudio_api) && nzchar(system.file(package = "rstudioapi")) && rstudioapi::isAvailable()) {
     use_rstudio_api <- TRUE
@@ -445,7 +450,8 @@ load_pkg <- function(path = ".",
                      quiet = FALSE,
                      ...) {
   
-  pal::assert_pkg("devtools")
+  rlang::check_installed("devtools",
+                         reason = pal::reason_pkg_required())
   
   # convert `Rmd/*.Rmd` to `R/*.gen.R`
   purl_rmd(path = path,
@@ -631,7 +637,8 @@ lint_rmd <- function(path = ".",
   checkmate::assert_directory_exists(path,
                                      access = "r")
   checkmate::assert_flag(excl_vignettes)
-  pal::assert_pkg("lintr")
+  rlang::check_installed("lintr",
+                         reason = pal::reason_pkg_required())
   
   lintr::lint_dir(path = path,
                   pattern = "\\.[Rr]([Mm][Dd])?$",
@@ -832,8 +839,8 @@ run_nopurl_rmd <- function(path = ".",
 gen_pkgdown_ref <- function(rmd) {
   
   checkmate::assert_string(rmd)
-  pal::assert_pkg("xml2")
-  
+  rlang::check_installed("xml2",
+                         reason = pal::reason_pkg_required())
   rmd_xml <-
     rmd |>
     pal::md_to_xml(strip_xml_ns = FALSE) |>

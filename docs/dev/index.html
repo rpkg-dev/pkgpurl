@@ -11,8 +11,7 @@
 <link href="deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link rel="stylesheet" href="deps/all.min.css">
 <link rel="stylesheet" href="deps/v4-shims.min.css">
-<script src="deps/bootstrap-toc.min.js"></script><script src="deps/headroom.min.js"></script><script src="deps/jQuery.headroom.min.js"></script><script src="deps/clipboard.min.js"></script><script src="deps/fuse.min.js"></script><script src="deps/autocomplete.jquery.min.js"></script><script src="deps/mark.min.js"></script><script src="deps/MathJax.js"></script><script src="deps/TeX-AMS-MML_HTMLorMML.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
-<meta property="og:title" content="Facilitate Authoring R Packages in the R Markdown File Format">
+<script src="deps/bootstrap-toc.min.js"></script><script src="deps/headroom.min.js"></script><script src="deps/jQuery.headroom.min.js"></script><script src="deps/clipboard.min.js"></script><script src="deps/fuse.min.js"></script><script src="deps/autocomplete.jquery.min.js"></script><script src="deps/mark.min.js"></script><script src="deps/MathJax.js"></script><script src="deps/TeX-AMS-MML_HTMLorMML.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Facilitate Authoring R Packages in the R Markdown File Format">
 <meta property="og:description" content="pkgpurl facilitates R package authoring using a literate programming approach. The main idea behind this is to write all of the R source code in R Markdown files (`Rmd/*.Rmd`), which allows the actual code to be freely mixed with explanatory and supplementary information in expressive Markdown format. The main object of pkgpurl is to provide a standardized way to compile the bare `.R` files from the prose-enhanced and thus more human-oriented `.Rmd` files.">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:creator" content="@2BSalim">
@@ -175,6 +174,7 @@ editor_options:
 <div class="table-wide">
 <table class="table">
 <thead><tr class="header">
+<th></th>
 <th align="left"><strong>Description</strong></th>
 <th align="left"><strong>R option</strong></th>
 <th align="left"><strong>Environment variable</strong></th>
@@ -182,18 +182,21 @@ editor_options:
 </tr></thead>
 <tbody>
 <tr class="odd">
+<td><strong>1</strong></td>
 <td align="left">Whether or not to add a <strong>copyright notice</strong> at the beginning of the generated <code>.R</code> files as recommended by e.g. the <a href="https://www.gnu.org/licenses/gpl-howto.html" class="external-link">GNU licenses</a>. The notice consists of the name and description of the program and the word <code>Copyright (C)</code> followed by the release years and the name(s) of the copyright holder(s), or if not specified, the author(s). The year is always the current year. All the other information is extracted from the package’s <code>DESCRIPTION</code> file.</td>
 <td align="left"><code>pkgpurl.add_copyright_notice</code></td>
 <td align="left"><code>PKGPURL_ADD_COPYRIGHT_NOTICE</code></td>
 <td align="left"></td>
 </tr>
 <tr class="even">
+<td><strong>2</strong></td>
 <td align="left">Whether or not to add a <strong>license notice</strong> at the beginning of the generated <code>.R</code> files as recommended by e.g. the <a href="https://www.gnu.org/licenses/gpl-howto.html" class="external-link">GNU licenses</a>. The license is determined from the package’s <code>DESCRIPTION</code> file and currently only the <a href="https://spdx.org/licenses/AGPL-3.0-or-later.html" class="external-link"><code>AGPL-3.0-or-later</code> license</a> is supported.</td>
 <td align="left"><code>pkgpurl.add_license_notice</code></td>
 <td align="left"><code>PKGPURL_ADD_LICENSE_NOTICE</code></td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
+<td><strong>3</strong></td>
 <td align="left">Whether or not to overwrite [pkgdown][pkgdown::pkgdown-package]’s <a href="https://pkgdown.r-lib.org/reference/build_reference.html#reference-index" class="external-link">reference index</a> in the configuration file <code>_pkgdown.yml</code> with an auto-generated one based on the main input file as described in [gen_pkgdown_ref()].</td>
 <td align="left"><code>pkgpurl.gen_pkgdown_ref</code></td>
 <td align="left"><code>PKGPURL_GEN_PKGDOWN_REF</code></td>
