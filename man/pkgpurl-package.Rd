@@ -12,8 +12,8 @@ pkgpurl facilitates R package authoring using a literate programming approach. T
 Useful links:
 \itemize{
   \item \url{https://pkgpurl.rpkg.dev}
-  \item \url{https://gitlab.com/salim_b/r/pkgs/pkgpurl}
-  \item Report bugs at \url{https://gitlab.com/salim_b/r/pkgs/pkgpurl/issues}
+  \item \url{https://gitlab.com/rpkg.dev/pkgpurl}
+  \item Report bugs at \url{https://gitlab.com/rpkg.dev/pkgpurl/issues}
 }
 
 }

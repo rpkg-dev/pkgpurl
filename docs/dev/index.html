@@ -49,7 +49,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://gitlab.com/salim_b/r/pkgs/pkgpurl/" aria-label="gitlab">
+  <a class="external-link nav-link" href="https://gitlab.com/rpkg.dev/pkgpurl/" aria-label="gitlab">
     <span class="fab fa fab fa-gitlab fa-lg"></span>
      
   </a>
@@ -160,7 +160,7 @@ editor_options:
 <span>                   repos <span class="op">=</span> <span class="st">"https://cloud.r-project.org/"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_gitlab.html" class="external-link">install_gitlab</a></span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"salim_b/r/pkgs/pkgpurl"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_gitlab.html" class="external-link">install_gitlab</a></span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"rpkg.dev/pkgpurl"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -174,7 +174,6 @@ editor_options:
 <div class="table-wide">
 <table class="table">
 <thead><tr class="header">
-<th></th>
 <th align="left"><strong>Description</strong></th>
 <th align="left"><strong>R option</strong></th>
 <th align="left"><strong>Environment variable</strong></th>
@@ -182,21 +181,18 @@ editor_options:
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td><strong>1</strong></td>
 <td align="left">Whether or not to add a <strong>copyright notice</strong> at the beginning of the generated <code>.R</code> files as recommended by e.g. the <a href="https://www.gnu.org/licenses/gpl-howto.html" class="external-link">GNU licenses</a>. The notice consists of the name and description of the program and the word <code>Copyright (C)</code> followed by the release years and the name(s) of the copyright holder(s), or if not specified, the author(s). The year is always the current year. All the other information is extracted from the package’s <code>DESCRIPTION</code> file.</td>
 <td align="left"><code>pkgpurl.add_copyright_notice</code></td>
 <td align="left"><code>PKGPURL_ADD_COPYRIGHT_NOTICE</code></td>
 <td align="left"></td>
 </tr>
 <tr class="even">
-<td><strong>2</strong></td>
 <td align="left">Whether or not to add a <strong>license notice</strong> at the beginning of the generated <code>.R</code> files as recommended by e.g. the <a href="https://www.gnu.org/licenses/gpl-howto.html" class="external-link">GNU licenses</a>. The license is determined from the package’s <code>DESCRIPTION</code> file and currently only the <a href="https://spdx.org/licenses/AGPL-3.0-or-later.html" class="external-link"><code>AGPL-3.0-or-later</code> license</a> is supported.</td>
 <td align="left"><code>pkgpurl.add_license_notice</code></td>
 <td align="left"><code>PKGPURL_ADD_LICENSE_NOTICE</code></td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
-<td><strong>3</strong></td>
 <td align="left">Whether or not to overwrite [pkgdown][pkgdown::pkgdown-package]’s <a href="https://pkgdown.r-lib.org/reference/build_reference.html#reference-index" class="external-link">reference index</a> in the configuration file <code>_pkgdown.yml</code> with an auto-generated one based on the main input file as described in [gen_pkgdown_ref()].</td>
 <td align="left"><code>pkgpurl.gen_pkgdown_ref</code></td>
 <td align="left"><code>PKGPURL_GEN_PKGDOWN_REF</code></td>
@@ -213,7 +209,7 @@ editor_options:
 <h3 id="r-markdown-format">R Markdown format<a class="anchor" aria-label="anchor" href="#r-markdown-format"></a>
 </h3>
 <p>This package’s source code is written in the <a href="https://rmarkdown.rstudio.com/" class="external-link">R Markdown</a> file format to facilitate practices commonly referred to as <a href="https://en.wikipedia.org/wiki/Literate_programming" class="external-link"><em>literate programming</em></a>. It allows the actual code to be freely mixed with explanatory and supplementary information in expressive Markdown format instead of having to rely on <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Comments" class="external-link"><code>#</code> comments</a> only.</p>
-<p>All the <code>.gen.R</code> suffixed R source code found under <a href="https://gitlab.com/salim_b/r/pkgs/pkgpurl/-/tree/master/R/" class="external-link"><code>R/</code></a> is generated from the respective R Markdown counterparts under <a href="https://gitlab.com/salim_b/r/pkgs/pkgpurl/-/tree/master/Rmd/" class="external-link"><code>Rmd/</code></a> using <a href="https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.html"><code>pkgpurl::purl_rmd()</code></a><a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;This naming convention as well as the very idea to leverage the R Markdown format to author R packages was originally proposed by Yihui Xie. See his excellent &lt;a href="https://yihui.name/rlp/" class="external-link"&gt;blog post&lt;/a&gt; for more detailed information about the benefits of literate programming techniques and some practical examples. Note that using &lt;code&gt;&lt;a href="reference/purl_rmd.html"&gt;pkgpurl::purl_rmd()&lt;/a&gt;&lt;/code&gt; is a less cumbersome alternative to the Makefile approach outlined by him.&lt;/p&gt;'><sup>4</sup></a>. Always make changes only to the <code>.Rmd</code> files – never the <code>.R</code> files – and then run <code><a href="reference/purl_rmd.html">pkgpurl::purl_rmd()</a></code> to regenerate the R source files.</p>
+<p>All the <code>.gen.R</code> suffixed R source code found under <a href="https://gitlab.com/rpkg.dev/pkgpurl/-/tree/master/R/" class="external-link"><code>R/</code></a> is generated from the respective R Markdown counterparts under <a href="https://gitlab.com/rpkg.dev/pkgpurl/-/tree/master/Rmd/" class="external-link"><code>Rmd/</code></a> using <a href="https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.html"><code>pkgpurl::purl_rmd()</code></a><a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;This naming convention as well as the very idea to leverage the R Markdown format to author R packages was originally proposed by Yihui Xie. See his excellent &lt;a href="https://yihui.name/rlp/" class="external-link"&gt;blog post&lt;/a&gt; for more detailed information about the benefits of literate programming techniques and some practical examples. Note that using &lt;code&gt;&lt;a href="reference/purl_rmd.html"&gt;pkgpurl::purl_rmd()&lt;/a&gt;&lt;/code&gt; is a less cumbersome alternative to the Makefile approach outlined by him.&lt;/p&gt;'><sup>4</sup></a>. Always make changes only to the <code>.Rmd</code> files – never the <code>.R</code> files – and then run <code><a href="reference/purl_rmd.html">pkgpurl::purl_rmd()</a></code> to regenerate the R source files.</p>
 </div>
 <div class="section level3">
 <h3 id="coding-style">Coding style<a class="anchor" aria-label="anchor" href="#coding-style"></a>
@@ -252,8 +248,8 @@ editor_options:
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://gitlab.com/salim_b/r/pkgs/pkgpurl/" class="external-link">Browse source code</a></li>
-<li><a href="https://gitlab.com/salim_b/r/pkgs/pkgpurl/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://gitlab.com/rpkg.dev/pkgpurl/" class="external-link">Browse source code</a></li>
+<li><a href="https://gitlab.com/rpkg.dev/pkgpurl/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 

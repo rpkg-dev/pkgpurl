@@ -27,7 +27,7 @@ a package's main .Rmd file."><meta name="twitter:card" content="summary"><meta n
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://gitlab.com/salim_b/r/pkgs/pkgpurl/" aria-label="gitlab">
+  <a class="external-link nav-link" href="https://gitlab.com/rpkg.dev/pkgpurl/" aria-label="gitlab">
     <span class="fab fa fab fa-gitlab fa-lg"></span>
      
   </a>
@@ -40,7 +40,7 @@ a package's main .Rmd file."><meta name="twitter:card" content="summary"><meta n
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Generate pkgdown reference index</h1>
-      <small class="dont-index">Source: <a href="https://gitlab.com/salim_b/r/pkgs/pkgpurl/blob/HEAD/R/pkgpurl.gen.R" class="external-link"><code>R/pkgpurl.gen.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://gitlab.com/rpkg.dev/pkgpurl/blob/HEAD/R/pkgpurl.gen.R" class="external-link"><code>R/pkgpurl.gen.R</code></a></small>
       <div class="d-none name"><code>gen_pkgdown_ref.Rd</code></div>
     </div>
 
@@ -74,7 +74,7 @@ specially named headings. See below for details.</p>
     <div class="section level2">
     <h2 id="special-headings">Special headings<a class="anchor" aria-label="anchor" href="#special-headings"></a></h2>
     <p>Headings that exactly match certain strings (case-insensitive, but without any inline formatting or additional text) are treated specially. Here's an
-overview:</p><table class="table table"><tr><td></td><td><strong>Headings</strong></td><td><strong>Meaning</strong></td></tr><tr><td><strong>1</strong></td><td>DESCRIPTION</td><td>Paragraph(s) below this heading, which in turn is hierarchically below a <code>title</code> or <code>subtitle</code> heading, are used as the description for this very (sub)title (<code>desc</code> in the pkgdown reference index).</td></tr><tr><td><strong>2</strong></td><td>EXPORTED</td><td>Will never be used as <code>title</code> or <code>subtitle</code> in the pkgdown reference index (i.e. ignored). Simply serves as a (usually top-level) heading to indicate that the objects defined below it are <a href="https://r-pkgs.org/dependencies-in-practice.html#exports" class="external-link">exported</a> by the package.</td></tr><tr><td><strong>3</strong></td><td>INTERNAL , NOTES    , TEMPORARY, TMP</td><td>Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index generation.</td></tr></table></div>
+overview:</p><table class="table table"><tr><td><strong>Headings</strong></td><td><strong>Meaning</strong></td></tr><tr><td>DESCRIPTION</td><td>Paragraph(s) below this heading, which in turn is hierarchically below a <code>title</code> or <code>subtitle</code> heading, are used as the description for this very (sub)title (<code>desc</code> in the pkgdown reference index).</td></tr><tr><td>EXPORTED</td><td>Will never be used as <code>title</code> or <code>subtitle</code> in the pkgdown reference index (i.e. ignored). Simply serves as a (usually top-level) heading to indicate that the objects defined below it are <a href="https://r-pkgs.org/dependencies-in-practice.html#exports" class="external-link">exported</a> by the package.</td></tr><tr><td>INTERNAL , NOTES    , TEMPORARY, TMP</td><td>Everything that's hierarchically below one of these headings is completely ignored for pkgdown reference index generation.</td></tr></table></div>
     <div class="section level2">
     <h2 id="parsing-rules">Parsing rules<a class="anchor" aria-label="anchor" href="#parsing-rules"></a></h2>
     <p>To be able to unambiguously map an <code>.Rmd</code> file's heading hierarchy to the pkgdown reference index, some parsing rules are necessary. Attention must be paid
