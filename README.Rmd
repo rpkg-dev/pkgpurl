@@ -198,7 +198,8 @@ pkgsnip::md_snip(id = "usage_notice") %>%
 pkgsnip::md_snip(id = "pkg_config",
                  pkg = "pkgpurl")
 cat("\n\n::: {.table-wide}\n ")
-pal::print_pkg_config("pkgpurl")
+pal::print_pkg_config("pkgpurl",
+                      roxy_to_md = TRUE)
 cat("\n :::")
 ```
 

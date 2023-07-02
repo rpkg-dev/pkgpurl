@@ -1252,7 +1252,7 @@ pkg_config <-
                                        "`DESCRIPTION` file and currently only the [`AGPL-3.0-or-later` ",
                                        "license](https://spdx.org/licenses/AGPL-3.0-or-later.html) is supported.")) |>
   tibble::add_row(key = "gen_pkgdown_ref",
-                  description = paste0("Whether or not to overwrite [pkgdown][pkgdown::pkgdown-package]'s [reference ",
+                  description = paste0("Whether or not to overwrite [pkgdown](https://pkgdown.r-lib.org/)'s [reference ",
                                        "index](https://pkgdown.r-lib.org/reference/build_reference.html#reference-index) in the configuration file ",
-                                       "`_pkgdown.yml` with an auto-generated one based on the main input file as described in [gen_pkgdown_ref()]."))
+                                       "`_pkgdown.yml` with an auto-generated one based on the main input file as described in [pkgpurl::gen_pkgdown_ref()]."))
 ```

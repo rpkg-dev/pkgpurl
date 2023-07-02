@@ -25,7 +25,7 @@ Imports:
     knitr (>= 1.28),
     lifecycle (>= 1.0.1),
     magrittr (>= 2.0.0),
-    pal (>= 0.0.9096),
+    pal (>= 0.0.9098),
     purrr (>= 1.0.0),
     rlang (>= 0.4.11),
     stringr (>= 1.4.0),
