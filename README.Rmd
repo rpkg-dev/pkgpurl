@@ -155,7 +155,7 @@ Unfortunately, there are also a few notable **drawbacks** of the R Markdown form
 #| eval: !expr '!isTRUE(getOption("pal.build_readme.is_pkgdown"))'
 #| results: asis
 #| echo: false
-pkgsnip::md_snip(name = "pkgdown_notice") %>%
+pkgsnip::md_snip(id = "pkgdown_notice") %>%
   paste0("## Documentation\n\n",
          "[![Netlify Status](https://api.netlify.com/api/v1/badges/f639cb7f-f5fe-454c-b20d-1e06916daffc/deploy-status)]",
          "(https://app.netlify.com/sites/pkgpurl-rpkg-dev/deploys)\n\n",
@@ -183,7 +183,7 @@ pkgsnip::md_snip(name = "pkgdown_notice") %>%
 #| eval: !expr isTRUE(getOption("pal.build_readme.is_pkgdown"))
 #| results: asis
 #| echo: false
-pkgsnip::md_snip(name = "usage_notice") %>%
+pkgsnip::md_snip(id = "usage_notice") %>%
   paste0("## Usage\n\n", .) %>%
   pal::cat_lines()
 ```
@@ -195,7 +195,7 @@ pkgsnip::md_snip(name = "usage_notice") %>%
 #| echo: false
 #| results: "asis"
 
-pkgsnip::md_snip(name = "pkg_config",
+pkgsnip::md_snip(id = "pkg_config",
                  pkg = "pkgpurl")
 cat("\n\n::: {.table-wide}\n ")
 pal::print_pkg_config("pkgpurl")

@@ -160,7 +160,7 @@ yet_another_subgroup_fn <- function(...) \{...\}
 
 \examples{
 if (pal::is_pkg_installed("tinkr")) {
-  pal::gh_text_file(path = "Rmd/pal.Rmd",
+  yay::gh_text_file(path = "Rmd/pal.Rmd",
                     owner = "salim-b",
                     name = "pal") |>
     pkgpurl::gen_pkgdown_ref() |>
