@@ -394,8 +394,8 @@ TODO:
 
 NOTES:
 
--   There's a [longstanding bug in R](https://bugs.r-project.org/show_bug.cgi?id=16644) that causes `process_pkg()` to fail with an error "lazy-load database
-    ... is corrupt".
+-   There's a [longstanding bug in R](https://bugs.r-project.org/show_bug.cgi?id=16644) that causes `process_pkg(use_rstudio_api = FALSE)` to fail with an error
+    "lazy-load database ... is corrupt".
 
 ```{r}
 #' Process R Markdown package from source to installation
@@ -569,8 +569,7 @@ load_pkg <- function(path = ".",
 
 ### `purl_rmd`
 
-The basic workflow is heavily inspired by a pertinent makefile from Yihui Xie found [here](https://yihui.org/rlp/#from-rmd-to-r). Not least because I'm a
-complete noob regarding [makefile syntax](https://en.wikipedia.org/wiki/Makefile), I decided to write the relevant pieces in R.
+The basic workflow is heavily inspired by a pertinent makefile from Yihui Xie found [here](https://yihui.org/rlp/#from-rmd-to-r).
 
 TODO:
 
