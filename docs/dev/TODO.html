@@ -55,6 +55,25 @@
 <p>Advertise package at relevant places</p>
 <ul><li><a href="https://github.com/rstudio/rstudio/issues/5809" class="external-link uri">https://github.com/rstudio/rstudio/issues/5809</a></li>
 </ul></li>
+<li>
+<p>Propose a standard way to render a package’s main <code>Rmd/*.Rmd</code> source file for the pkgdown site (as an article, or better as main menu item), so people can view all Markdown annotations etc. accompanying the code (“literate programming”) in the most readable way? Contra: Benefit compared to the <a href="https://gitlab.com/rpkg.dev/pkgpurl/-/blob/master/Rmd/pkgpurl.Rmd?plain=0" class="external-link">rendered GitLab view</a> would be minimal (currently mainly R code syntax highlighting).</p>
+<p>Basically, we’d need to add a vignette <code>vignettes/source_code.Rmd</code> with the following content:</p>
+<pre class="rmd"><code>---
+title: "R Markdown source code"
+output: rmarkdown::html_vignette
+vignette: &gt;
+  %\VignetteIndexEntry{R Markdown source code}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, child = "../Rmd/pkgpurl.Rmd", results = "hide"}
+```</code></pre>
+<p>What’s left to do would be</p>
+<ol style="list-style-type: decimal"><li><p>Differentiate between actual source code blocks (starting with <code>```{r}</code>) and code blocks in accompanying documentation!</p></li>
+<li><p>Tweak the CSS to reduce the font size of source code blocks.</p></li>
+<li><p>Tweak the CSS to extend width to the right for source code blocks.</p></li>
+</ol></li>
 </ul></div>
 
   </main></div>
