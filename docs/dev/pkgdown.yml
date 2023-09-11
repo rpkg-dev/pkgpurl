@@ -1,8 +1,8 @@
-pandoc: 3.1.4
+pandoc: 3.1.8
 pkgdown: 2.0.7.9000
 pkgdown_sha: 74872270eda08c87b0bd197b7ef4ab69e6c71996
 articles: {}
-last_built: 2023-07-04T22:58Z
+last_built: 2023-09-11T21:09Z
 urls:
   reference: https://pkgpurl.rpkg.dev/reference
   article: https://pkgpurl.rpkg.dev/articles

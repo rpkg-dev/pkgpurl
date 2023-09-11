@@ -12,7 +12,7 @@ lint_rmd(path = ".", excl_vignettes = TRUE)
 \item{excl_vignettes}{Whether to exclude all \code{.Rmd} files under \verb{vignettes/}. A logical scalar.}
 }
 \value{
-A list of lint objects.
+An object of class \code{c("lints", "list")}, each element of which is a \code{"list"} object.
 }
 \description{
 This is a convenience wrapper around \code{\link[lintr:lint]{lintr::lint_dir()}} which is tailored to a typical R Markdown package. To use this function, the

@@ -339,7 +339,7 @@ rmd_files <- function(path) {
 #' @param use_rstudio_api Whether or not to rely on the RStudio API to install the built package (which always triggers an R session restart regardless of
 #'   `restart_r_session`). If `NULL`, the RStudio API is automatically used if possible, i.e. RStudio is running. Note that installation without the RStudio API
 #'   has known issues, see section *Details* below for further information.
-#' @param quiet `r pkgsnip::param_label("quiet")`
+#' @param quiet `r pkgsnip::param_lbl("quiet")`
 #'
 #' @inherit purl_rmd return
 #' @family high_lvl
@@ -714,12 +714,14 @@ run_nopurl_rmd <- function(path = ".",
     
     cli::cli_progress_step(msg = "{.strong Executing file {.file {path_tmp_purled[i]}}}")
     
+    # nolint start: undesirable_function_linter
     source(file = path_tmp_purled[i],
            local = ifelse(is.null(env),
                           FALSE,
                           env),
            echo = FALSE,
            encoding = "UTF-8")
+    # nolint end
     
     cli::cli_progress_done()
     
@@ -788,7 +790,7 @@ run_nopurl_rmd <- function(path = ".",
 #' The following rules define how the reference index is generated:
 #' 
 #' 1. Headings below a heading named
-#'    `r purrr::list_c(dplyr::filter(data_special_headings, type == "ignore_content")$heading_texts, ptype = character()) |> pal::prose_ls(wrap = "*", last_sep = " or ")`
+#'    `r data_special_headings |> dplyr::filter(type == "ignore_content") %$% heading_texts |> unlist() |> pal::prose_ls(wrap = "*", last_sep = " or ")`
 #'    (case-insensitive, but without any inline formatting) are simply ignored when generating the reference index.
 #' 2. Every heading that is a) inline-formatted as [verbatim](https://pandoc.org/MANUAL.html#verbatim) and b) doesn't contain any whitespace characters is
 #'    considered to be the name of a help topic (usually the name of a function or dataset) to be included in the reference index. This maps to the `contents`
@@ -849,11 +851,8 @@ gen_pkgdown_ref <- function(rmd) {
   # assemble necessary Markdown heading hierarchy information (one row for each node of `rmd_xml`)
   hierarchy <-
     tibble::tibble(subnode_ix = pal::md_xml_subnode_ix(xml = rmd_xml),
-                   # is *relevant* heading
-                   is_heading =
-                     subnode_ix |>
-                     purrr::map_int(length) |>
-                     magrittr::is_greater_than(0L)) |>
+                   # is _relevant_ heading
+                   is_heading = lengths(subnode_ix) > 0L) |>
     tibble::rowid_to_column(var = "i") %>%
     # add variables that are relevant for heading nodes only
     dplyr::left_join(y = tibble::tibble(i = .$i[.$is_heading],
@@ -892,7 +891,7 @@ gen_pkgdown_ref <- function(rmd) {
   ## complete `is_ignored`
   for (i in hierarchy$i[hierarchy$is_ignored
                         & !is.na(hierarchy$is_ignored)
-                        & purrr::map_int(hierarchy$subnode_ix, length) > 0L]) {
+                        & lengths(hierarchy$subnode_ix) > 0L]) {
     
     hierarchy$is_ignored[unlist(hierarchy$subnode_ix[i])] <- TRUE
   }
@@ -1047,11 +1046,11 @@ gen_pkgdown_ref <- function(rmd) {
   list(reference = result)
 }
 
-#' `r pkgsnip::title_label("pkg_config", pkg = "pkgpurl")`
+#' `r pkgsnip::title_lbl("pkg_config", pkg = "pkgpurl")`
 #'
-#' `r pkgsnip::description_label("pkg_config", pkg = "pkgpurl")`
+#' `r pkgsnip::description_lbl("pkg_config", pkg = "pkgpurl")`
 #'
-#' @format `r pkgsnip::return_label("data_cols", cols = colnames(pkg_config))`
+#' @format `r pkgsnip::return_lbl("tibble_cols", cols = colnames(pkg_config))`
 #' @export
 #'
 #' @examples
