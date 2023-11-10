@@ -639,7 +639,7 @@ lint_rmd <- function(path = ".",
                      relative_path = TRUE,
                      exclusions = default_exclusions(excl_vignettes = TRUE),
                      pattern = "\\.[Rr]([Mm][Dd])?$",
-                     parse_settings = NULL,
+                     parse_settings = TRUE,
                      show_progress = NULL) {
   
   checkmate::assert_directory_exists(path,
@@ -953,17 +953,19 @@ gen_pkgdown_ref <- function(rmd) {
                                           title_description =
                                             hierarchy$subnode_ix[i_title] |>
                                             purrr::map2_chr(.y = i_title,
-                                                            .f = \(x, y)
-                                                            hierarchy[x, ] |>
-                                                              dplyr::filter(is_description_heading
-                                                                            & heading_lvl == hierarchy$heading_lvl[y] + 1L) %$%
-                                                              subnode_ix |>
-                                                              purrr::list_c(ptype = integer()) %>%
-                                                              magrittr::extract(rmd_xml, .) |>
-                                                              purrr::map_chr(pal::xml_to_md) |>
-                                                              stringr::str_trim() |>
-                                                              pal::when(length(.) > 0L ~ paste0(., collapse = "\n\n"),
-                                                                        ~ NA_character_))),
+                                                            .f = \(x, y) {
+                                                              
+                                                              hierarchy[x, ] |>
+                                                                dplyr::filter(is_description_heading
+                                                                              & heading_lvl == hierarchy$heading_lvl[y] + 1L) %$%
+                                                                subnode_ix |>
+                                                                purrr::list_c(ptype = integer()) %>%
+                                                                magrittr::extract(rmd_xml, .) |>
+                                                                purrr::map_chr(pal::xml_to_md) |>
+                                                                stringr::str_trim() |>
+                                                                pal::when(length(.) > 0L ~ paste0(., collapse = "\n\n"),
+                                                                          ~ NA_character_)
+                                                            })),
                        by = "i_title") %>%
       dplyr::left_join(y = tibble::tibble(i_subtitle =
                                             .$i_subtitle |>
@@ -976,17 +978,19 @@ gen_pkgdown_ref <- function(rmd) {
                                           subtitle_description =
                                             hierarchy$subnode_ix[i_subtitle] |>
                                             purrr::map2_chr(.y = i_subtitle,
-                                                            .f = \(x, y)
-                                                            hierarchy[x, ] |>
-                                                              dplyr::filter(is_description_heading
-                                                                            & heading_lvl == hierarchy$heading_lvl[y] + 1L) %$%
-                                                              subnode_ix |>
-                                                              purrr::list_c(ptype = integer()) %>%
-                                                              magrittr::extract(rmd_xml, .) |>
-                                                              purrr::map_chr(pal::xml_to_md) |>
-                                                              stringr::str_trim() |>
-                                                              pal::when(length(.) > 0L ~ paste0(., collapse = "\n\n"),
-                                                                        ~ NA_character_))),
+                                                            .f = \(x, y) {
+                                                              
+                                                              hierarchy[x, ] |>
+                                                                dplyr::filter(is_description_heading
+                                                                              & heading_lvl == hierarchy$heading_lvl[y] + 1L) %$%
+                                                                subnode_ix |>
+                                                                purrr::list_c(ptype = integer()) %>%
+                                                                magrittr::extract(rmd_xml, .) |>
+                                                                purrr::map_chr(pal::xml_to_md) |>
+                                                                stringr::str_trim() |>
+                                                                pal::when(length(.) > 0L ~ paste0(., collapse = "\n\n"),
+                                                                          ~ NA_character_)
+                                                            })),
                        by = "i_subtitle")
     
     # assemble result list that can easily be converted to YAML using `yaml::as.yaml()`

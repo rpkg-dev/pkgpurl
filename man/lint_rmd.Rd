@@ -11,7 +11,7 @@ lint_rmd(
   relative_path = TRUE,
   exclusions = default_exclusions(excl_vignettes = TRUE),
   pattern = "\\\\.[Rr]([Mm][Dd])?$",
-  parse_settings = NULL,
+  parse_settings = TRUE,
   show_progress = NULL
 )
 }
