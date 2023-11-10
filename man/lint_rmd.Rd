@@ -4,12 +4,40 @@
 \alias{lint_rmd}
 \title{Lint R Markdown package}
 \usage{
-lint_rmd(path = ".", excl_vignettes = TRUE)
+lint_rmd(
+  path = ".",
+  linters = default_linters,
+  cache = FALSE,
+  relative_path = TRUE,
+  exclusions = default_exclusions(excl_vignettes = TRUE),
+  pattern = "\\\\.[Rr]([Mm][Dd])?$",
+  parse_settings = NULL,
+  show_progress = NULL
+)
 }
 \arguments{
 \item{path}{Path to the root of the package directory.}
 
-\item{excl_vignettes}{Whether to exclude all \code{.Rmd} files under \verb{vignettes/}. A logical scalar.}
+\item{linters}{A named list of linter functions to apply. See \link[lintr]{linters} for a full list of default and available
+linters.}
+
+\item{cache}{When logical, toggle caching of lint results. If passed a character string, store the cache in this
+directory.}
+
+\item{relative_path}{if \code{TRUE}, file paths are printed using their path relative to the base directory.
+If \code{FALSE}, use the full absolute path.}
+
+\item{exclusions}{exclusions for \code{\link[lintr:exclude]{exclude()}}, relative to the package path.}
+
+\item{pattern}{pattern for files, by default it will take files with any of the extensions
+.R, .Rmd, .qmd, .Rnw, .Rhtml, .Rrst, .Rtex, .Rtxt allowing for lowercase r (.r, ...).}
+
+\item{parse_settings}{Logical, default \code{TRUE}. Whether to try and parse the settings;
+otherwise, the \code{\link[lintr:default_settings]{default_settings()}} are used.}
+
+\item{show_progress}{Logical controlling whether to show linting progress with a simple text
+progress bar \emph{via} \code{\link[utils:txtProgressBar]{utils::txtProgressBar()}}. The default behavior is to show progress in
+\code{\link[=interactive]{interactive()}} sessions not running a testthat suite.}
 }
 \value{
 An object of class \code{c("lints", "list")}, each element of which is a \code{"list"} object.
@@ -24,6 +52,8 @@ To avoid unnecessary noise, all the the generated \verb{R/*.gen.R} files as well
 This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in}, allowing RStudio users to assign a \href{https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE}{custom shortcut} to it or to invoke it from the \href{https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts}{command palette}.
 }
 \seealso{
+\code{\link{default_linters}} and \code{\link[=default_exclusions]{default_exclusions()}}
+
 Other high-level functions:
 \code{\link{load_pkg}()},
 \code{\link{process_pkg}()},

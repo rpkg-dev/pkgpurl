@@ -18,6 +18,89 @@ editor_options:
 
 # Define data
 
+## `default_linters`
+
+```{r}
+default_linters <- lintr::linters_with_defaults(
+  absolute_path_linter             = lintr::absolute_path_linter(),
+  any_duplicated_linter            = lintr::any_duplicated_linter(),
+  any_is_na_linter                 = lintr::any_is_na_linter(),
+  assignment_linter                = lintr::assignment_linter(allow_cascading_assign = FALSE,
+                                                              allow_pipe_assign = TRUE),
+  boolean_arithmetic_linter        = lintr::boolean_arithmetic_linter(),
+  # TODO: add `function_braces = "not_inline"` once https://github.com/r-lib/lintr/pull/2240 is merged 
+  brace_linter                     = lintr::brace_linter(allow_single_line = TRUE),
+  class_equals_linter              = lintr::class_equals_linter(),
+  condition_message_linter         = lintr::condition_message_linter(),
+  conjunct_test_linter             = lintr::conjunct_test_linter(allow_filter = "always"),
+  consecutive_assertion_linter     = lintr::consecutive_assertion_linter(),
+  empty_assignment_linter          = lintr::empty_assignment_linter(),
+  expect_comparison_linter         = lintr::expect_comparison_linter(),
+  expect_length_linter             = lintr::expect_length_linter(),
+  expect_named_linter              = lintr::expect_named_linter(),
+  expect_not_linter                = lintr::expect_not_linter(),
+  expect_null_linter               = lintr::expect_null_linter(),
+  expect_s3_class_linter           = lintr::expect_s3_class_linter(),
+  expect_s4_class_linter           = lintr::expect_s4_class_linter(),
+  expect_true_false_linter         = lintr::expect_true_false_linter(),
+  expect_type_linter               = lintr::expect_type_linter(),
+  fixed_regex_linter               = lintr::fixed_regex_linter(),
+  for_loop_index_linter            = lintr::for_loop_index_linter(),
+  function_argument_linter         = lintr::function_argument_linter(),
+  if_not_else_linter               = lintr::if_not_else_linter(exceptions = NULL),
+  ifelse_censor_linter             = lintr::ifelse_censor_linter(),
+  implicit_assignment_linter       = lintr::implicit_assignment_linter(),
+  implicit_integer_linter          = lintr::implicit_integer_linter(allow_colon = TRUE),
+  # DISABLED due to too many false-positives / deviations from RStudio's auto-indent
+  # cf. https://github.com/r-lib/lintr/issues?q=is%3Aissue+is%3Aopen+indentation_linter
+  # indentation_linter               = lintr::indentation_linter(hanging_indent_style = "always"),
+  indentation_linter               = NULL,
+  inner_combine_linter             = lintr::inner_combine_linter(),
+  is_numeric_linter                = lintr::is_numeric_linter(),
+  keyword_quote_linter             = lintr::keyword_quote_linter(),
+  length_levels_linter             = lintr::length_levels_linter(),
+  length_test_linter               = lintr::length_test_linter(),
+  lengths_linter                   = lintr::lengths_linter(),
+  line_length_linter               = lintr::line_length_linter(160),
+  literal_coercion_linter          = lintr::literal_coercion_linter(),
+  # TODO: remove custom `except` arg once https://github.com/r-lib/lintr/issues/2109 is resolved
+  missing_argument_linter          = lintr::missing_argument_linter(except = c("alist",
+                                                                               "quote",
+                                                                               "switch",
+                                                                               "extract")),
+  nested_ifelse_linter             = lintr::nested_ifelse_linter(),
+  numeric_leading_zero_linter      = lintr::numeric_leading_zero_linter(),
+  object_length_linter             = lintr::object_length_linter(40),
+  # TODO: remove once https://github.com/r-lib/lintr/issues/2252 is fixed
+  object_usage_linter              = NULL,
+  outer_negation_linter            = lintr::outer_negation_linter(),
+  paste_linter                     = lintr::paste_linter(),
+  pipe_call_linter                 = lintr::pipe_call_linter(),
+  quotes_linter                    = NULL,
+  redundant_equals_linter          = lintr::redundant_equals_linter(),
+  redundant_ifelse_linter          = lintr::redundant_ifelse_linter(),
+  regex_subset_linter              = lintr::regex_subset_linter(),
+  repeat_linter                    = lintr::repeat_linter(),
+  scalar_in_linter                 = lintr::scalar_in_linter(),
+  sort_linter                      = lintr::sort_linter(),
+  sprintf_linter                   = lintr::sprintf_linter(),
+  string_boundary_linter           = lintr::string_boundary_linter(),
+  system_file_linter               = lintr::system_file_linter(),
+  todo_comment_linter              = lintr::todo_comment_linter(),
+  trailing_whitespace_linter       = NULL,
+  undesirable_function_linter      = lintr::undesirable_function_linter(symbol_is_undesirable = FALSE),
+  undesirable_operator_linter      = lintr::undesirable_operator_linter(
+    op = c(lintr::default_undesirable_operators,
+           "->" = "Makes it harder to see in code where an object is defined.")
+  ),
+  unnecessary_concatenation_linter = lintr::unnecessary_concatenation_linter(),
+  unnecessary_nested_if_linter     = lintr::unnecessary_nested_if_linter(),
+  unnecessary_placeholder_linter   = lintr::unnecessary_placeholder_linter(),
+  unreachable_code_linter          = lintr::unreachable_code_linter(),
+  yoda_test_linter                 = lintr::yoda_test_linter()
+)
+```
+
 ## `pkg_config`
 
 ```{r}
@@ -48,7 +131,8 @@ Save all the small data objects as a single internal file `R/sysdata.rda`. Note 
 to package users.
 
 ```{r}
-usethis::use_data(pkg_config,
+usethis::use_data(default_linters,
+                  pkg_config,
                   internal = TRUE,
                   overwrite = TRUE,
                   compress = "xz",

@@ -27,4 +27,7 @@ reference:
 - title: Low-level functions
 - contents: gen_pkgdown_ref
 - title: Miscellaneous
-- contents: pkg_config
+- contents:
+  - default_exclusions
+  - default_linters
+  - pkg_config

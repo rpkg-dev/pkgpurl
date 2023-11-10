@@ -13,6 +13,12 @@
     <loc>https://pkgpurl.rpkg.dev/dev/index.html</loc>
   </url>
   <url>
+    <loc>https://pkgpurl.rpkg.dev/dev/reference/default_exclusions.html</loc>
+  </url>
+  <url>
+    <loc>https://pkgpurl.rpkg.dev/dev/reference/default_linters.html</loc>
+  </url>
+  <url>
     <loc>https://pkgpurl.rpkg.dev/dev/reference/gen_pkgdown_ref.html</loc>
   </url>
   <url>

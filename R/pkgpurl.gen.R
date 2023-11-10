@@ -625,31 +625,36 @@ purl_rmd <- function(path = ".",
 #'
 #' `r pkgsnip::md_snip("rstudio_addin_hint")`
 #'
-#' @param excl_vignettes Whether to exclude all `.Rmd` files under `vignettes/`. A logical scalar.
 #' @inheritParams purl_rmd
+#' @inheritParams lintr::lint_dir
+#' @inheritParams lintr::lint
 #'
 #' @inherit lintr::lint_dir return
+#' @seealso [`default_linters`][default_linters] and [default_exclusions()]
 #' @family high_lvl
 #' @export
 lint_rmd <- function(path = ".",
-                     excl_vignettes = TRUE) {
+                     linters = default_linters,
+                     cache = FALSE,
+                     relative_path = TRUE,
+                     exclusions = default_exclusions(excl_vignettes = TRUE),
+                     pattern = "\\.[Rr]([Mm][Dd])?$",
+                     parse_settings = NULL,
+                     show_progress = NULL) {
   
   checkmate::assert_directory_exists(path,
                                      access = "r")
-  checkmate::assert_flag(excl_vignettes)
   rlang::check_installed("lintr",
                          reason = pal::reason_pkg_required())
   
   lintr::lint_dir(path = path,
-                  pattern = "\\.[Rr]([Mm][Dd])?$",
-                  exclusions = list(c(list.files(path = "R",
-                                                 recursive = TRUE,
-                                                 full.names = TRUE,
-                                                 pattern = "\\.gen\\.R$"),
-                                      list.files(path = "vignettes",
-                                                 recursive = TRUE,
-                                                 full.names = TRUE,
-                                                 pattern = "\\.Rmd$")[!excl_vignettes])))
+                  linters = linters,
+                  cache = cache,
+                  relative_path = relative_path,
+                  exclusions = exclusions,
+                  pattern = pattern,
+                  parse_settings = parse_settings,
+                  show_progress = show_progress)
 }
 
 #' Run `*.nopurl.Rmd` files
@@ -900,13 +905,7 @@ gen_pkgdown_ref <- function(rmd) {
   hierarchy$is_help_topic[hierarchy$is_ignored] <- FALSE
   
   # warn if no valid help topic nodes are present
-  if (!length(which(hierarchy$is_help_topic))) {
-    
-    cli::cli_alert_warning("Unable to generate pkgdown reference index. No valid help topic headings found in main {.file .Rmd} file.")
-    
-    result <- list()
-    
-  } else {
+  if (any(hierarchy$is_help_topic)) {
     
     # initialize reference index data
     data_ref_i <- tibble::tibble(i_title = integer(),
@@ -955,7 +954,7 @@ gen_pkgdown_ref <- function(rmd) {
                                             hierarchy$subnode_ix[i_title] |>
                                             purrr::map2_chr(.y = i_title,
                                                             .f = \(x, y)
-                                                              hierarchy[x, ] |>
+                                                            hierarchy[x, ] |>
                                                               dplyr::filter(is_description_heading
                                                                             & heading_lvl == hierarchy$heading_lvl[y] + 1L) %$%
                                                               subnode_ix |>
@@ -978,7 +977,7 @@ gen_pkgdown_ref <- function(rmd) {
                                             hierarchy$subnode_ix[i_subtitle] |>
                                             purrr::map2_chr(.y = i_subtitle,
                                                             .f = \(x, y)
-                                                              hierarchy[x, ] |>
+                                                            hierarchy[x, ] |>
                                                               dplyr::filter(is_description_heading
                                                                             & heading_lvl == hierarchy$heading_lvl[y] + 1L) %$%
                                                               subnode_ix |>
@@ -1041,10 +1040,66 @@ gen_pkgdown_ref <- function(rmd) {
       # move title-less item to the front (the `NA` group is always processed last in `group_map()`)
       pal::when(anyNA(data_ref_i$title) ~ .[c(length(.), seq_len(length(.) - 1L))],
                 ~ .)
+  } else {
+    
+    cli::cli_alert_warning("Unable to generate pkgdown reference index. No valid help topic headings found in main {.file .Rmd} file.")
+    result <- list()
   }
   
   list(reference = result)
 }
+
+#' pkgpurl's default lintr exclusions
+#'
+#' Opinionated set of files and folders to be excluded from linting, relative to the package path. To be used with [lint_rmd()], [lintr::lint_dir()] or
+#' [lintr::lint_package()].
+#'
+#' @param excl_vignettes Whether or not to exclude all `.Rmd` files under `vignettes/`. A logical scalar.
+#'
+#' @return A named list of [lintr::linters].
+#' @seealso [`default_linters`][default_linters] and [lint_rmd()]
+#' @export
+#'
+#' @examples
+#' names(pkgpurl::default_linters)
+default_exclusions <- function(excl_vignettes = TRUE) {
+  
+  checkmate::assert_flag(excl_vignettes)
+  
+  c("docs",
+    "input",
+    "output",
+    "pkgdown",
+    "renv",
+    "packrat",
+    "tests",
+    list.files(path = "R",
+               recursive = TRUE,
+               full.names = TRUE,
+               pattern = "\\.gen\\.R$"),
+    list.files(path = "Rmd",
+               recursive = TRUE,
+               full.names = TRUE,
+               pattern = "\\.nopurl\\.Rmd$"),
+    if (excl_vignettes) list.files(path = "vignettes",
+                                   recursive = TRUE,
+                                   full.names = TRUE,
+                                   pattern = "\\.Rmd$"),
+    "README.Rmd")
+}
+
+#' pkgpurl's default linters
+#'
+#' Opinionated set of [lintr::linters]. Built from [lintr::linters_with_defaults()] with lots of customizations. See the [relevant source
+#' code](https://gitlab.com/rpkg.dev/pkgpurl/-/blob/master/Rmd/sysdata.nopurl.Rmd#default_linters) for details.
+#'
+#' @format A named list of [lintr::linters].
+#' @seealso [default_exclusions()] and [lint_rmd()]
+#' @export
+#'
+#' @examples
+#' names(pkgpurl::default_linters)
+"default_linters"
 
 #' `r pkgsnip::title_lbl("pkg_config", pkg = "pkgpurl")`
 #'

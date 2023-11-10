@@ -51,7 +51,16 @@ lintr package is required."><meta name="twitter:card" content="summary"><meta na
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lint_rmd</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"."</span>, excl_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lint_rmd</span><span class="op">(</span></span>
+<span>  path <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>  linters <span class="op">=</span> <span class="va">default_linters</span>,</span>
+<span>  cache <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  relative_path <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  exclusions <span class="op">=</span> <span class="fu"><a href="default_exclusions.html">default_exclusions</a></span><span class="op">(</span>excl_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  pattern <span class="op">=</span> <span class="st">"\\.[Rr]([Mm][Dd])?$"</span>,</span>
+<span>  parse_settings <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  show_progress <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -60,8 +69,39 @@ lintr package is required."><meta name="twitter:card" content="summary"><meta na
 <dd><p>Path to the root of the package directory.</p></dd>
 
 
-<dt>excl_vignettes</dt>
-<dd><p>Whether to exclude all <code>.Rmd</code> files under <code>vignettes/</code>. A logical scalar.</p></dd>
+<dt>linters</dt>
+<dd><p>A named list of linter functions to apply. See <a href="https://lintr.r-lib.org/reference/linters.html" class="external-link">linters</a> for a full list of default and available
+linters.</p></dd>
+
+
+<dt>cache</dt>
+<dd><p>When logical, toggle caching of lint results. If passed a character string, store the cache in this
+directory.</p></dd>
+
+
+<dt>relative_path</dt>
+<dd><p>if <code>TRUE</code>, file paths are printed using their path relative to the base directory.
+If <code>FALSE</code>, use the full absolute path.</p></dd>
+
+
+<dt>exclusions</dt>
+<dd><p>exclusions for <code><a href="https://lintr.r-lib.org/reference/exclude.html" class="external-link">exclude()</a></code>, relative to the package path.</p></dd>
+
+
+<dt>pattern</dt>
+<dd><p>pattern for files, by default it will take files with any of the extensions
+.R, .Rmd, .qmd, .Rnw, .Rhtml, .Rrst, .Rtex, .Rtxt allowing for lowercase r (.r, ...).</p></dd>
+
+
+<dt>parse_settings</dt>
+<dd><p>Logical, default <code>TRUE</code>. Whether to try and parse the settings;
+otherwise, the <code><a href="https://lintr.r-lib.org/reference/default_settings.html" class="external-link">default_settings()</a></code> are used.</p></dd>
+
+
+<dt>show_progress</dt>
+<dd><p>Logical controlling whether to show linting progress with a simple text
+progress bar <em>via</em> <code><a href="https://rdrr.io/r/utils/txtProgressBar.html" class="external-link">utils::txtProgressBar()</a></code>. The default behavior is to show progress in
+<code><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive()</a></code> sessions not running a testthat suite.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -77,7 +117,8 @@ lintr package is required."><meta name="twitter:card" content="summary"><meta na
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other high-level functions:
+    <div class="dont-index"><p><code><a href="default_linters.html">default_linters</a></code> and <code><a href="default_exclusions.html">default_exclusions()</a></code></p>
+<p>Other high-level functions:
 <code><a href="load_pkg.html">load_pkg</a>()</code>,
 <code><a href="process_pkg.html">process_pkg</a>()</code>,
 <code><a href="purl_rmd.html">purl_rmd</a>()</code>,
