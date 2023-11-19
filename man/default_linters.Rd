@@ -11,7 +11,7 @@ A named list of \link[lintr:linters]{lintr::linters}.
 default_linters
 }
 \description{
-Opinionated set of \link[lintr:linters]{lintr::linters}. Built from \code{\link[lintr:linters_with_defaults]{lintr::linters_with_defaults()}} with lots of customizations. See the \href{https://gitlab.com/rpkg.dev/pkgpurl/-/blob/master/Rmd/sysdata.nopurl.Rmd#default_linters}{relevant source code} for details.
+Opinionated set of \link[lintr:linters]{linters}. Built from \code{\link[lintr:linters_with_defaults]{lintr::linters_with_defaults()}} with lots of customizations. See the \href{https://gitlab.com/rpkg.dev/pkgpurl/-/blob/master/Rmd/sysdata.nopurl.Rmd#default_linters}{relevant source code} for details.
 }
 \examples{
 names(pkgpurl::default_linters)

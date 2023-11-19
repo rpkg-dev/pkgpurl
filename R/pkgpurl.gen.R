@@ -1065,7 +1065,7 @@ gen_pkgdown_ref <- function(rmd) {
 #' @export
 #'
 #' @examples
-#' names(pkgpurl::default_linters)
+#' pkgpurl::default_exclusions()
 default_exclusions <- function(excl_vignettes = TRUE) {
   
   checkmate::assert_flag(excl_vignettes)
@@ -1094,7 +1094,7 @@ default_exclusions <- function(excl_vignettes = TRUE) {
 
 #' pkgpurl's default linters
 #'
-#' Opinionated set of [lintr::linters]. Built from [lintr::linters_with_defaults()] with lots of customizations. See the [relevant source
+#' Opinionated set of [linters][lintr::linters]. Built from [lintr::linters_with_defaults()] with lots of customizations. See the [relevant source
 #' code](https://gitlab.com/rpkg.dev/pkgpurl/-/blob/master/Rmd/sysdata.nopurl.Rmd#default_linters) for details.
 #'
 #' @format A named list of [lintr::linters].

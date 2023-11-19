@@ -17,7 +17,7 @@ Opinionated set of files and folders to be excluded from linting, relative to th
 \code{\link[lintr:lint]{lintr::lint_package()}}.
 }
 \examples{
-names(pkgpurl::default_linters)
+pkgpurl::default_exclusions()
 }
 \seealso{
 \code{\link{default_linters}} and \code{\link[=lint_rmd]{lint_rmd()}}
