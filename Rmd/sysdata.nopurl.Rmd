@@ -63,7 +63,8 @@ default_linters <- lintr::linters_with_defaults(
   lengths_linter                   = lintr::lengths_linter(),
   line_length_linter               = lintr::line_length_linter(160),
   literal_coercion_linter          = lintr::literal_coercion_linter(),
-  # TODO: remove custom `except` arg once https://github.com/r-lib/lintr/issues/2109 is resolved
+  # NOTE: non-base-R fns aren't up for inclusion in default `except` arg, thus we have to customize ourselves
+  #       cf. https://github.com/r-lib/lintr/issues/2109#issuecomment-1842245434
   missing_argument_linter          = lintr::missing_argument_linter(except = c("alist",
                                                                                "quote",
                                                                                "switch",
