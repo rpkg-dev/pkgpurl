@@ -21,7 +21,7 @@ lint_rmd(
 \item{linters}{A named list of linter functions to apply. See \link[lintr]{linters} for a full list of default and available
 linters.}
 
-\item{cache}{When logical, toggle caching of lint results. If passed a character string, store the cache in this
+\item{cache}{When logical, toggle caching of lint results. I1f passed a character string, store the cache in this
 directory.}
 
 \item{relative_path}{if \code{TRUE}, file paths are printed using their path relative to the base directory.
@@ -32,8 +32,8 @@ If \code{FALSE}, use the full absolute path.}
 \item{pattern}{pattern for files, by default it will take files with any of the extensions
 .R, .Rmd, .qmd, .Rnw, .Rhtml, .Rrst, .Rtex, .Rtxt allowing for lowercase r (.r, ...).}
 
-\item{parse_settings}{Logical, default \code{TRUE}. Whether to try and parse the \link[lintr:read_settings]{settings}. Otherwise,
-the \code{\link[lintr:default_settings]{default_settings()}} are used.}
+\item{parse_settings}{Logical, default \code{TRUE}. Whether to try and parse the settings;
+otherwise, the \code{\link[lintr:default_settings]{default_settings()}} are used.}
 
 \item{show_progress}{Logical controlling whether to show linting progress with a simple text
 progress bar \emph{via} \code{\link[utils:txtProgressBar]{utils::txtProgressBar()}}. The default behavior is to show progress in
