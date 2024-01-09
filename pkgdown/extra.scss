@@ -15,19 +15,20 @@ h1 {
 main {
   /*
      add more spacing above headers
-
+     
      Bootstrap only exposes a `$headings-margin-bottom` and [no `*-top` equivalent](https://github.com/twbs/bootstrap/blob/main/scss/_reboot.scss#L83-L91),
      thus we manually style it
   */
   h2, h3, h4, h5, h6 {
     margin-top: 1em;
   }
-
+  
   /* tables that adapt to viewport width */
   .table-wide {
     min-width: 100%;
     max-width: 1320px;
     width: 85vw;
+    position: relative; /* this is needed for the table to be placed *above* the <aside> element, i.e. for text to be selectable */
   }
 }
 
@@ -38,12 +39,12 @@ main {
       margin-top: 1em;
     }
   }
-
+  
   /* harmonize page header height */
   .page-header {
     min-height: 92px;
   }
-
+  
   .template-home .page-header {
     min-height: 92px;
   }
