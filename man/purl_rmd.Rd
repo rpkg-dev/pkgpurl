@@ -11,7 +11,8 @@ purl_rmd(
   add_license_notice = pal::pkg_config_val(key = "add_license_notice", pkg = this_pkg,
     default = TRUE),
   gen_pkgdown_ref = pal::pkg_config_val(key = "gen_pkgdown_ref", pkg = this_pkg, default
-    = TRUE)
+    = TRUE),
+  env = parent.frame()
 )
 }
 \arguments{
@@ -22,6 +23,9 @@ purl_rmd(
 \item{add_license_notice}{Whether or not to add a \strong{license notice} at the beginning of the generated \code{.R} files as recommended by e.g. the \href{https://www.gnu.org/licenses/gpl-howto.html}{GNU licenses}. The license is determined from the package's \code{DESCRIPTION} file and currently only the \href{https://spdx.org/licenses/AGPL-3.0-or-later.html}{\code{AGPL-3.0-or-later} license} is supported. A logical scalar. Only applies if \code{path} \link[pal:is_pkg_dir]{is actually an R package directory}.}
 
 \item{gen_pkgdown_ref}{Whether or not to overwrite \href{https://pkgdown.r-lib.org/}{pkgdown}'s \href{https://pkgdown.r-lib.org/reference/build_reference.html#reference-index}{reference index} in the configuration file \verb{_pkgdown.yml} with an auto-generated one based on the main input file as described in \code{\link[=gen_pkgdown_ref]{gen_pkgdown_ref()}}. A logical scalar. Only applies if \code{path} \link[pal:is_pkg_dir]{is actually an R package directory}, \link[pal:is_pkgdown_dir]{pkgdown is set up} and a \link[=main_rmd]{main R Markdown file} exists.}
+
+\item{env}{Environment to evaluate R Markdown inline code expressions in when generating the pkgdown reference index. Only relevant if
+\code{gen_pkgdown_ref = TRUE}.}
 }
 \value{
 \code{path}, invisibly.

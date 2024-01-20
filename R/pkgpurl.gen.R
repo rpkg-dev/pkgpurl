@@ -146,13 +146,16 @@ document_pkg <- function(path,
   cli::cli_progress_done()
 }
 
-extract_md_heading_content <- function(x) {
+extract_md_heading_content <- function(x,
+                                       env) {
   
   x |>
     stringr::str_remove(pattern = "^#+") |>
     stringr::str_trim() |>
     purrr::map_chr(\(x) {
-      if (x == "") NA_character_ else x
+      if (x == "") NA_character_ else knitr::knit(text = x,
+                                                  quiet = TRUE,
+                                                  envir = env)
     })
 }
 
@@ -354,6 +357,7 @@ process_pkg <- function(path = ".",
                         gen_pkgdown_ref = pal::pkg_config_val(key = "gen_pkgdown_ref",
                                                               pkg = this_pkg,
                                                               default = TRUE),
+                        env = parent.frame(),
                         document = TRUE,
                         build_and_install = TRUE,
                         restart_r_session = build_and_install,
@@ -386,7 +390,8 @@ process_pkg <- function(path = ".",
   purl_rmd(path = path,
            add_copyright_notice = add_copyright_notice,
            add_license_notice = add_license_notice,
-           gen_pkgdown_ref = gen_pkgdown_ref)
+           gen_pkgdown_ref = gen_pkgdown_ref,
+           env = env)
   
   # build roxygen2 documentation
   if (document) {
@@ -508,6 +513,8 @@ load_pkg <- function(path = ".",
 #'   package directory][pal::is_pkg_dir].
 #' @param gen_pkgdown_ref `r pkg_config$description[pkg_config$key == "gen_pkgdown_ref"]` A logical scalar. Only applies if `path` [is actually an R package
 #'   directory][pal::is_pkg_dir], [pkgdown is set up][pal::is_pkgdown_dir] and a [main R Markdown file][main_rmd()] exists.
+#' @param env Environment to evaluate R Markdown inline code expressions in when generating the pkgdown reference index. Only relevant if
+#'   `gen_pkgdown_ref = TRUE`.
 #'
 #' @return `path`, invisibly.
 #' @family high_lvl
@@ -521,7 +528,8 @@ purl_rmd <- function(path = ".",
                                                               default = TRUE),
                      gen_pkgdown_ref = pal::pkg_config_val(key = "gen_pkgdown_ref",
                                                            pkg = this_pkg,
-                                                           default = TRUE)) {
+                                                           default = TRUE),
+                     env = parent.frame()) {
   
   checkmate::assert_flag(add_copyright_notice)
   checkmate::assert_flag(add_license_notice)
@@ -596,7 +604,7 @@ purl_rmd <- function(path = ".",
       ref <-
         main_rmd_file |>
         brio::read_file() |>
-        gen_pkgdown_ref()
+        gen_pkgdown_ref(env = env)
       
       if (length(ref$reference) > 0L) {
         
@@ -828,7 +836,13 @@ run_nopurl_rmd <- function(path = ".",
 #'   cat()
 #' ```
 #'
+#' # Inline R code
+#' 
+#' R Markdown [inline code](https://rmarkdown.rstudio.com/lesson-4.html) is fully supported in headings and descriptions, except for the above mentioned special
+#' headings which mustn't contain any inline R code.
+#'
 #' @param rmd The (R) Markdown file content as a character scalar.
+#' @param env Environment to evaluate R Markdown inline code expressions in.
 #'
 #' @return A list.
 #' @family low_lvl
@@ -843,9 +857,11 @@ run_nopurl_rmd <- function(path = ".",
 #'     yaml::as.yaml() |>
 #'     cat()
 #' }
-gen_pkgdown_ref <- function(rmd) {
+gen_pkgdown_ref <- function(rmd,
+                            env = parent.frame()) {
   
   checkmate::assert_string(rmd)
+  checkmate::assert_environment(env)
   rlang::check_installed("xml2",
                          reason = pal::reason_pkg_required())
   rmd_xml <-
@@ -949,7 +965,7 @@ gen_pkgdown_ref <- function(rmd) {
                                           title =
                                             rmd_xml[i_title] |>
                                             purrr::map_chr(pal::xml_to_md) |>
-                                            extract_md_heading_content(),
+                                            extract_md_heading_content(env = env),
                                           title_description =
                                             hierarchy$subnode_ix[i_title] |>
                                             purrr::map2_chr(.y = i_title,
@@ -962,6 +978,9 @@ gen_pkgdown_ref <- function(rmd) {
                                                                 purrr::list_c(ptype = integer()) %>%
                                                                 magrittr::extract(rmd_xml, .) |>
                                                                 purrr::map_chr(pal::xml_to_md) |>
+                                                                knitr::knit(text = _,
+                                                                            quiet = TRUE,
+                                                                            envir = env) |>
                                                                 stringr::str_trim() |>
                                                                 pal::when(length(.) > 0L ~ paste0(., collapse = "\n\n"),
                                                                           ~ NA_character_)
@@ -974,7 +993,7 @@ gen_pkgdown_ref <- function(rmd) {
                                           subtitle =
                                             rmd_xml[i_subtitle] |>
                                             purrr::map_chr(pal::xml_to_md) |>
-                                            extract_md_heading_content(),
+                                            extract_md_heading_content(env = env),
                                           subtitle_description =
                                             hierarchy$subnode_ix[i_subtitle] |>
                                             purrr::map2_chr(.y = i_subtitle,
@@ -987,6 +1006,9 @@ gen_pkgdown_ref <- function(rmd) {
                                                                 purrr::list_c(ptype = integer()) %>%
                                                                 magrittr::extract(rmd_xml, .) |>
                                                                 purrr::map_chr(pal::xml_to_md) |>
+                                                                knitr::knit(text = _,
+                                                                            quiet = TRUE,
+                                                                            envir = env) |>
                                                                 stringr::str_trim() |>
                                                                 pal::when(length(.) > 0L ~ paste0(., collapse = "\n\n"),
                                                                           ~ NA_character_)

@@ -58,7 +58,8 @@ subdirectory using <code><a href="https://rdrr.io/pkg/knitr/man/knit.html" class
 <span>  add_license_notice <span class="op">=</span> <span class="fu">pal</span><span class="fu">::</span><span class="fu"><a href="https://pal.rpkg.dev/reference/pkg_config_val.html" class="external-link">pkg_config_val</a></span><span class="op">(</span>key <span class="op">=</span> <span class="st">"add_license_notice"</span>, pkg <span class="op">=</span> <span class="va">this_pkg</span>,</span>
 <span>    default <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  gen_pkgdown_ref <span class="op">=</span> <span class="fu">pal</span><span class="fu">::</span><span class="fu"><a href="https://pal.rpkg.dev/reference/pkg_config_val.html" class="external-link">pkg_config_val</a></span><span class="op">(</span>key <span class="op">=</span> <span class="st">"gen_pkgdown_ref"</span>, pkg <span class="op">=</span> <span class="va">this_pkg</span>, default</span>
-<span>    <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>    <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  env <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -78,6 +79,11 @@ subdirectory using <code><a href="https://rdrr.io/pkg/knitr/man/knit.html" class
 
 <dt>gen_pkgdown_ref</dt>
 <dd><p>Whether or not to overwrite <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>'s <a href="https://pkgdown.r-lib.org/reference/build_reference.html#reference-index" class="external-link">reference index</a> in the configuration file <code>_pkgdown.yml</code> with an auto-generated one based on the main input file as described in <code><a href="gen_pkgdown_ref.html">gen_pkgdown_ref()</a></code>. A logical scalar. Only applies if <code>path</code> <a href="https://pal.rpkg.dev/reference/is_pkg_dir.html" class="external-link">is actually an R package directory</a>, <a href="https://pal.rpkg.dev/reference/is_pkgdown_dir.html" class="external-link">pkgdown is set up</a> and a <a href="main_rmd.html">main R Markdown file</a> exists.</p></dd>
+
+
+<dt>env</dt>
+<dd><p>Environment to evaluate R Markdown inline code expressions in when generating the pkgdown reference index. Only relevant if
+<code>gen_pkgdown_ref = TRUE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

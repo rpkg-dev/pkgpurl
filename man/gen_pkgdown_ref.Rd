@@ -4,10 +4,12 @@
 \alias{gen_pkgdown_ref}
 \title{Generate pkgdown reference index}
 \usage{
-gen_pkgdown_ref(rmd)
+gen_pkgdown_ref(rmd, env = parent.frame())
 }
 \arguments{
 \item{rmd}{The (R) Markdown file content as a character scalar.}
+
+\item{env}{Environment to evaluate R Markdown inline code expressions in.}
 }
 \value{
 A list.
@@ -156,6 +158,11 @@ yet_another_subgroup_fn <- function(...) \{...\}
 - subtitle: Yet another subgroup
 - contents: yet_another_subgroup_fn
 }\if{html}{\out{</div>}}
+}
+
+\section{Inline R code}{
+R Markdown \href{https://rmarkdown.rstudio.com/lesson-4.html}{inline code} is fully supported in headings and descriptions, except for the above mentioned special
+headings which mustn't contain any inline R code.
 }
 
 \examples{

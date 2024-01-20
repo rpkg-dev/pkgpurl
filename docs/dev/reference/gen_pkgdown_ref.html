@@ -51,13 +51,17 @@ a package's main <code>.Rmd</code> file.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gen_pkgdown_ref</span><span class="op">(</span><span class="va">rmd</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gen_pkgdown_ref</span><span class="op">(</span><span class="va">rmd</span>, env <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>rmd</dt>
 <dd><p>The (R) Markdown file content as a character scalar.</p></dd>
+
+
+<dt>env</dt>
+<dd><p>Environment to evaluate R Markdown inline code expressions in.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -192,6 +196,11 @@ subtitle heading, are used as the description for the respective (sub)title. Thi
 <span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="sc">-</span> title<span class="sc">:</span> Second group of fns</span>
 <span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="sc">-</span> subtitle<span class="sc">:</span> Yet another subgroup</span>
 <span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="sc">-</span> contents<span class="sc">:</span> yet_another_subgroup_fn</span></code></pre><p></p></div>
+    </div>
+    <div class="section level2">
+    <h2 id="inline-r-code">Inline R code<a class="anchor" aria-label="anchor" href="#inline-r-code"></a></h2>
+    <p>R Markdown <a href="https://rmarkdown.rstudio.com/lesson-4.html" class="external-link">inline code</a> is fully supported in headings and descriptions, except for the above mentioned special
+headings which mustn't contain any inline R code.</p>
     </div>
 
     <div class="section level2">
