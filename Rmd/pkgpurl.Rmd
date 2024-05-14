@@ -475,7 +475,7 @@ process_pkg <- function(path = ".",
   if (is.null(use_rstudio_api) && nzchar(system.file(package = "rstudioapi")) && rstudioapi::isAvailable()) {
     use_rstudio_api <- TRUE
   } else {
-    use_rstudio_api <- use_rstudio_api %||% FALSE
+    use_rstudio_api <- isTRUE(use_rstudio_api)
   }
   
   # convert `Rmd/*.Rmd` to `R/*.gen.R`
@@ -677,8 +677,6 @@ purl_rmd <- function(path = ".",
     
     if (pal::is_pkg_dir(path)) {
       
-      add_copyright_notice <- add_copyright_notice %||% TRUE
-      add_license_notice <- add_license_notice %||% TRUE
       if (add_copyright_notice) copyright_notice <- assemble_copyright_notice(path = path)
       if (add_license_notice) license_notice <- assemble_license_notice(path = path)
       
