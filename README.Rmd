@@ -241,7 +241,7 @@ pkgsnip::md_snip(id = "pkg_config",
 cat("\n\n::: {.table-wide}\n ")
 pal::print_pkg_config("pkgpurl",
                       roxy_to_md = TRUE)
-cat("\n :::")
+cat("\n:::")
 ```
 
 ## Development

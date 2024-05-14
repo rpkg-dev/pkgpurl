@@ -15,7 +15,7 @@ License: AGPL (>= 3)
 URL: https://pkgpurl.rpkg.dev, https://gitlab.com/rpkg.dev/pkgpurl
 BugReports: https://gitlab.com/rpkg.dev/pkgpurl/issues
 Depends: 
-    R (>= 4.1)
+    R (>= 4.2)
 Imports: 
     brio (>= 1.1.1),
     checkmate (>= 2.0.0),
@@ -48,4 +48,4 @@ Remotes:
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.0
+RoxygenNote: 7.3.1.9000
