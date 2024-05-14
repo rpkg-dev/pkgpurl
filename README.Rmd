@@ -196,6 +196,7 @@ issues](https://github.com/rstudio/rstudio/issues/5809#issuecomment-932228146) w
 #| eval: !expr '!isTRUE(getOption("pal.build_readme.is_pkgdown"))'
 #| results: asis
 #| echo: false
+
 pkgsnip::md_snip(id = "pkgdown_notice") %>%
   paste0("## Documentation\n\n",
          "[![Netlify Status](https://api.netlify.com/api/v1/badges/f639cb7f-f5fe-454c-b20d-1e06916daffc/deploy-status)]",
@@ -224,6 +225,7 @@ pkgsnip::md_snip(id = "pkgdown_notice") %>%
 #| eval: !expr isTRUE(getOption("pal.build_readme.is_pkgdown"))
 #| results: asis
 #| echo: false
+
 pkgsnip::md_snip(id = "usage_notice") %>%
   paste0("## Usage\n\n", .) %>%
   pal::cat_lines()
