@@ -16,6 +16,7 @@
 ^\.github$
 ^\.gitlab-ci\.yml$
 ^\.lintr\.R$
+^\.rgignore$
 ^\.travis\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
