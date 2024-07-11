@@ -162,7 +162,7 @@ yet_another_subgroup_fn <- function(...) \{...\}
 
 \section{Inline R code}{
 R Markdown \href{https://rmarkdown.rstudio.com/lesson-4.html}{inline code} is fully supported in headings and descriptions, except for the above mentioned special
-headings which mustn't contain any inline R code.
+headings (otherwise, they're not recognized as special headings anymore).
 }
 
 \examples{

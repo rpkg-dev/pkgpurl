@@ -837,7 +837,7 @@ run_nopurl_rmd <- function(path = ".",
 #' # Inline R code
 #' 
 #' R Markdown [inline code](https://rmarkdown.rstudio.com/lesson-4.html) is fully supported in headings and descriptions, except for the above mentioned special
-#' headings which mustn't contain any inline R code.
+#' headings (otherwise, they're not recognized as special headings anymore).
 #'
 #' @param rmd The (R) Markdown file content as a character scalar.
 #' @param env Environment to evaluate R Markdown inline code expressions in.

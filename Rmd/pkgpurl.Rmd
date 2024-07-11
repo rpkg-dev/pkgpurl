@@ -574,12 +574,10 @@ load_pkg <- function(path = ".",
 
 ### `purl_rmd`
 
-The basic workflow is heavily inspired by a pertinent makefile from Yihui Xie found [here](https://yihui.org/rlp/#from-rmd-to-r).
-
 TODO:
 
--   [ ] Support more OSS licenses in param `add_license_notice` / fn `assemble_license_notice()`. Default license headers would have to be systematically
-    fetched from somewhere for this!
+-   Support more OSS licenses in param `add_license_notice` / fn `assemble_license_notice()`. Default license headers would have to be systematically fetched
+    from somewhere for this!
 
     Notable stuff:
 
@@ -602,6 +600,10 @@ TODO:
         specifications) to the SPDX identifiers!
 
     2.  Based on the SPDX identifier, scrape the SPDX page for the *Standard License Header* section.
+
+NOTES:
+
+-   The basic workflow is heavily inspired by a pertinent makefile from Yihui Xie found [here](https://yihui.org/rlp/#from-rmd-to-r).
 
 ```{r}
 #' Purl `Rmd/*.Rmd` to `R/*.gen.R`
@@ -993,7 +995,7 @@ NOTES:
 #' # Inline R code
 #' 
 #' R Markdown [inline code](https://rmarkdown.rstudio.com/lesson-4.html) is fully supported in headings and descriptions, except for the above mentioned special
-#' headings which mustn't contain any inline R code.
+#' headings (otherwise, they're not recognized as special headings anymore).
 #'
 #' @param rmd The (R) Markdown file content as a character scalar.
 #' @param env Environment to evaluate R Markdown inline code expressions in.
