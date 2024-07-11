@@ -821,7 +821,7 @@ run_nopurl_rmd <- function(path = ".",
 #'
 #' ```{r, results = "asis", echo = FALSE}
 #' brio::read_lines("snippets/simplified_example.Rmd") %>%
-#'   c(paste(pal::as_str(rep("`", 4L)), "md"), ., pal::as_str(rep("`", 4L))) %>%
+#'   c(paste(pal::as_str(rep("`", 4L)), "rmd"), ., pal::as_str(rep("`", 4L))) %>%
 #'   pal::cat_lines()
 #' ```
 #'

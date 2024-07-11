@@ -59,7 +59,7 @@ An example might better explain how the parsing rules work than a thousand words
 
 When fed to \code{gen_pkgdown_ref()}, the following R Markdown content...
 
-\if{html}{\out{<div class="sourceCode md">}}\preformatted{---
+\if{html}{\out{<div class="sourceCode rmd">}}\preformatted{---
 editor_options:
   markdown:
     wrap: 80
