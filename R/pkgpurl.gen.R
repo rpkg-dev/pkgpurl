@@ -611,7 +611,8 @@ purl_rmd <- function(path = ".",
                         handlers = list(seq = \(x) x)) |>
           purrr::discard_at(at = "reference") |>
           c(ref) |>
-          yaml::write_yaml(file = pkgdown_config_file)
+          yaml::write_yaml(file = pkgdown_config_file,
+                           handlers = list(logical = yaml::verbatim_logical))
       }
     }
     
