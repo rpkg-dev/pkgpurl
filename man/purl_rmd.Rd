@@ -46,7 +46,7 @@ In practice, the main advantage of writing R code in R Markdown is that you don'
 \href{https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Comments}{\verb{#} comments} to explain, annotate or otherwise elaborate on your code. It also
 allows you to easily compile your source code to beautifully looking HTML, PDF etc. files using \code{\link[rmarkdown:render]{rmarkdown::render()}}.
 
-This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in}, allowing RStudio users to assign a \href{https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE}{custom shortcut} to it or to invoke it from the \href{https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts}{command palette}.
+This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in}, allowing RStudio users to assign a \href{https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE}{custom shortcut} to it and to invoke it from the \href{https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts}{command palette}.
 }
 \section{\code{.Rmd} files excluded from purling}{
 \code{purl_rmd()} does not generate an \code{.R} file for each and every R Markdown file in the \verb{Rmd/} subdirectory. Two types of \code{.Rmd} files are excluded from

@@ -49,7 +49,7 @@ This is a convenience wrapper around \code{\link[lintr:lint]{lintr::lint_dir()}}
 \details{
 To avoid unnecessary noise, all the the generated \verb{R/*.gen.R} files as well as R Markdown vignettes under \verb{vignettes/*.Rmd} are excluded from linting.
 
-This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in}, allowing RStudio users to assign a \href{https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE}{custom shortcut} to it or to invoke it from the \href{https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts}{command palette}.
+This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in}, allowing RStudio users to assign a \href{https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE}{custom shortcut} to it and to invoke it from the \href{https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts}{command palette}.
 }
 \seealso{
 \code{\link{default_linters}} and \code{\link[=default_exclusions]{default_exclusions()}}
