@@ -312,8 +312,6 @@ rmd_files <- function(path) {
 #' Process R Markdown package from source to installation
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
-#'
 #' Executes all steps to process an R package written in R Markdown format from source to installation in one go:
 #'
 #' 1. Purl all relevant `Rmd/*.Rmd` files to `R/*.gen.R` files using [purl_rmd()].
