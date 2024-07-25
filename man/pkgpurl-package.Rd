@@ -8,6 +8,17 @@
 \description{
 pkgpurl facilitates R package authoring using a literate programming approach. The main idea behind this is to write all of the R source code in R Markdown files (`Rmd/*.Rmd`), which allows the actual code to be freely mixed with explanatory and supplementary information in expressive Markdown format. The main object of pkgpurl is to provide a standardized way to compile the bare `.R` files from the prose-enhanced and thus more human-oriented `.Rmd` files.
 }
+\section{Package configuration}{
+
+
+Some of pkgpurl's functionality is controlled via package-specific global configuration which can either be set via \href{https://rdrr.io/r/base/options.html}{R options} or \href{https://en.wikipedia.org/wiki/Environment_variable}{environment variables} (the former take precedence). This configuration includes:\tabular{llll}{
+   \strong{Description} \tab \strong{R option} \tab \strong{Environment variable} \tab \strong{Default value} \cr
+   Whether or not to add a \strong{copyright notice} at the beginning of the generated \code{.R} files as recommended by e.g. the \href{https://www.gnu.org/licenses/gpl-howto.html}{GNU licenses}. The notice consists of the name and description of the program and the word \code{Copyright (C)} followed by the release years and the name(s) of the copyright holder(s), or if not specified, the author(s). The year is always the current year. All the other information is extracted from the package's \code{DESCRIPTION} file. \tab \code{pkgpurl.add_copyright_notice} \tab \code{R_PKGPURL_ADD_COPYRIGHT_NOTICE} \tab  \cr
+   Whether or not to add a \strong{license notice} at the beginning of the generated \code{.R} files as recommended by e.g. the \href{https://www.gnu.org/licenses/gpl-howto.html}{GNU licenses}. The license is determined from the package's \code{DESCRIPTION} file and currently only the \href{https://spdx.org/licenses/AGPL-3.0-or-later.html}{\code{AGPL-3.0-or-later} license} is supported. \tab \code{pkgpurl.add_license_notice} \tab \code{R_PKGPURL_ADD_LICENSE_NOTICE} \tab  \cr
+   Whether or not to overwrite \href{https://pkgdown.r-lib.org/}{pkgdown}'s \href{https://pkgdown.r-lib.org/reference/build_reference.html#reference-index}{reference index} in the configuration file \verb{_pkgdown.yml} with an auto-generated one based on the main input file as described in \code{\link[=gen_pkgdown_ref]{gen_pkgdown_ref()}}. \tab \code{pkgpurl.gen_pkgdown_ref} \tab \code{R_PKGPURL_GEN_PKGDOWN_REF} \tab  \cr
+}
+}
+
 \seealso{
 Useful links:
 \itemize{
