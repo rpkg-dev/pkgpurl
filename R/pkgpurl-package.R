@@ -3,7 +3,7 @@
 #' `r pkgsnip::md_snip(id = "pkg_config", pkg = this_pkg)`
 #'
 #' ```{r, echo = FALSE}
-#' pal::print_pkg_config(this_pkg)
+#' pal::print_pkg_config()
 #' ```
 #'
 #' @keywords internal
