@@ -6,12 +6,9 @@
 \usage{
 process_pkg(
   path = ".",
-  add_copyright_notice = pal::pkg_config_val(key = "add_copyright_notice", pkg =
-    this_pkg, default = TRUE),
-  add_license_notice = pal::pkg_config_val(key = "add_license_notice", pkg = this_pkg,
-    default = TRUE),
-  gen_pkgdown_ref = pal::pkg_config_val(key = "gen_pkgdown_ref", pkg = this_pkg, default
-    = TRUE),
+  add_copyright_notice = pal::pkg_config_val("add_copyright_notice"),
+  add_license_notice = pal::pkg_config_val("add_license_notice"),
+  gen_pkgdown_ref = pal::pkg_config_val("gen_pkgdown_ref"),
   env = parent.frame(),
   document = TRUE,
   build_and_install = TRUE,

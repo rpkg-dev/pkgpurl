@@ -6,12 +6,9 @@
 \usage{
 load_pkg(
   path = ".",
-  add_copyright_notice = pal::pkg_config_val(key = "add_copyright_notice", pkg =
-    this_pkg, default = TRUE),
-  add_license_notice = pal::pkg_config_val(key = "add_license_notice", pkg = this_pkg,
-    default = TRUE),
-  gen_pkgdown_ref = pal::pkg_config_val(key = "gen_pkgdown_ref", pkg = this_pkg, default
-    = FALSE),
+  add_copyright_notice = FALSE,
+  add_license_notice = FALSE,
+  gen_pkgdown_ref = FALSE,
   reset = TRUE,
   recompile = FALSE,
   export_all = TRUE,
