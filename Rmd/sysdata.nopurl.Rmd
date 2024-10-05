@@ -95,7 +95,7 @@ default_linters <- lintr::linters_with_defaults(
            "->" = "Makes it harder to see in code where an object is defined.")
   ),
   unnecessary_concatenation_linter = lintr::unnecessary_concatenation_linter(),
-  unnecessary_nested_if_linter     = lintr::unnecessary_nested_if_linter(),
+  unnecessary_nesting_linter       = lintr::unnecessary_nesting_linter(),
   unnecessary_placeholder_linter   = lintr::unnecessary_placeholder_linter(),
   unreachable_code_linter          = lintr::unreachable_code_linter(),
   yoda_test_linter                 = lintr::yoda_test_linter()
