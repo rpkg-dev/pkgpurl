@@ -99,7 +99,7 @@ assemble_copyright_notice <- function(path) {
                 any(purrr::map_lgl(., \(x) "aut" %in% x$role)) ~ purrr::keep(., \(x) "aut" %in% x$role),
                 ~ .) |>
       format(include = c("given", "family")) |>
-      pal::prose_ls()
+      pal::enum_str()
     
     if (length(authors) > 0L) {
       
@@ -940,7 +940,7 @@ NOTES:
 #' The following rules define how the reference index is generated:
 #' 
 #' 1. Headings below a heading named
-#'    `r data_special_headings |> dplyr::filter(type == "ignore_content") %$% heading_texts |> unlist() |> pal::prose_ls(wrap = "*", last_sep = " or ")`
+#'    `r data_special_headings |> dplyr::filter(type == "ignore_content") %$% heading_texts |> unlist() |> pal::enum_str(wrap = "*", sep2 = " or ")`
 #'    (case-insensitive, but without any inline formatting) are simply ignored when generating the reference index.
 #' 2. Every heading that is a) inline-formatted as [verbatim](https://pandoc.org/MANUAL.html#verbatim) and b) doesn't contain any whitespace characters is
 #'    considered to be the name of a help topic (usually the name of a function or dataset) to be included in the reference index. This maps to the `contents`
