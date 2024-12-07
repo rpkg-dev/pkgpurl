@@ -13,6 +13,7 @@
 ^_output\.yaml$
 ^_pkgdown\.yml$
 ^\.ackrc$
+^\.coderabbit\.yaml$
 ^\.github$
 ^\.gitlab-ci\.yml$
 ^\.lintr\.R$
