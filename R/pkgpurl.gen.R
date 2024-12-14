@@ -328,7 +328,7 @@ rmd_files <- function(path) {
 #' due to [unresolved deficiencies](https://bugs.r-project.org/show_bug.cgi?id=16644) in \R's namespace unloading. If you encounter an error, simply restart the
 #' \R session and try again.
 #' 
-#' `r pkgsnip::md_snip("rstudio_addin_hint")`
+#' `r pkgsnip::md_snip("rstudio_addin")`
 #'
 #' @inheritParams purl_rmd
 #' @inheritParams devtools::document
@@ -477,7 +477,7 @@ load_pkg <- function(path = ".",
 #' [`#` comments](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Comments) to explain, annotate or otherwise elaborate on your code. It also
 #' allows you to easily compile your source code to beautifully looking HTML, PDF etc. files using [rmarkdown::render()].
 #'
-#' `r pkgsnip::md_snip("rstudio_addin_hint")`
+#' `r pkgsnip::md_snip("rstudio_addin")`
 #' 
 #' # `.Rmd` files excluded from purling
 #' 
@@ -610,7 +610,7 @@ purl_rmd <- function(path = ".",
 #'
 #' To avoid unnecessary noise, all the the generated `R/*.gen.R` files as well as R Markdown vignettes under `vignettes/*.Rmd` are excluded from linting.
 #'
-#' `r pkgsnip::md_snip("rstudio_addin_hint")`
+#' `r pkgsnip::md_snip("rstudio_addin")`
 #'
 #' @inheritParams purl_rmd
 #' @inheritParams lintr::lint_dir
