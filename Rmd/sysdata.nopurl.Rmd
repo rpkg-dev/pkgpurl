@@ -20,22 +20,33 @@ editor_options:
 
 ## `default_linters`
 
+NOTES:
+
+-   Non-default linters that we tested but dismissed due to annoyance or disagreement include:
+
+    -   `nested_pipe_linter` (nesting pipes doesn't ncessarily have to make the code less-readable, on the contrary!)
+    -   `strings_as_factors_linter` (unnecessary when the code requires R \>= 4.0)
+
 ```{r}
 default_linters <- lintr::linters_with_defaults(
   absolute_path_linter             = lintr::absolute_path_linter(),
   any_duplicated_linter            = lintr::any_duplicated_linter(),
   any_is_na_linter                 = lintr::any_is_na_linter(),
-  assignment_linter                = lintr::assignment_linter(allow_cascading_assign = FALSE,
-                                                              allow_pipe_assign = TRUE),
+  assignment_linter                = lintr::assignment_linter(operator = c("<-", "<<-", "%<>%")),
   boolean_arithmetic_linter        = lintr::boolean_arithmetic_linter(),
-  # TODO: add `function_braces = "not_inline"` once https://github.com/r-lib/lintr/pull/2240 is merged 
+  # TODO: set `function_braces = "not_inline"` once lintr 3.2.1+ is released
   brace_linter                     = lintr::brace_linter(allow_single_line = TRUE),
   class_equals_linter              = lintr::class_equals_linter(),
+  comparison_negation_linter       = lintr::comparison_negation_linter(),
+  condition_call_linter            = lintr::condition_call_linter(),
   condition_message_linter         = lintr::condition_message_linter(),
   conjunct_test_linter             = lintr::conjunct_test_linter(allow_filter = "always"),
   consecutive_assertion_linter     = lintr::consecutive_assertion_linter(),
+  consecutive_mutate_linter        = lintr::consecutive_mutate_linter(),
+  cyclocomp_linter                 = lintr::cyclocomp_linter(),
   empty_assignment_linter          = lintr::empty_assignment_linter(),
   expect_comparison_linter         = lintr::expect_comparison_linter(),
+  expect_identical_linter          = lintr::expect_identical_linter(),
   expect_length_linter             = lintr::expect_length_linter(),
   expect_named_linter              = lintr::expect_named_linter(),
   expect_not_linter                = lintr::expect_not_linter(),
@@ -47,7 +58,9 @@ default_linters <- lintr::linters_with_defaults(
   fixed_regex_linter               = lintr::fixed_regex_linter(),
   for_loop_index_linter            = lintr::for_loop_index_linter(),
   function_argument_linter         = lintr::function_argument_linter(),
+  function_return_linter           = lintr::function_return_linter(),
   if_not_else_linter               = lintr::if_not_else_linter(exceptions = NULL),
+  if_switch_linter                 = lintr::if_switch_linter(),
   ifelse_censor_linter             = lintr::ifelse_censor_linter(),
   implicit_assignment_linter       = lintr::implicit_assignment_linter(),
   implicit_integer_linter          = lintr::implicit_integer_linter(allow_colon = TRUE),
@@ -61,7 +74,8 @@ default_linters <- lintr::linters_with_defaults(
   length_levels_linter             = lintr::length_levels_linter(),
   length_test_linter               = lintr::length_test_linter(),
   lengths_linter                   = lintr::lengths_linter(),
-  line_length_linter               = lintr::line_length_linter(160),
+  line_length_linter               = lintr::line_length_linter(length = 160L),
+  list_comparison_linter           = lintr::list_comparison_linter(),
   literal_coercion_linter          = lintr::literal_coercion_linter(),
   # NOTE: non-base-R fns aren't up for inclusion in default `except` arg, thus we have to customize ourselves
   #       cf. https://github.com/r-lib/lintr/issues/2109#issuecomment-1842245434
@@ -70,34 +84,49 @@ default_linters <- lintr::linters_with_defaults(
                                                                                "switch",
                                                                                "extract")),
   nested_ifelse_linter             = lintr::nested_ifelse_linter(),
+  nrow_subset_linter               = lintr::nrow_subset_linter(),
   numeric_leading_zero_linter      = lintr::numeric_leading_zero_linter(),
-  object_length_linter             = lintr::object_length_linter(40),
-  # TODO: remove once https://github.com/r-lib/lintr/issues/2252 is fixed
+  nzchar_linter                    = lintr::nzchar_linter(),
+  object_length_linter             = lintr::object_length_linter(length = 40L),
+  object_overwrite_linter          = lintr::object_overwrite_linter(packages = "base"),
+  # TODO: try re-enabling once https://github.com/r-lib/lintr/issues/2252 is fixed
   object_usage_linter              = NULL,
+  one_call_pipe_linter             = lintr::one_call_pipe_linter(),
   outer_negation_linter            = lintr::outer_negation_linter(),
   paste_linter                     = lintr::paste_linter(),
   pipe_call_linter                 = lintr::pipe_call_linter(),
+  pipe_return_linter               = lintr::pipe_return_linter(),
+  print_linter                     = lintr::print_linter(),
+  # disabled because being able to use both types of quotes allows to avoid having to escape the respective other quote type
   quotes_linter                    = NULL,
   redundant_equals_linter          = lintr::redundant_equals_linter(),
   redundant_ifelse_linter          = lintr::redundant_ifelse_linter(),
   regex_subset_linter              = lintr::regex_subset_linter(),
+  rep_len_linter                   = lintr::rep_len_linter(),
   repeat_linter                    = lintr::repeat_linter(),
+  return_linter                    = lintr::return_linter(allow_implicit_else = FALSE),
+  routine_registration_linter      = lintr::routine_registration_linter(),
+  sample_int_linter                = lintr::sample_int_linter(),
   scalar_in_linter                 = lintr::scalar_in_linter(),
   sort_linter                      = lintr::sort_linter(),
   sprintf_linter                   = lintr::sprintf_linter(),
+  stopifnot_all_linter             = lintr::stopifnot_all_linter(),
   string_boundary_linter           = lintr::string_boundary_linter(),
   system_file_linter               = lintr::system_file_linter(),
+  terminal_close_linter            = lintr::terminal_close_linter(),
   todo_comment_linter              = lintr::todo_comment_linter(),
+  # disabled since RStudio's built-in `StripTrailingWhitespace` proj opt ignores .Rmd code chunks
   trailing_whitespace_linter       = NULL,
   undesirable_function_linter      = lintr::undesirable_function_linter(symbol_is_undesirable = FALSE),
-  undesirable_operator_linter      = lintr::undesirable_operator_linter(
-    op = c(lintr::default_undesirable_operators,
-           "->" = "Makes it harder to see in code where an object is defined.")
-  ),
+  undesirable_operator_linter      = lintr::undesirable_operator_linter(op = c(lintr::default_undesirable_operators,
+                                                                               "->" = "Makes it harder to see in code where an object is defined.")),
   unnecessary_concatenation_linter = lintr::unnecessary_concatenation_linter(),
-  unnecessary_nesting_linter       = lintr::unnecessary_nesting_linter(),
+  unnecessary_lambda_linter        = lintr::unnecessary_lambda_linter(),
+  # TODO: enable once https://github.com/r-lib/lintr/issues/2748 is fixed
+  # unnecessary_nesting_linter       = lintr::unnecessary_nesting_linter(),
   unnecessary_placeholder_linter   = lintr::unnecessary_placeholder_linter(),
   unreachable_code_linter          = lintr::unreachable_code_linter(),
+  which_grepl_linter               = lintr::which_grepl_linter(),
   yoda_test_linter                 = lintr::yoda_test_linter()
 )
 ```
