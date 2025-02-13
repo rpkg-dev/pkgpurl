@@ -2,7 +2,7 @@
 # See `README.md#r-markdown-format` for more information on the literate programming approach used applying the R Markdown format.
 
 # pkgpurl: Facilitate Authoring R Packages in the R Markdown File Format
-# Copyright (C) 2024 Salim Brüggemann
+# Copyright (C) 2025 Salim Brüggemann
 # 
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or any later version.
@@ -153,9 +153,13 @@ extract_md_heading_content <- function(x,
     stringr::str_remove(pattern = "^#+") |>
     stringr::str_trim() |>
     purrr::map_chr(\(x) {
-      if (x == "") NA_character_ else knitr::knit(text = x,
-                                                  quiet = TRUE,
-                                                  envir = env)
+      if (x == "") {
+        NA_character_
+      } else {
+        knitr::knit(text = x,
+                    quiet = TRUE,
+                    envir = env)
+      }
     })
 }
 
@@ -961,7 +965,7 @@ gen_pkgdown_ref <- function(rmd,
                                                                             quiet = TRUE,
                                                                             envir = env) |>
                                                                 stringr::str_trim() |>
-                                                                pal::when(length(.) > 0L ~ paste0(., collapse = "\n\n"),
+                                                                pal::when(length(.) > 0L ~ paste(., collapse = "\n\n"),
                                                                           ~ NA_character_)
                                                             })),
                        by = "i_title") %>%
@@ -989,7 +993,7 @@ gen_pkgdown_ref <- function(rmd,
                                                                             quiet = TRUE,
                                                                             envir = env) |>
                                                                 stringr::str_trim() |>
-                                                                pal::when(length(.) > 0L ~ paste0(., collapse = "\n\n"),
+                                                                pal::when(length(.) > 0L ~ paste(., collapse = "\n\n"),
                                                                           ~ NA_character_)
                                                             })),
                        by = "i_subtitle")
