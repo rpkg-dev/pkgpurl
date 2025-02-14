@@ -24,7 +24,9 @@ NOTES:
 
 -   Non-default linters that we tested but dismissed due to annoyance or disagreement include:
 
-    -   `nested_pipe_linter` (nesting pipes doesn't ncessarily have to make the code less-readable, on the contrary!)
+    -   `nested_pipe_linter` (nesting pipes doesn't necessarily have to make the code less-readable, on the contrary!)
+    -   `nonportable_path_linter` (requires paths to always be constructed using `file.path()`, but `file.path()` emits forward-slashes on all platforms incl.
+        Windows, so the benefit seems questionable; besides, `fs::path()` is clearly superior to `file.path()` anyways)
     -   `strings_as_factors_linter` (unnecessary when the code requires R \>= 4.0)
 
 ```{r}
