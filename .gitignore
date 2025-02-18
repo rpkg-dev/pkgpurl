@@ -5,11 +5,17 @@
 .DS_Store
 Thumbs.db
 
-# R(Studio) specific (temp) files
+# R(Studio)-specific (temp) files
+.Rapp.history
 .RData
+.RDataTmp
 .Rhistory
 .Rproj.user
 .Ruserdata
 
-# API keys
+# generated vignette output
+vignettes/*.html
+vignettes/*.pdf
+
+# API credentials/tokens
 .httr-oauth
