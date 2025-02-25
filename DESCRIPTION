@@ -13,7 +13,7 @@ Description: pkgpurl facilitates R package authoring using a literate
     the prose-enhanced and thus more human-oriented `.Rmd` files.
 License: AGPL (>= 3)
 URL: https://pkgpurl.rpkg.dev, https://gitlab.com/rpkg.dev/pkgpurl
-BugReports: https://gitlab.com/rpkg.dev/pkgpurl/issues
+BugReports: https://gitlab.com/rpkg.dev/pkgpurl/-/issues
 Depends: 
     R (>= 4.2)
 Imports: 
