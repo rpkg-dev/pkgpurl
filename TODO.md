@@ -2,6 +2,9 @@
 
 -   Add `.qmd` support
 
+-   Write an additional line with `# fmt: skip file` to the `*.gen.R` files [instructing air to ignore
+    them](https://posit-dev.github.io/air/formatter.html#disabling-formatting). Make this optional?
+
 -   Mention RStudio-Add-In [splitChunk](https://github.com/LudvigOlsen/splitChunk/) and file a bug report for native RStudio support for this functionality (the
     add-in has a few issues; e.g. splits in the wrong source pane when invoked from command palette and the active source pane is not primary one)
 
@@ -41,4 +44,3 @@
     2.  Tweak the CSS to reduce the font size of source code blocks.
 
     3.  Tweak the CSS to extend width to the right for source code blocks.
-
