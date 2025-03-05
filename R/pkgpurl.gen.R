@@ -21,8 +21,6 @@ utils::globalVariables(names = c(".",
                                  "is_help_topic",
                                  "subnode_ix"))
 
-this_pkg <- utils::packageName()
-
 data_special_headings <-
   tibble::tibble(type = character(),
                  heading_texts = list(),
@@ -350,9 +348,9 @@ rmd_files <- function(path) {
 #' @family high_lvl
 #' @export
 process_pkg <- function(path = ".",
-                        add_copyright_notice = pal::pkg_config_val("add_copyright_notice"),
-                        add_license_notice = pal::pkg_config_val("add_license_notice"),
-                        gen_pkgdown_ref = pal::pkg_config_val("gen_pkgdown_ref"),
+                        add_copyright_notice = funky::config_val("add_copyright_notice"),
+                        add_license_notice = funky::config_val("add_license_notice"),
+                        gen_pkgdown_ref = funky::config_val("gen_pkgdown_ref"),
                         env = parent.frame(),
                         document = TRUE,
                         build_and_install = TRUE,
@@ -497,11 +495,11 @@ load_pkg <- function(path = ".",
 #' under `R/*.R` is generated. For the sake of clarity, it's generally advised to prefer the `.nopurl` suffix over hiding files.
 #'
 #' @param path Path to the root of the package directory.
-#' @param add_copyright_notice `r pkg_config$description[pkg_config$key == "add_copyright_notice"]` A logical scalar. Only applies if `path` [is actually an R
+#' @param add_copyright_notice `r funky_config$description[funky_config$key == "add_copyright_notice"]` A logical scalar. Only applies if `path` [is actually an
+#'   R package directory][pal::is_pkg_dir].
+#' @param add_license_notice `r funky_config$description[funky_config$key == "add_license_notice"]` A logical scalar. Only applies if `path` [is actually an R
 #'   package directory][pal::is_pkg_dir].
-#' @param add_license_notice `r pkg_config$description[pkg_config$key == "add_license_notice"]` A logical scalar. Only applies if `path` [is actually an R
-#'   package directory][pal::is_pkg_dir].
-#' @param gen_pkgdown_ref `r pkg_config$description[pkg_config$key == "gen_pkgdown_ref"]` A logical scalar. Only applies if `path` [is actually an R package
+#' @param gen_pkgdown_ref `r funky_config$description[funky_config$key == "gen_pkgdown_ref"]` A logical scalar. Only applies if `path` [is actually an R package
 #'   directory][pal::is_pkg_dir], [pkgdown is set up][pal::is_pkgdown_dir] and a [main R Markdown file][main_rmd()] exists.
 #' @param env Environment to evaluate R Markdown inline code expressions in when generating the pkgdown reference index. Only relevant if
 #'   `gen_pkgdown_ref = TRUE`.
@@ -510,9 +508,9 @@ load_pkg <- function(path = ".",
 #' @family high_lvl
 #' @export
 purl_rmd <- function(path = ".",
-                     add_copyright_notice = pal::pkg_config_val("add_copyright_notice"),
-                     add_license_notice = pal::pkg_config_val("add_license_notice"),
-                     gen_pkgdown_ref = pal::pkg_config_val("gen_pkgdown_ref"),
+                     add_copyright_notice = funky::config_val("add_copyright_notice"),
+                     add_license_notice = funky::config_val("add_license_notice"),
+                     gen_pkgdown_ref = funky::config_val("gen_pkgdown_ref"),
                      env = parent.frame()) {
   
   checkmate::assert_flag(add_copyright_notice)
@@ -1110,13 +1108,13 @@ default_exclusions <- function(excl_vignettes = TRUE) {
 #' names(pkgpurl::default_linters)
 "default_linters"
 
-#' `r pkgsnip::title_lbl("pkg_config", pkg = "pkgpurl")`
+#' `r pkgsnip::title_lbl("funky_config", pkg = "pkgpurl")`
 #'
-#' `r pkgsnip::description_lbl("pkg_config", pkg = "pkgpurl")`
+#' `r pkgsnip::description_lbl("funky_config", pkg = "pkgpurl")`
 #'
-#' @format `r pkgsnip::return_lbl("tibble_cols", cols = colnames(pkg_config))`
+#' @format `r pkgsnip::return_lbl("tibble_cols", cols = colnames(funky_config))`
 #' @export
 #'
 #' @examples
-#' pkgpurl::pkg_config
-"pkg_config"
+#' pkgpurl::funky_config
+"funky_config"

@@ -6,9 +6,9 @@
 \usage{
 purl_rmd(
   path = ".",
-  add_copyright_notice = pal::pkg_config_val("add_copyright_notice"),
-  add_license_notice = pal::pkg_config_val("add_license_notice"),
-  gen_pkgdown_ref = pal::pkg_config_val("gen_pkgdown_ref"),
+  add_copyright_notice = funky::config_val("add_copyright_notice"),
+  add_license_notice = funky::config_val("add_license_notice"),
+  gen_pkgdown_ref = funky::config_val("gen_pkgdown_ref"),
   env = parent.frame()
 )
 }

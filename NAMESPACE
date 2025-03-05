@@ -2,11 +2,11 @@
 
 export(default_exclusions)
 export(default_linters)
+export(funky_config)
 export(gen_pkgdown_ref)
 export(lint_rmd)
 export(load_pkg)
 export(main_rmd)
-export(pkg_config)
 export(process_pkg)
 export(purl_rmd)
 export(run_nopurl_rmd)

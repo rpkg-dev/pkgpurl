@@ -15,4 +15,4 @@ reference:
 - contents:
   - default_exclusions
   - default_linters
-  - pkg_config
+  - funky_config

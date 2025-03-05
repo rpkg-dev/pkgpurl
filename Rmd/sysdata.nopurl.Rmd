@@ -132,13 +132,11 @@ default_linters <- lintr::linters_with_defaults(
 )
 ```
 
-## `pkg_config`
+## `funky_config`
 
 ```{r}
-pkg_config <-
-  tibble::tibble(key = character(),
-                 default_value = list(),
-                 description = character()) |>
+funky_config <-
+  funky::ptype_config |>
   tibble::add_row(key = "add_copyright_notice",
                   default_value = list(TRUE),
                   description = paste0("Whether or not to add a **copyright notice** at the beginning of the generated `.R` files as recommended by e.g. the ",
@@ -166,7 +164,7 @@ to package users.
 
 ```{r}
 usethis::use_data(default_linters,
-                  pkg_config,
+                  funky_config,
                   internal = TRUE,
                   overwrite = TRUE,
                   compress = "xz",
