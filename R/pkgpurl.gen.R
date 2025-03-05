@@ -483,7 +483,7 @@ load_pkg <- function(path = ".",
 #'
 #' `r pkgsnip::md_snip("rstudio_addin")`
 #' 
-#' # `.Rmd` files excluded from purling
+#' # Files excluded from purling
 #' 
 #' `purl_rmd()` does not generate an `.R` file for each and every R Markdown file in the `Rmd/` subdirectory. Two types of `.Rmd` files are excluded from
 #' purling:
