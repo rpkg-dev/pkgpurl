@@ -43,6 +43,7 @@ Suggests:
     rstudioapi (>= 0.13),
     yay (>= 0.0.9013)
 Remotes:
+    gitlab::rpkg.dev/funky,
     gitlab::rpkg.dev/pal,
     gitlab::rpkg.dev/pkgsnip,
     gitlab::rpkg.dev/yay
