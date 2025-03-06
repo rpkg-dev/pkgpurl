@@ -24,7 +24,7 @@ Useful links:
 \itemize{
   \item \url{https://pkgpurl.rpkg.dev}
   \item \url{https://gitlab.com/rpkg.dev/pkgpurl}
-  \item Report bugs at \url{https://gitlab.com/rpkg.dev/pkgpurl/issues}
+  \item Report bugs at \url{https://gitlab.com/rpkg.dev/pkgpurl/-/issues}
 }
 
 }
