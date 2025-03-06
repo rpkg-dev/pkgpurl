@@ -3,7 +3,7 @@
 \docType{data}
 \name{funky_config}
 \alias{funky_config}
-\title{pkgpurl package configuration metadata}
+\title{pkgpurl package configuration data}
 \format{
 A \link[tibble:tbl_df-class]{tibble} with the columns \code{key}, \code{default_value}, \code{default_value_dynamic}, \code{require}, and \code{description}.
 }
@@ -11,7 +11,7 @@ A \link[tibble:tbl_df-class]{tibble} with the columns \code{key}, \code{default_
 funky_config
 }
 \description{
-A \link[tibble:tbl_df-class]{tibble} with metadata of all possible pkgpurl package configuration options. See \code{\link[funky:config_val]{funky::config_val()}} for more information.
+A \link[tibble:tbl_df-class]{tibble} with data about all possible pkgpurl package configuration options. See \code{\link[funky:config_val]{funky::config_val()}} for more information.
 }
 \examples{
 pkgpurl::funky_config
