@@ -65,11 +65,11 @@ assemble_copyright_notice <- function(path) {
   if (desc::desc_has_fields(keys = "Authors@R",
                             file = path)) {
     
-    pkg <- pal::desc_value(key = "Package",
-                           file = path)
-    desc <- pal::desc_value(key = "Title",
-                            default = "",
-                            file = path)
+    pkg <- pal::desc_get_field_safe(key = "Package",
+                                    file = path)
+    desc <- pal::desc_get_field_safe(key = "Title",
+                                     default = "",
+                                     file = path)
     authors <-
       desc::desc_get_authors(file = path) |>
       # reduce to copyright holders or otherwise authors
@@ -108,8 +108,8 @@ assemble_license_notice <- function(path) {
   if (desc::desc_has_fields(keys = "License",
                             file = path)) {
     
-    license <- pal::desc_value(key = "License",
-                               file = path)
+    license <- pal::desc_get_field_safe(key = "License",
+                                        file = path)
     
     if (grepl(x = license,
               pattern = "^\\s*(AGPL ?\\(>= ?3\\)|AGPL-3\\.0-or-later)\\s*$")) {
@@ -226,8 +226,8 @@ main_rmd <- function(path = ".") {
       rmd_file_paths |>
       fs::path_file() |>
       fs::path_ext_remove() |>
-      magrittr::is_in(pal::desc_value(key = "Package",
-                                      file = path)) |>
+      magrittr::is_in(pal::desc_get_field_safe(key = "Package",
+                                               file = path)) |>
       which() %>%
       magrittr::extract(rmd_file_paths, .) |>
       pal::when(length(.) > 1L ~ # this is theoretically possible in case of subdirs under `Rmd/` or for case-sensitive filesystems (both `.Rmd` and `.rmd`)
