@@ -1,5 +1,19 @@
 # TODOs
 
+-   Fix annoying "lazy-load database is corrupt" error after `pkgpurl::process_pkg(use_rstudio_api = TRUE)`!
+
+    The error reads something along:
+
+    ```         
+    Error in mget(objectNames, envir = namespace, inherits = TRUE) :
+      lazy-load database 'PATH/TO/PKG.rdb' is corrupt
+    In addition: Warning message:
+      In mget(objectNames, envir = namespace, inherits = TRUE) :
+        internal error 1 in R_decompress1 with libdeflate
+    ```
+
+    There's a [SO question](https://stackoverflow.com/questions/79585966/intermittent-database-corrupt-error-in-r-on-package-install) about exactly this issue.
+
 -   Add `.qmd` support
 
 -   Write an additional line with `# fmt: skip file` to the `*.gen.R` files [instructing air to ignore
