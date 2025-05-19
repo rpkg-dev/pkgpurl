@@ -1,0 +1,8 @@
+[format]
+line-width = 160
+indent-width = 2
+indent-style = "space"
+line-ending = "lf"
+persistent-line-breaks = true
+exclude = [ "*.gen.R" ]
+default-exclude = true

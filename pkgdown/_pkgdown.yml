@@ -4,6 +4,7 @@ url: https://pkgpurl.rpkg.dev
 reference:
 - title: High-level functions
 - contents:
+  - create_pkg
   - process_pkg
   - load_pkg
   - purl_rmd

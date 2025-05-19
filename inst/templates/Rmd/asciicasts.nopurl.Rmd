@@ -1,0 +1,43 @@
+---
+editor_options:
+  chunk_output_type: console
+---
+
+# NOTES
+
+-   This file is *not* included in the [source package](https://r-pkgs.org/structure.html#sec-source-package) because of the [`.nopurl` suffix in its
+    filename](https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.html#-rmd-files-excluded-from-purling).
+
+-   The chunks below have to be manually executed in order to regenerate the package data.
+
+-   asciicasts are only regenerated manually because their generation takes a considerable amount of time. To regenerate an asciicast, manually run its code
+    chunk, rebuild the package and finally re-build the vignette(s) where it's included.
+
+-   After asciicasts are regenerated (and stored as JSON files under `inst/asciicasts/`), the package must be rebuilt in order to actually include the updated
+    JSON files.
+
+-   The asciicast player width of 116 chars (`cols = 116L`) is optimized for the current pkgdown layout of `rpkg.dev`.
+
+# Record and write asciicasts
+
+## `SOME_ASCIICAST`
+
+```{r}
+fs::dir_create("inst/asciicasts")
+tmp_file <- fs::file_temp(ext = "R")
+
+c('SOME_R_CODE_TO_CAST() %>%
+  readr::write_lines(file = tmp_file)
+
+asciicast::record(script = tmp_file,
+                  title = "SOME TITLE",
+                  startup = quote(options(cli.width = 115L)),
+                  timeout = 180L,
+                  typing_speed = 0L,
+                  rows = 50L,
+                  cols = 116L,
+                  speed = 1.0) %>%
+  asciicast::write_json(path = "inst/asciicasts/SOME_ASCIICAST.json")
+
+fs::file_delete(tmp_file)
+```

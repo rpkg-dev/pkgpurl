@@ -1,0 +1,35 @@
+---
+editor_options:
+  chunk_output_type: console
+---
+
+# NOTES
+
+-   This file is *not* included in the [source package](https://r-pkgs.org/structure.html#sec-source-package) because of the [`.nopurl` suffix in its
+    filename](https://pkgpurl.rpkg.dev/reference/purl_rmd.html#-rmd-files-excluded-from-purling).
+
+-   The chunks below have to be manually executed in order to regenerate the package data.
+
+-   When used internally, other than internal data, [exported data](https://r-pkgs.org/data.html#sec-data-data) must always be referred to by its explicit
+    namespace.
+
+# Define data
+
+## `SOME_DATASET`
+
+```{r}
+SOME_DATASET <- SOME_R_CODE()
+```
+
+# Write data
+
+Save all the bigger data objects to separate files under `data/*.rda`. Note that when documenting them, they mustn't be explicitly `@export`ed since they're
+already automatically exported and thus available to package users.
+
+```{r}
+usethis::use_data(SOME_DATASET,
+                  internal = FALSE,
+                  overwrite = TRUE,
+                  compress = "xz",
+                  version = 3L)
+```

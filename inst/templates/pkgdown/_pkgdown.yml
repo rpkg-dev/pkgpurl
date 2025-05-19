@@ -1,0 +1,3 @@
+template:
+  package: pkgdown.tpl
+url: https://{{ pkg }}.rpkg.dev

@@ -1,0 +1,21 @@
+# system-specific temp, backup, thumbnail etc. files
+.~lock*
+*.backup
+~$*
+.DS_Store
+Thumbs.db
+
+# R(Studio)-specific (temp) files
+.Rapp.history
+.RData
+.RDataTmp
+.Rhistory
+.Rproj.user
+.Ruserdata
+
+# generated vignette output
+vignettes/*.html
+vignettes/*.pdf
+
+# API credentials/tokens
+.httr-oauth

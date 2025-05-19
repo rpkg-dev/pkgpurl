@@ -1,0 +1,13 @@
+# This is an [ack configuration file][1] with options [complementing/overriding ack's defaults][2]. To print the current defaults, run: `ack --dump`
+#
+# [1]: https://beyondgrep.com/documentation/ack-2.28-man.html#THE-.ackrc-FILE
+# [2]: https://beyondgrep.com/documentation/ack-v3.5.0-man.html#ACKRC-LOCATION-SEMANTICS
+
+
+## Directories to ignore
+--ignore-dir=.quarto
+--ignore-dir=.Rproj.user
+
+## File types to ignore
+--ignore-file=ext:RData
+--ignore-file=ext:Rhistory

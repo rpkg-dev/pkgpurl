@@ -1,0 +1,36 @@
+---
+editor_options:
+  chunk_output_type: console
+---
+
+# EXPORTED
+
+## Some function group
+
+### DESCRIPTION
+
+Function group's description. Fed to pkgdown index generator.
+
+### `some_function`
+
+Some prose...
+
+```{r}
+some_function <- function() {
+
+  # do something
+}
+```
+
+# INTERNAL
+
+## Avoid `R CMD check` NOTES about undefined global objects
+
+cf. <https://github.com/tidyverse/magrittr/issues/29#issuecomment-74313262>
+
+```{r}
+utils::globalVariables(names = c("."))
+
+# avoid notes about "possible error"s when using non-exported rex shortcuts, cf. https://rex.r-lib.org/#using-rex-in-other-packages
+rex::register_shortcuts(pkg_name = utils::packageName())
+```

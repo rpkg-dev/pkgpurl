@@ -1,0 +1,49 @@
+---
+editor_options:
+  chunk_output_type: console
+---
+
+# NOTES
+
+-   This file is *not* included in the [source package](https://r-pkgs.org/structure.html#sec-source-package) because of the [`.nopurl` suffix in its
+    filename](https://pkgpurl.rpkg.dev/reference/purl_rmd.html#-rmd-files-excluded-from-purling).
+
+-   The chunks below have to be manually executed in order to regenerate the package data.
+
+-   Although the datasets below are saved as ["internal data" in `R/sysdata.rda`](https://r-pkgs.org/data.html#sec-data-sysdata), they can still be
+    exported and documented (by documenting the dataset's quoted name in the main `.Rmd` source file – which only works when the dataset is also `@export`ed),
+    something [not explicitly mentioned](https://coolbutuseless.github.io/2018/12/10/r-packages-internal-and-external-data/) in the book [R
+    Packages](https://r-pkgs.org/data.html#sec-data-data). To do so, you first need to manually add the `export()` directive in the NAMESPACE file since
+    roxygen2 won't add it automatically.
+
+# Define data
+
+## `funky_config`
+
+```{r}
+funky_config <-
+  tibble::tibble(key = character(),
+                 default_value = list(),
+                 default_value_dynamic = character(),
+                 require = logical(),
+                 description = character()) |>
+  tibble::add_row(key = "some_required_key",
+                  description = "what is some required key for?",
+                  require = TRUE) |>
+  tibble::add_row(key = "some_optional_key",
+                  description = "what is some optional key for?",
+                  require = FALSE)
+```
+
+# Write data
+
+Save all the small data objects as a single internal file `R/sysdata.rda`. Note that when documenting them, they must be explicitly `@export`ed to be available
+to package users.
+
+```{r}
+usethis::use_data(funky_config,
+                  internal = TRUE,
+                  overwrite = TRUE,
+                  compress = "xz",
+                  version = 3L)
+```

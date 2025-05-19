@@ -311,6 +311,167 @@ rmd_files <- function(path) {
                perl = TRUE)
 }
 
+#' Create new R Markdown package
+#'
+#' @description
+#' Populates the directory specified via `path` with all the necessary files for a new R Markdown package.
+#' 
+#' The `DESCRIPTION` file is created using
+#' [usethis::use_description()] and all fields except `Package`, `URL` and `BugReports` are sourced from the [`usethis.description` \R
+#' option](https://usethis.r-lib.org/reference/use_description.html) if defined.
+#'
+#' @param name Package name.
+#' @param id_netlify Netlify site identifier.
+#' @param path Path to the new package directory.
+#' @param incl_roxygen2_meta Whether or not to create a `man/roxygen/meta.R` file that i.a. stores the metadata for [roxygen2's `@family`
+#'   tags](https://roxygen2.r-lib.org/articles/index-crossref.html#family).
+#' @param incl_reexports Whether or not to create an `R/reexports.R` file prefilled with an opinionated set of magrittr and rland operator exports.
+#' @param incl_sysdata_rmd Whether or not to create an `Rmd/sysdata.nopurl.Rmd` stub file.
+#' @param incl_data_rmd Whether or not to create an `Rmd/data.nopurl.Rmd` stub file.
+#' @param incl_asciicasts_rmd Whether or not to create an `Rmd/asciicasts.nopurl.Rmd` stub file.
+#' @param incl_pkgdown_config Whether or not to create a minimal `pkgdown/_pkgdown.yml` configuration file.
+#' @param incl_ripgrep_config Whether or not to create a ripgrep ignore file `.rgignore`.
+#' @param incl_ack_config Whether or not to create an [`.ackrc` configuration file](https://beyondgrep.com/documentation/).
+#' @param incl_air_config Whether or not to create an [`air.toml` configuration file](https://posit-dev.github.io/air/configuration.html). Note that air is not
+#'   of much use yet for R Markdown packages.
+#'
+#' @returns `path`, invisibly.
+#' @export
+create_pkg <- function(name,
+                       id_netlify = NULL,
+                       path = ".",
+                       incl_roxygen2_meta = TRUE,
+                       incl_reexports = FALSE,
+                       incl_sysdata_rmd = FALSE,
+                       incl_data_rmd = FALSE,
+                       incl_asciicasts_rmd = FALSE,
+                       incl_pkgdown_config = TRUE,
+                       incl_ripgrep_config = TRUE,
+                       incl_ack_config = FALSE,
+                       incl_air_config = FALSE) {
+  
+  checkmate::assert_string(name)
+  checkmate::assert_string(id_netlify,
+                           null.ok = TRUE)
+  checkmate::assert_flag(incl_roxygen2_meta)
+  checkmate::assert_flag(incl_reexports)
+  checkmate::assert_flag(incl_sysdata_rmd)
+  checkmate::assert_flag(incl_data_rmd)
+  checkmate::assert_flag(incl_asciicasts_rmd)
+  checkmate::assert_flag(incl_pkgdown_config)
+  checkmate::assert_flag(incl_ripgrep_config)
+  checkmate::assert_flag(incl_ack_config)
+  checkmate::assert_flag(incl_air_config)
+  
+  tpl_pkg <- utils::packageName()
+  
+  # create dirs if necessary and set usethis proj
+  if (fs::dir_exists(path)) {
+    path <- fs::path(path, name)
+  }
+  fs::dir_create(path = path)
+  
+  # switch to target dir
+  usethis::local_project(path = path,
+                         force = TRUE)
+  fs::dir_create("R")
+  fs::dir_create("Rmd")
+  
+  # create files without any content interpolation ----
+  usethis::use_template(template = "gitignore",
+                        save_as = ".gitignore",
+                        package = tpl_pkg)
+  
+  usethis::use_template(template = "LICENSE.md",
+                        package = tpl_pkg)
+  
+  usethis::use_template(template = "PKG.Rproj",
+                        save_as = fs::path(name,
+                                           ext = "Rproj"),
+                        package = tpl_pkg)
+  
+  usethis::use_template(template = "Rbuildignore",
+                        save_as = ".Rbuildignore",
+                        package = tpl_pkg)
+  
+  usethis::use_template(template = "R/PKG-package.R",
+                        save_as = fs::path("R", paste0(name, "-package"),
+                                           ext = "R"),
+                        package = tpl_pkg)
+  
+  usethis::use_template(template = "Rmd/PKG.Rmd",
+                        save_as = fs::path("Rmd", name,
+                                           ext = "Rmd"),
+                        package = tpl_pkg)
+  
+  if (incl_sysdata_rmd) {
+    usethis::use_template(template = "Rmd/sysdata.nopurl.Rmd",
+                          package = tpl_pkg)
+  }
+  
+  if (incl_data_rmd) {
+    usethis::use_template(template = "Rmd/data.nopurl.Rmd",
+                          package = tpl_pkg)
+  }
+  
+  if (incl_asciicasts_rmd) {
+    usethis::use_template(template = "Rmd/asciicasts.nopurl.Rmd",
+                          package = tpl_pkg)
+  }
+  
+  if (incl_ack_config) {
+    usethis::use_template(template = "ackrc",
+                          save_as = ".ackrc",
+                          package = tpl_pkg)
+  }
+  
+  if (incl_air_config) {
+    usethis::use_template(template = "air.toml",
+                          package = tpl_pkg)
+  }
+  
+  if (incl_roxygen2_meta) {
+    fs::dir_create("man/roxygen")
+    usethis::use_template(template = "man/roxygen/meta.R",
+                          package = tpl_pkg)
+  }
+  
+  if (incl_reexports) {
+    usethis::use_template(template = "R/reexports.R",
+                          package = tpl_pkg)
+  }
+  
+  if (incl_ripgrep_config) {
+    usethis::use_template(template = "rgignore",
+                          save_as = ".rgignore",
+                          package = tpl_pkg)
+  }
+  
+  # create files customized to pkg ----
+  usethis::use_template(template = "README.Rmd",
+                        data = list(pkg = name,
+                                    id_netlify = id_netlify),
+                        package = tpl_pkg)
+  
+  if (!is.null(id_netlify)) {
+    usethis::use_template(template = "netlify.toml",
+                          data = list(pkg = name),
+                          package = tpl_pkg)
+  }
+  
+  if (incl_pkgdown_config) {
+    fs::dir_create("pkgdown")
+    usethis::use_template(template = "pkgdown/_pkgdown.yml",
+                          data = list(pkg = name),
+                          package = tpl_pkg)
+  }
+  
+  usethis::use_description(fields = list(Package = name,
+                                         URL = paste0("https://gitlab.com/rpkg.dev/", name),
+                                         BugReports = paste0("https://gitlab.com/rpkg.dev/", name, "/-/issues")))
+  invisible(path)
+}
+
 #' Process R Markdown package from source to installation
 #'
 #' @description
