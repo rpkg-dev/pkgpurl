@@ -22,17 +22,14 @@ editor_options:
 
 ```{r}
 funky_config <-
-  tibble::tibble(key = character(),
-                 default_value = list(),
-                 default_value_dynamic = character(),
-                 require = logical(),
-                 description = character()) |>
+  funky::ptype_config |>
   tibble::add_row(key = "some_required_key",
-                  description = "what is some required key for?",
-                  require = TRUE) |>
+                  default_value = list("some value")
+                  require = TRUE,
+                  description = "what is some required key for?") |>
   tibble::add_row(key = "some_optional_key",
-                  description = "what is some optional key for?",
-                  require = FALSE)
+                  require = FALSE,
+                  description = "what is some optional key for?")
 ```
 
 # Write data
