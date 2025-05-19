@@ -49,9 +49,9 @@ subdirectory using <code><a href="https://rdrr.io/pkg/knitr/man/knit.html" class
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">purl_rmd</span><span class="op">(</span></span>
 <span>  path <span class="op">=</span> <span class="st">"."</span>,</span>
-<span>  add_copyright_notice <span class="op">=</span> <span class="fu">pal</span><span class="fu">::</span><span class="fu"><a href="https://pal.rpkg.dev/reference/pkg_config_val.html" class="external-link">pkg_config_val</a></span><span class="op">(</span><span class="st">"add_copyright_notice"</span><span class="op">)</span>,</span>
-<span>  add_license_notice <span class="op">=</span> <span class="fu">pal</span><span class="fu">::</span><span class="fu"><a href="https://pal.rpkg.dev/reference/pkg_config_val.html" class="external-link">pkg_config_val</a></span><span class="op">(</span><span class="st">"add_license_notice"</span><span class="op">)</span>,</span>
-<span>  gen_pkgdown_ref <span class="op">=</span> <span class="fu">pal</span><span class="fu">::</span><span class="fu"><a href="https://pal.rpkg.dev/reference/pkg_config_val.html" class="external-link">pkg_config_val</a></span><span class="op">(</span><span class="st">"gen_pkgdown_ref"</span><span class="op">)</span>,</span>
+<span>  add_copyright_notice <span class="op">=</span> <span class="fu">funky</span><span class="fu">::</span><span class="fu"><a href="https://funky.rpkg.dev/reference/config_val.html" class="external-link">config_val</a></span><span class="op">(</span><span class="st">"add_copyright_notice"</span><span class="op">)</span>,</span>
+<span>  add_license_notice <span class="op">=</span> <span class="fu">funky</span><span class="fu">::</span><span class="fu"><a href="https://funky.rpkg.dev/reference/config_val.html" class="external-link">config_val</a></span><span class="op">(</span><span class="st">"add_license_notice"</span><span class="op">)</span>,</span>
+<span>  gen_pkgdown_ref <span class="op">=</span> <span class="fu">funky</span><span class="fu">::</span><span class="fu"><a href="https://funky.rpkg.dev/reference/config_val.html" class="external-link">config_val</a></span><span class="op">(</span><span class="st">"gen_pkgdown_ref"</span><span class="op">)</span>,</span>
 <span>  env <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -95,10 +95,10 @@ optimized for human readability. This facilitates (best) practices which are com
 <p>In practice, the main advantage of writing R code in R Markdown is that you don't have to rely on
 <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Comments" class="external-link"><code>#</code> comments</a> to explain, annotate or otherwise elaborate on your code. It also
 allows you to easily compile your source code to beautifully looking HTML, PDF etc. files using <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">rmarkdown::render()</a></code>.</p>
-<p>This function is registered as an <a href="https://rstudio.github.io/rstudioaddins/" class="external-link">RStudio add-in</a>, allowing RStudio users to assign a <a href="https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE" class="external-link">custom shortcut</a> to it and to invoke it from the <a href="https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts" class="external-link">command palette</a>.</p>
+<p>This function is registered as an <a href="https://rstudio.github.io/rstudioaddins/" class="external-link">RStudio add-in</a>, allowing RStudio users to assign a <a href="https://support.posit.co/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE" class="external-link">custom shortcut</a> to it and to invoke it from the <a href="https://posit.co/blog/rstudio-1-4-a-quick-tour/#command-palette-shortcuts" class="external-link">command palette</a>.</p>
     </div>
     <div class="section level2">
-    <h2 id="-rmd-files-excluded-from-purling"><code>.Rmd</code> files excluded from purling<a class="anchor" aria-label="anchor" href="#-rmd-files-excluded-from-purling"></a></h2>
+    <h2 id="files-excluded-from-purling">Files excluded from purling<a class="anchor" aria-label="anchor" href="#files-excluded-from-purling"></a></h2>
     <p><code>purl_rmd()</code> does not generate an <code>.R</code> file for each and every R Markdown file in the <code>Rmd/</code> subdirectory. Two types of <code>.Rmd</code> files are excluded from
 purling:</p><ol><li><p>Files having the suffix <code>.nopurl</code> in their name, e.g. <code>Rmd/playground.nopurl.Rmd</code>.</p></li>
 <li><p>Hidden files <a href="https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments" class="external-link">as per Unix convention</a> whose names start
@@ -124,7 +124,7 @@ under <code>R/*.R</code> is generated. For the sake of clarity, it's generally a
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer></div>

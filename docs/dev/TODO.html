@@ -39,7 +39,18 @@
 
 <div id="todos" class="section level1">
 
-<ul><li><p>Add <code>.qmd</code> support</p></li>
+<ul><li>
+<p>Fix annoying “lazy-load database is corrupt” error after <code>pkgpurl::process_pkg(use_rstudio_api = TRUE)</code>!</p>
+<p>The error reads something along:</p>
+<pre><code>Error in mget(objectNames, envir = namespace, inherits = TRUE) :
+  lazy-load database 'PATH/TO/PKG.rdb' is corrupt
+In addition: Warning message:
+  In mget(objectNames, envir = namespace, inherits = TRUE) :
+    internal error 1 in R_decompress1 with libdeflate</code></pre>
+<p>There’s a <a href="https://stackoverflow.com/questions/79585966/intermittent-database-corrupt-error-in-r-on-package-install" class="external-link">SO question</a> about exactly this issue.</p>
+</li>
+<li><p>Add <code>.qmd</code> support</p></li>
+<li><p>Write an additional line with <code># fmt: skip file</code> to the <code>*.gen.R</code> files <a href="https://posit-dev.github.io/air/formatter.html#disabling-formatting" class="external-link">instructing air to ignore them</a>. Make this optional?</p></li>
 <li><p>Mention RStudio-Add-In <a href="https://github.com/LudvigOlsen/splitChunk/" class="external-link">splitChunk</a> and file a bug report for native RStudio support for this functionality (the add-in has a few issues; e.g. splits in the wrong source pane when invoked from command palette and the active source pane is not primary one)</p></li>
 <li>
 <p>Check out</p>
@@ -80,7 +91,7 @@ vignette: &gt;
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer></div>
