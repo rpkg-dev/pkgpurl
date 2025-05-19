@@ -11,6 +11,8 @@ knitr::opts_knit$set(root.dir = getwd())
 
 # `r pal::desc_get_field_safe("Package")`
 
+[![R-CMD-check](https://github.com/rpkg-dev/pkgpurl/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rpkg-dev/pkgpurl/actions/workflows/R-CMD-check.yaml)
+
 ```{r}
 #| label: pkg-desc
 #| child: !expr pkgsnip::snip_path("pkg-desc.Rmd")
