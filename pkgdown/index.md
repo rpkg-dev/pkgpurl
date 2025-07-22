@@ -171,6 +171,8 @@ Some of pkgpurl's functionality is controlled via package-specific global config
 
 ## Development
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/rpkg-dev/pkgpurl)
+
 ### R Markdown format
 
 This package's source code is written in the [R Markdown](https://rmarkdown.rstudio.com/) file format to facilitate practices commonly referred to as [*literate programming*](https://en.wikipedia.org/wiki/Literate_programming). It allows the actual code to be freely mixed with explanatory and supplementary information in expressive Markdown format instead of having to rely on [`#` comments](https://rstudio.github.io/r-manuals/r-lang/Parser.html#comments) only.
