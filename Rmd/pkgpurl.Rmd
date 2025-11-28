@@ -1437,18 +1437,3 @@ default_exclusions <- function(excl_vignettes = TRUE) {
 #' names(pkgpurl::default_linters)
 "default_linters"
 ```
-
-### `funky_config`
-
-```{r}
-#' `r pkgsnip::title_lbl("funky_config", pkg = "pkgpurl")`
-#'
-#' `r pkgsnip::description_lbl("funky_config", pkg = "pkgpurl")`
-#'
-#' @format `r pkgsnip::return_lbl("tibble_cols", cols = colnames(funky_config))`
-#' @export
-#'
-#' @examples
-#' pkgpurl::funky_config
-"funky_config"
-```
