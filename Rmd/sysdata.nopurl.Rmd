@@ -22,11 +22,15 @@ editor_options:
 
 NOTES:
 
--   Non-default linters that we tested but dismissed due to annoyance or disagreement include:
+-   Non-default linters that we considered but dismissed due to annoyance or disagreement include:
 
+    -   `library_call_linter` (not relevant in the context of R package development)
     -   `nested_pipe_linter` (nesting pipes doesn't necessarily have to make the code less-readable, on the contrary!)
     -   `nonportable_path_linter` (requires paths to always be constructed using `file.path()`, but `file.path()` emits forward-slashes on all platforms incl.
         Windows, so the benefit seems questionable; besides, `fs::path()` is clearly superior to `file.path()` anyways)
+    -   `pipe_consistency_linter` (although we generally prefer base R's pipe operator over magrittr's, we still like to be able to use the latter for specific
+        cases that the former doesn't support like referencing the input placeholder multiple times or piping input to magrittr's pipe assignement operator
+        `%<>%`)
     -   `strings_as_factors_linter` (unnecessary when the code requires R \>= 4.0)
 
 ```{r}
@@ -36,8 +40,8 @@ default_linters <- lintr::linters_with_defaults(
   any_is_na_linter                 = lintr::any_is_na_linter(),
   assignment_linter                = lintr::assignment_linter(operator = c("<-", "<<-", "%<>%")),
   boolean_arithmetic_linter        = lintr::boolean_arithmetic_linter(),
-  # TODO: set `function_braces = "not_inline"` once lintr 3.2.1+ is released
-  brace_linter                     = lintr::brace_linter(allow_single_line = TRUE),
+  brace_linter                     = lintr::brace_linter(allow_single_line = TRUE,
+                                                         function_bodies = "not_inline"),
   class_equals_linter              = lintr::class_equals_linter(),
   comparison_negation_linter       = lintr::comparison_negation_linter(),
   condition_call_linter            = lintr::condition_call_linter(),
@@ -97,6 +101,7 @@ default_linters <- lintr::linters_with_defaults(
   outer_negation_linter            = lintr::outer_negation_linter(),
   paste_linter                     = lintr::paste_linter(),
   pipe_call_linter                 = lintr::pipe_call_linter(),
+  pipe_consistency_linter          = NULL,
   pipe_return_linter               = lintr::pipe_return_linter(),
   print_linter                     = lintr::print_linter(),
   # disabled because being able to use both types of quotes allows to avoid having to escape the respective other quote type
@@ -123,8 +128,7 @@ default_linters <- lintr::linters_with_defaults(
                                                                                "->" = "Makes it harder to see in code where an object is defined.")),
   unnecessary_concatenation_linter = lintr::unnecessary_concatenation_linter(),
   unnecessary_lambda_linter        = lintr::unnecessary_lambda_linter(),
-  # TODO: re-enable once lintr 3.2.1+ is released
-  # unnecessary_nesting_linter       = lintr::unnecessary_nesting_linter(),
+  unnecessary_nesting_linter       = lintr::unnecessary_nesting_linter(),
   unnecessary_placeholder_linter   = lintr::unnecessary_placeholder_linter(),
   unreachable_code_linter          = lintr::unreachable_code_linter(),
   which_grepl_linter               = lintr::which_grepl_linter(),
