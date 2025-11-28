@@ -130,10 +130,8 @@ assemble_license_notice <- function(path) {
   if (desc::desc_has_fields(keys = "License",
                             file = path)) {
     
-    license <- pal::desc_get_field_safe(key = "License",
-                                        file = path)
-    
-    if (grepl(x = license,
+    if (grepl(x = pal::desc_get_field_safe(key = "License",
+                                           file = path),
               pattern = "^\\s*(AGPL ?\\(>= ?3\\)|AGPL-3\\.0-or-later)\\s*$")) {
       
       notice <- c(paste0("This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as ",
@@ -546,7 +544,7 @@ create_pkg <- function(name,
   
   usethis::use_description(fields = list(Package = name,
                                          URL = paste0("https://gitlab.com/rpkg.dev/", name),
-                                         BugReports = paste0("https://gitlab.com/rpkg.dev/", name, "/-/issues")))
+                                         BugReports = paste0("https://gitlab.com/rpkg.dev/", name, "/-/issues"))) # nolint: absolute_path_linter
   invisible(path)
 }
 ```
@@ -866,11 +864,11 @@ purl_rmd <- function(path = ".",
       gen_pkgdown_ref <- FALSE
     }
     
-    rmd_files %>% purrr::walk(process_rmd,
-                              path_pkg = path,
-                              copyright_notice = copyright_notice,
-                              license_notice = license_notice)
-    
+    purrr::walk(rmd_files,
+                \(x) process_rmd(path_file = x,
+                                 path_pkg = path,
+                                 copyright_notice = copyright_notice,
+                                 license_notice = license_notice))
     if (gen_pkgdown_ref) {
       
       ref <-
