@@ -4,17 +4,19 @@
 \alias{default_exclusions}
 \title{pkgpurl's default lintr exclusions}
 \usage{
-default_exclusions(excl_vignettes = TRUE)
+default_exclusions(excl_inst = TRUE, excl_vignettes = TRUE)
 }
 \arguments{
-\item{excl_vignettes}{Whether or not to exclude all \code{.Rmd} files under \verb{vignettes/}. A logical scalar.}
+\item{excl_inst}{Whether or not to exclude all files under \verb{inst/}. A logical scalar.}
+
+\item{excl_vignettes}{Whether or not to exclude all files under \verb{vignettes/}. A logical scalar.}
 }
 \value{
 A named list of \link[lintr:linters]{lintr::linters}.
 }
 \description{
-Opinionated set of files and folders to be excluded from linting, relative to the package path. To be used with \code{\link[=lint_rmd]{lint_rmd()}}, \code{\link[lintr:lint]{lintr::lint_dir()}} or
-\code{\link[lintr:lint]{lintr::lint_package()}}.
+Returns an opinionated set of files and folders to be excluded from linting, relative to the root of the package directory. To be used with \code{\link[=lint_rmd]{lint_rmd()}},
+\code{\link[lintr:lint]{lintr::lint_dir()}} or \code{\link[lintr:lint]{lintr::lint_package()}}.
 }
 \examples{
 pkgpurl::default_exclusions()

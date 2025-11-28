@@ -1,0 +1,425 @@
+# pkgpurl
+
+[![R-CMD-check](https://github.com/rpkg-dev/pkgpurl/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rpkg-dev/pkgpurl/actions/workflows/R-CMD-check.yaml)
+
+pkgpurl facilitates R package authoring using a literate programming
+workflow. It enables you to write all R source code in R Markdown files,
+letting executable code coexist naturally with narrative explanations
+and supplementary context in expressive Markdown format. The primary
+purpose of pkgpurl is to provide a standardized way to compile the bare
+`.R` files from the richer, prose-enhanced `.Rmd` files.
+
+The basic idea behind the concept this package implements originates
+from Yihui Xie. See his blog post [*Write An R Package Using Literate
+Programming Techniques*](https://yihui.org/rlp/) for more details, it’s
+definitively worth reading. This package’s function
+[`pkgpurl::purl_rmd()`](https://pkgpurl.rpkg.dev/reference/purl_rmd.html)
+is just a less cumbersome alternative to the Makefile approach outlined
+by him that offers additional convenience features like [auto-generating
+the pkgdown reference index](https://pkgpurl.rpkg.dev/reference/) or
+adding
+[copyright](https://pkgpurl.rpkg.dev/reference/purl_rmd.html#arg-add-copyright-notice)
+or
+[license](https://pkgpurl.rpkg.dev/reference/purl_rmd.html#arg-add-license-notice)
+notices.
+
+Setting up a new project to write an R package in the R Markdown format
+differs slightly from the classic approach.
+[`pkgpurl::create_pkg()`](https://pkgpurl.rpkg.dev/reference/create_pkg.html)
+is offered as a convenience function similar to
+[`usethis::create_package()`](https://usethis.r-lib.org/reference/create_package.html)
+to populate a directory with all the files necessary for a new package
+in the R Markdown format.
+
+## Pros and cons
+
+The [R Markdown](https://rmarkdown.rstudio.com/) format provides several
+**advantages** over the bare R source format when developing an R
+package:
+
+👍 **Mix Markdown and Code**
+
+It allows the actual code to be freely mixed with explanatory and
+supplementary information in expressive
+[Markdown](https://en.wikipedia.org/wiki/Markdown) format instead of
+having to rely on [`#`
+comments](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Comments)
+only. In general, this should encourage to actually record
+code-accompanying information because you’re able to use the full
+spectrum of [Pandoc’s Markdown
+syntax](https://pandoc.org/MANUAL.html#pandocs-markdown) like inline
+formatting, lists, tables, quotations or math[^1].
+
+It is especially powerful in combination with the [Visual R
+Markdown](https://rstudio.github.io/visual-markdown-editing/) feature
+introduced in RStudio 1.4, which – in addition to the visual editor –
+offers a feature whose utility can hardly be overestimated: Pandoc
+Markdown
+[canonicalization](https://en.wikipedia.org/wiki/Canonicalization) (on
+file save[^2]). For example, it allows paragraphs being wrapped
+automatically at the desired line width; or to write a minimal sloppy
+[pipe table](https://pandoc.org/MANUAL.html#extension-pipe_tables) that
+is automatically normalized to a beautifully formatted and actually
+readable one.
+
+The relevant editor options which adjust the canonical Markdown
+generation can either be set
+
+- [per `.Rmd`
+  file](https://rstudio.github.io/visual-markdown-editing/#/markdown?id=writer-options),
+  e.g.
+
+  ``` rmd
+  ---
+  editor_options:
+    markdown:
+      wrap: 160
+      references:
+        location: section
+      canonical: true
+  ---
+  ```
+
+- or [per
+  project](https://rstudio.github.io/visual-markdown-editing/#/options?id=project-options)
+  in the usual `PACKAGE_NAME.Rproj` file, e.g.
+
+  ``` ini
+  MarkdownWrap: Column
+  MarkdownWrapAtColumn: 160
+  MarkdownReferences: Section
+  MarkdownCanonical: Yes
+  ```
+
+  (I’d recommend to set them *per project*, so they apply to the whole
+  package including any `.Rmd` vignettes.)
+
+👍 **All your main R code in a single, well-structured file**
+
+The [traditional
+recommendation](https://style.tidyverse.org/package-files.html) to not
+lose overview of your package’s R source code is to split it over
+multiple files. The popular (and very useful) book *R Packages* [gives
+the following advice](https://r-pkgs.org/code.html#sec-code-organising):
+
+> If it’s very hard to predict which file a function lives in, that
+> suggests it’s time to separate your functions into more files or
+> reconsider how you are naming your functions and/or files.
+
+I think this is just ridiculous.
+
+Instead, I encourage you to keep all your code (as far as possible) in a
+single file `Rmd/PACKAGE_NAME.Rmd` and structure it according to the
+[rules described
+here](https://pkgpurl.rpkg.dev/reference/gen_pkgdown_ref.html#details),
+which even allows the [pkgdown `Reference:`
+index](https://pkgdown.r-lib.org/reference/build_reference.html#reference-index)
+to be automatically in sync with the source code structure. As a result,
+you re-organize (and thus most likely improve) your package’s code
+structure whenever you intend to improve the pkgdown reference – and
+vice versa. For a basic example, see [this very package’s main source
+file](https://gitlab.com/rpkg.dev/pkgpurl/-/blob/master/Rmd/pkgpurl.Rmd?plain=0).
+
+Keeping all code in a single file frees you from the traditional hassle
+of finding a viable (but in the end still unsatisfactory) way to
+organize your R source code across multiple files. Of course, there are
+still good reasons to outsource code into separate files *in certain
+situations*, which nothing is stopping you from doing. You can also
+[exclude whole `.Rmd` files from purling using the `.nopurl.Rmd`
+filename
+suffix](https://pkgpurl.rpkg.dev/reference/purl_rmd.html#-rmd-files-excluded-from-purling).
+
+👍 **Improved overview and navigation**
+
+You can rely on RStudio’s [code
+outline](https://rviews.rstudio.com/2016/11/11/easy-tricks-you-mightve-missed/#code-outline)
+to easily navigate through longer `.Rmd` files. IMHO it provides
+significantly better usability than the [code section
+standard](https://support.posit.co/hc/en-us/articles/200484568-Code-Folding-and-Sections)
+of `.R` files. It makes it easy to find your way around source files
+that are thousands of lines long.
+
+RStudio’s [*Go to File/Function*
+shortcut](https://support.posit.co/hc/en-us/articles/200711853-Keyboard-Shortcuts)
+works the same for `.Rmd` files as it does for `.R` files.
+
+👍 **Improved visual clarity**
+
+If you use RStudio or any other editor with proper R Markdown syntax
+highlighting, you will probably like the gained visual clarity for
+distinguishing individual functions/code parts (by putting them in
+separate R code chunks). This also facilitates creating a meaningful
+document structure (in Markdown) alongside the actual R source code.
+
+👍 **Easily toggle code inclusion**
+
+You can put development-only code which never lands in the generated R
+source files (and thus the R package) in separate code chunks with the
+chunk option
+[`purl = FALSE`](https://yihui.org/knitr/options/#extracting-source-code).
+This turns out to be very convenient in certain situations.
+
+For example, this is a good way to reproducibly document the generation
+of cleaned versions of [exported
+data](https://r-pkgs.org/data.html#sec-data-data) as well as [internal
+data](https://r-pkgs.org/data.html#sec-data-sysdata). This avoids having
+to outsource the code to separate files under `data-raw/` and adding the
+directory to `.Rbuildignore`, i.e. no need to use
+[`usethis::use_data_raw()`](https://usethis.r-lib.org/reference/use_data.html).
+Instead, you just set `purl = FALSE` for the relevant code chunk(s). You
+can (and should) still use
+[`usethis::use_data()`](https://usethis.r-lib.org/reference/use_data.html)
+(optionally with `overwrite = TRUE`) to generate the files under `data/`
+holding external package data as well as the `R/sysdata.rda` file (using
+`internal = TRUE`) holding internal package data.
+
+👍 **Easily toggle styler**
+
+If you use [styler](https://styler.r-lib.org/) to auto-format your code
+globally by [setting
+`knitr::opts_chunk$set(tidy = "styler")`](https://styler.r-lib.org/articles/third-party-integrations.html),
+you can still opt-out on a per-chunk basis by setting
+[`tidy = FALSE`](https://github.com/r-lib/styler/releases/tag/v1.5.1).
+This gives pleasant flexibility.
+
+Unfortunately, there are also a few notable **drawbacks** of the R
+Markdown format:
+
+👎 **Additional workflow step**
+
+The pkgpurl approach on writing R packages in the R Markdown format
+introduces *one* additional step at the very beginning of typical
+package development workflows: Running
+[`pkgpurl::purl_rmd()`](https://pkgpurl.rpkg.dev/reference/purl_rmd.html)
+to generate the `R/*.gen.R` files from the original `Rmd/*.Rmd` sources
+before documenting/checking/testing/building the package. Given
+sufficient user demand, this could probably be integrated into
+[devtools](https://devtools.r-lib.org/)’ functions in the future, so
+that no additional action has to be taken by the user when relying on
+RStudio’s built-in package building infrastructure.
+
+For the time being, it’s recommended to set up a custom shortcut[^3] for
+one or both of
+[`pkgpurl::purl_rmd()`](https://pkgpurl.rpkg.dev/reference/purl_rmd.html)
+and
+[`pkgpurl::process_pkg()`](https://pkgpurl.rpkg.dev/reference/process_pkg.html)
+which are registered as [RStudio
+add-ins](https://rstudio.github.io/rstudioaddins/).
+
+👎 **Unwieldy debugging**
+
+Debugging can be a bit more laborious since line numbers in warning and
+error messages always refer to the generated `R/*.gen.R` file(s), not
+the underlying `Rmd/*.Rmd` source code file(s). If need be, you first
+have to look up the line numbers in the `R/*.gen.R` file(s) to
+understand which function / code parts cause the issue in order to know
+where to fix it in the `Rmd/*.Rmd` source(s).
+
+👎 **Missing roxygen2 auto-completion**
+
+Other than in `.R` files, RStudio currently doesn’t support
+auto-completion of [roxygen2
+tags](https://roxygen2.r-lib.org/articles/rd.html) in `.Rmd` files and
+its Reflow Comment command doesn’t properly work on them. These are
+[known
+issues](https://github.com/rstudio/rstudio/issues/5809#issuecomment-932228146)
+which will hopefully be resolved in the near future.
+
+## Installation
+
+To install the latest development version of pkgpurl, run the following
+in R:
+
+``` r
+
+if (!("remotes" %in% rownames(installed.packages()))) {
+  install.packages(pkgs = "remotes",
+                   repos = "https://cloud.r-project.org/")
+}
+
+remotes::install_gitlab(repo = "rpkg.dev/pkgpurl")
+```
+
+## Usage
+
+The (function) reference is found
+[here](https://pkgpurl.rpkg.dev/dev/reference).
+
+## Package configuration
+
+Some of pkgpurl’s functionality is controlled via package-specific
+global configuration which can either be set via [R
+options](https://rdrr.io/r/base/options.html) or [environment
+variables](https://en.wikipedia.org/wiki/Environment_variable) (the
+former take precedence). This configuration includes:
+
+| **Description** | **R option** | **Environment variable** | **Default value** |
+|:---|:---|:---|:---|
+| Whether or not to add a **copyright notice** at the beginning of the generated `.R` files as recommended by e.g. the [GNU licenses](https://www.gnu.org/licenses/gpl-howto.html). The notice consists of the name and description of the program and the word `Copyright (C)` followed by the release years and the name(s) of the copyright holder(s), or if not specified, the author(s). The year is always the current year. All the other information is extracted from the package’s `DESCRIPTION` file. | `pkgpurl.add_copyright_notice` | `R_PKGPURL_ADD_COPYRIGHT_NOTICE` | `TRUE` |
+| Whether or not to add a **license notice** at the beginning of the generated `.R` files as recommended by e.g. the [GNU licenses](https://www.gnu.org/licenses/gpl-howto.html). The license is determined from the package’s `DESCRIPTION` file and currently only the [`AGPL-3.0-or-later` license](https://spdx.org/licenses/AGPL-3.0-or-later.html) is supported. | `pkgpurl.add_license_notice` | `R_PKGPURL_ADD_LICENSE_NOTICE` | `TRUE` |
+| Whether or not to overwrite [pkgdown](https://pkgdown.r-lib.org/)’s [reference index](https://pkgdown.r-lib.org/reference/build_reference.html#reference-index) in the configuration file `_pkgdown.yml` with an auto-generated one based on the main input file as described in [`pkgpurl::gen_pkgdown_ref()`](https://pkgpurl.rpkg.dev/reference/gen_pkgdown_ref.html). | `pkgpurl.gen_pkgdown_ref` | `R_PKGPURL_GEN_PKGDOWN_REF` | `TRUE` |
+
+## Development
+
+[![Ask
+DeepWiki](https://rpkg.dev/badge_deepwiki.svg)](https://deepwiki.com/rpkg-dev/pkgpurl)
+
+### R Markdown format
+
+This package’s source code is written in the [R
+Markdown](https://rmarkdown.rstudio.com/) file format to facilitate
+practices commonly referred to as [*literate
+programming*](https://en.wikipedia.org/wiki/Literate_programming). It
+allows the actual code to be freely mixed with explanatory and
+supplementary information in expressive Markdown format instead of
+having to rely on [`#`
+comments](https://rstudio.github.io/r-manuals/r-lang/Parser.html#comments)
+only.
+
+All the `.gen.R` suffixed R source code found under
+[`R/`](https://gitlab.com/rpkg.dev/pkgpurl/-/tree/master/R/) is
+generated from the respective R Markdown counterparts under
+[`Rmd/`](https://gitlab.com/rpkg.dev/pkgpurl/-/tree/master/Rmd/) using
+[`pkgpurl::purl_rmd()`](https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.html)[^4].
+Always make changes only to the `.Rmd` files – never the `.R` files –
+and then run
+[`pkgpurl::purl_rmd()`](https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.md)
+to regenerate the R source files.
+
+### Coding style
+
+This package borrows a lot of the
+[Tidyverse](https://www.tidyverse.org/) design philosophies. The R code
+is guided by the [Tidy design principles](https://design.tidyverse.org/)
+and is formatted according to the [Tidyverse Style
+Guide](https://style.tidyverse.org/) (TSG) with the following
+exceptions:
+
+- Line width is limited to **160 characters**, double the [limit
+  proposed by the
+  TSG](https://style.tidyverse.org/syntax.html#long-lines) (80
+  characters is ridiculously little given today’s high-resolution wide
+  screen monitors).
+
+  Furthermore, the preferred style for breaking long lines differs.
+  Instead of wrapping directly after an expression’s opening bracket as
+  [suggested by the
+  TSG](https://style.tidyverse.org/syntax.html#long-lines), we prefer
+  two fewer line breaks and indent subsequent lines within the
+  expression by its opening bracket:
+
+  ``` r
+
+  # TSG proposes this
+  do_something_very_complicated(
+    something = "that",
+    requires = many,
+    arguments = "some of which may be long"
+  )
+
+  # we prefer this
+  do_something_very_complicated(something = "that",
+                                requires = many,
+                                arguments = "some of which may be long")
+  ```
+
+  This results in less vertical and more horizontal spread of the code
+  and better readability in pipes.
+
+- Usage of [magrittr’s compound assignment pipe-operator
+  `%<>%`](https://magrittr.tidyverse.org/reference/compound.html) is
+  desirable[^5].
+
+- Usage of [R’s right-hand assignment operator
+  `->`](https://rdrr.io/r/base/assignOps.html) is not allowed[^6].
+
+- R source code is *not* split over several files as [suggested by the
+  TSG](https://style.tidyverse.org/package-files.html) but instead is
+  (as far as possible) kept in the single file
+  [`Rmd/pkgpurl.Rmd`](https://gitlab.com/rpkg.dev/pkgpurl/-/tree/master/Rmd/pkgpurl.Rmd)
+  which is well-structured thanks to its [Markdown
+  support](#r-markdown-format).
+
+As far as possible, these deviations from the TSG plus some additional
+restrictions are formally specified in
+[`pkgpurl::default_linters`](https://pkgpurl.rpkg.dev/reference/default_linters),
+which is (by default) used in
+[`pkgpurl::lint_rmd()`](https://pkgpurl.rpkg.dev/reference/lint_rmd),
+which in turn is the recommended way to lint this package.
+
+[^1]: Actually, you could write anything you like in any syntax outside
+    of R code chunks as long as you don’t mind the file to be
+    *knittable* (which it doesn’t have to be).
+
+[^2]: It basically sends the (R) Markdown file on a “Pandoc round trip”
+    on every file save.
+
+[^3]: I personally recommend to use the shortcut Ctrl+Shift+V since it’s
+    not occupied yet by any of the predefined [RStudio
+    shortcuts](https://support.posit.co/hc/en-us/articles/200711853-Keyboard-Shortcuts).
+
+[^4]: The very idea to leverage the R Markdown format to author R
+    packages was originally proposed by Yihui Xie. See his excellent
+    [blog post](https://yihui.org/rlp/) for his point of view on the
+    advantages of literate programming techniques and some practical
+    examples. Note that using
+    [`pkgpurl::purl_rmd()`](https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.md)
+    is a less cumbersome alternative to the Makefile approach outlined
+    by him.
+
+[^5]: The TSG [explicitly instructs to avoid this
+    operator](https://style.tidyverse.org/pipes.html#assignment-2) –
+    presumably because it’s relatively unknown and therefore might be
+    confused with the forward pipe operator `%>%` when skimming code
+    only briefly. I don’t consider this to be an actual issue since
+    there aren’t many sensible usage patterns of `%>%` at the beginning
+    of a pipe sequence inside a function – I can only think of creating
+    side effects and relying on [R’s implicit return of the last
+    evaluated expression](https://rdrr.io/r/base/function.html).
+    Therefore – and because I really like the `%<>%` operator – it’s
+    usage is welcome.
+
+[^6]: The TSG [explicitly accepts `->` for assignments at the end of a
+    pipe sequence](https://style.tidyverse.org/pipes.html#assignment-2)
+    while Google’s R Style Guide [considers this bad
+    practice](https://google.github.io/styleguide/Rguide.html#right-hand-assignment)
+    because it “makes it harder to see in code where an object is
+    defined”. I second the latter.
+
+# Package index
+
+## High-level functions
+
+- [`create_pkg()`](https://pkgpurl.rpkg.dev/dev/reference/create_pkg.md)
+  : Create new R Markdown package
+
+- [`process_pkg()`](https://pkgpurl.rpkg.dev/dev/reference/process_pkg.md)
+  : Process R Markdown package from source to installation
+
+- [`load_pkg()`](https://pkgpurl.rpkg.dev/dev/reference/load_pkg.md) :
+  Load R Markdown package
+
+- [`purl_rmd()`](https://pkgpurl.rpkg.dev/dev/reference/purl_rmd.md) :
+
+  Purl `Rmd/*.Rmd` to `R/*.gen.R`
+
+- [`lint_rmd()`](https://pkgpurl.rpkg.dev/dev/reference/lint_rmd.md) :
+  Lint R Markdown package
+
+- [`run_nopurl_rmd()`](https://pkgpurl.rpkg.dev/dev/reference/run_nopurl_rmd.md)
+  **\[experimental\]** :
+
+  Run `*.nopurl.Rmd` files
+
+## Low-level functions
+
+- [`gen_pkgdown_ref()`](https://pkgpurl.rpkg.dev/dev/reference/gen_pkgdown_ref.md)
+  : Generate pkgdown reference index
+
+## Miscellaneous
+
+- [`default_exclusions()`](https://pkgpurl.rpkg.dev/dev/reference/default_exclusions.md)
+  : pkgpurl's default lintr exclusions
+- [`default_linters`](https://pkgpurl.rpkg.dev/dev/reference/default_linters.md)
+  : pkgpurl's default linters
+

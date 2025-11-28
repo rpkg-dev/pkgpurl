@@ -108,10 +108,8 @@ assemble_license_notice <- function(path) {
   if (desc::desc_has_fields(keys = "License",
                             file = path)) {
     
-    license <- pal::desc_get_field_safe(key = "License",
-                                        file = path)
-    
-    if (grepl(x = license,
+    if (grepl(x = pal::desc_get_field_safe(key = "License",
+                                           file = path),
               pattern = "^\\s*(AGPL ?\\(>= ?3\\)|AGPL-3\\.0-or-later)\\s*$")) {
       
       notice <- c(paste0("This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as ",
@@ -468,7 +466,7 @@ create_pkg <- function(name,
   
   usethis::use_description(fields = list(Package = name,
                                          URL = paste0("https://gitlab.com/rpkg.dev/", name),
-                                         BugReports = paste0("https://gitlab.com/rpkg.dev/", name, "/-/issues")))
+                                         BugReports = paste0("https://gitlab.com/rpkg.dev/", name, "/-/issues"))) # nolint: absolute_path_linter
   invisible(path)
 }
 
@@ -597,7 +595,6 @@ load_pkg <- function(path = ".",
                      add_copyright_notice = FALSE,
                      add_license_notice = FALSE,
                      gen_pkgdown_ref = FALSE,
-                     reset = TRUE,
                      recompile = FALSE,
                      export_all = TRUE,
                      helpers = TRUE,
@@ -615,7 +612,6 @@ load_pkg <- function(path = ".",
   
   # load pkg
   devtools::load_all(path = path,
-                     reset = reset,
                      recompile = recompile,
                      export_all = export_all,
                      helpers = helpers,
@@ -735,11 +731,11 @@ purl_rmd <- function(path = ".",
       gen_pkgdown_ref <- FALSE
     }
     
-    rmd_files %>% purrr::walk(process_rmd,
-                              path_pkg = path,
-                              copyright_notice = copyright_notice,
-                              license_notice = license_notice)
-    
+    purrr::walk(rmd_files,
+                \(x) process_rmd(path_file = x,
+                                 path_pkg = path,
+                                 copyright_notice = copyright_notice,
+                                 license_notice = license_notice))
     if (gen_pkgdown_ref) {
       
       ref <-
@@ -1219,10 +1215,11 @@ gen_pkgdown_ref <- function(rmd,
 
 #' pkgpurl's default lintr exclusions
 #'
-#' Opinionated set of files and folders to be excluded from linting, relative to the package path. To be used with [lint_rmd()], [lintr::lint_dir()] or
-#' [lintr::lint_package()].
+#' Returns an opinionated set of files and folders to be excluded from linting, relative to the root of the package directory. To be used with [lint_rmd()],
+#' [lintr::lint_dir()] or [lintr::lint_package()].
 #'
-#' @param excl_vignettes Whether or not to exclude all `.Rmd` files under `vignettes/`. A logical scalar.
+#' @param excl_inst Whether or not to exclude all files under `inst/`. A logical scalar.
+#' @param excl_vignettes Whether or not to exclude all files under `vignettes/`. A logical scalar.
 #'
 #' @return A named list of [lintr::linters].
 #' @seealso [`default_linters`][default_linters] and [lint_rmd()]
@@ -1230,29 +1227,23 @@ gen_pkgdown_ref <- function(rmd,
 #'
 #' @examples
 #' pkgpurl::default_exclusions()
-default_exclusions <- function(excl_vignettes = TRUE) {
+default_exclusions <- function(excl_inst = TRUE,
+                               excl_vignettes = TRUE) {
   
+  checkmate::assert_flag(excl_inst)
   checkmate::assert_flag(excl_vignettes)
   
   c("docs",
     "input",
+    "inst"[excl_inst],
     "output",
+    "packrat",
     "pkgdown",
     "renv",
-    "packrat",
     "tests",
-    list.files(path = "R",
-               recursive = TRUE,
-               full.names = TRUE,
-               pattern = "\\.gen\\.R$"),
-    list.files(path = "Rmd",
-               recursive = TRUE,
-               full.names = TRUE,
-               pattern = "\\.nopurl\\.Rmd$"),
-    if (excl_vignettes) list.files(path = "vignettes",
-                                   recursive = TRUE,
-                                   full.names = TRUE,
-                                   pattern = "\\.Rmd$"),
+    "vignettes"[excl_vignettes],
+    "R/*.gen.R",
+    "Rmd/*.nopurl.Rmd",
     "README.Rmd")
 }
 
@@ -1268,14 +1259,3 @@ default_exclusions <- function(excl_vignettes = TRUE) {
 #' @examples
 #' names(pkgpurl::default_linters)
 "default_linters"
-
-#' `r pkgsnip::title_lbl("funky_config", pkg = "pkgpurl")`
-#'
-#' `r pkgsnip::description_lbl("funky_config", pkg = "pkgpurl")`
-#'
-#' @format `r pkgsnip::return_lbl("tibble_cols", cols = colnames(funky_config))`
-#' @export
-#'
-#' @examples
-#' pkgpurl::funky_config
-"funky_config"

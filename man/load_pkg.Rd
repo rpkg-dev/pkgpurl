@@ -9,7 +9,6 @@ load_pkg(
   add_copyright_notice = FALSE,
   add_license_notice = FALSE,
   gen_pkgdown_ref = FALSE,
-  reset = TRUE,
   recompile = FALSE,
   export_all = TRUE,
   helpers = TRUE,
@@ -26,15 +25,9 @@ load_pkg(
 
 \item{gen_pkgdown_ref}{Whether or not to overwrite \href{https://pkgdown.r-lib.org/}{pkgdown}'s \href{https://pkgdown.r-lib.org/reference/build_reference.html#reference-index}{reference index} in the configuration file \verb{_pkgdown.yml} with an auto-generated one based on the main input file as described in \code{\link[=gen_pkgdown_ref]{gen_pkgdown_ref()}}. A logical scalar. Only applies if \code{path} \link[pal:is_pkg_dir]{is actually an R package directory}, \link[pal:is_pkgdown_dir]{pkgdown is set up} and a \link[=main_rmd]{main R Markdown file} exists.}
 
-\item{reset}{clear package environment and reset file cache before loading
-any pieces of the package. This largely equivalent to running
-\code{\link[pkgload:unload]{unload()}}, however the old namespaces are not completely removed and no
-\code{.onUnload()} hooks are called. Use \code{reset = FALSE} may be faster for
-large code bases, but is a significantly less accurate approximation.}
-
 \item{recompile}{DEPRECATED. force a recompile of DLL from source code, if
 present. This is equivalent to running \code{\link[pkgbuild:clean_dll]{pkgbuild::clean_dll()}} before
-\code{load_all}}
+\code{load_all()}}
 
 \item{export_all}{If \code{TRUE} (the default), export all objects.
 If \code{FALSE}, export only the objects that are listed as exports

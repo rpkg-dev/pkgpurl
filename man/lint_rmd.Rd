@@ -32,12 +32,12 @@ If \code{FALSE}, use the full absolute path.}
 \item{pattern}{pattern for files, by default it will take files with any of the extensions
 .R, .Rmd, .qmd, .Rnw, .Rhtml, .Rrst, .Rtex, .Rtxt allowing for lowercase r (.r, ...).}
 
-\item{parse_settings}{Logical, default \code{TRUE}. Whether to try and parse the \link[lintr:read_settings]{settings}. Otherwise,
-the \code{\link[lintr:default_settings]{default_settings()}} are used.}
+\item{parse_settings}{Logical. Whether to try and parse the \link[lintr:read_settings]{settings}. Otherwise, the
+\code{\link[lintr:default_settings]{default_settings()}} are used. \code{TRUE} by default when linting files, as opposed to \verb{text=}.}
 
-\item{show_progress}{Logical controlling whether to show linting progress with a simple text
-progress bar \emph{via} \code{\link[utils:txtProgressBar]{utils::txtProgressBar()}}. The default behavior is to show progress in
-\code{\link[=interactive]{interactive()}} sessions not running a testthat suite.}
+\item{show_progress}{Logical controlling whether to show linting progress with
+\code{\link[cli:cli_progress_along]{cli::cli_progress_along()}}. The default behavior is to show progress in \code{\link[=interactive]{interactive()}} sessions
+not running a testthat suite.}
 }
 \value{
 An object of class \code{c("lints", "list")}, each element of which is a \code{"list"} object.

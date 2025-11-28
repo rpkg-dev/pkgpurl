@@ -88,17 +88,15 @@ Loads the package using devtools::load_all().
 
 
 <dt id="arg-reset">reset<a class="anchor" aria-label="anchor" href="#arg-reset"></a></dt>
-<dd><p>clear package environment and reset file cache before loading
-any pieces of the package. This largely equivalent to running
-<code><a href="https://pkgload.r-lib.org/reference/unload.html" class="external-link">unload()</a></code>, however the old namespaces are not completely removed and no
-<code>.onUnload()</code> hooks are called. Use <code>reset = FALSE</code> may be faster for
-large code bases, but is a significantly less accurate approximation.</p></dd>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> This is no longer supported
+because preserving the namespace requires unlocking its environment, which
+is no longer possible in recent versions of R.</p></dd>
 
 
 <dt id="arg-recompile">recompile<a class="anchor" aria-label="anchor" href="#arg-recompile"></a></dt>
 <dd><p>DEPRECATED. force a recompile of DLL from source code, if
 present. This is equivalent to running <code><a href="https://pkgbuild.r-lib.org/reference/clean_dll.html" class="external-link">pkgbuild::clean_dll()</a></code> before
-<code>load_all</code></p></dd>
+<code>load_all()</code></p></dd>
 
 
 <dt id="arg-export-all">export_all<a class="anchor" aria-label="anchor" href="#arg-export-all"></a></dt>
@@ -126,10 +124,10 @@ in the NAMESPACE file.</p></dd>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other high-level functions:
-<code><a href="lint_rmd.html">lint_rmd</a>()</code>,
-<code><a href="process_pkg.html">process_pkg</a>()</code>,
-<code><a href="purl_rmd.html">purl_rmd</a>()</code>,
-<code><a href="run_nopurl_rmd.html">run_nopurl_rmd</a>()</code></p></div>
+<code><a href="lint_rmd.html">lint_rmd()</a></code>,
+<code><a href="process_pkg.html">process_pkg()</a></code>,
+<code><a href="purl_rmd.html">purl_rmd()</a></code>,
+<code><a href="run_nopurl_rmd.html">run_nopurl_rmd()</a></code></p></div>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -141,7 +139,7 @@ in the NAMESPACE file.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
