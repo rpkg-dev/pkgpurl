@@ -1381,10 +1381,11 @@ gen_pkgdown_ref <- function(rmd,
 ```{r}
 #' pkgpurl's default lintr exclusions
 #'
-#' Opinionated set of files and folders to be excluded from linting, relative to the package path. To be used with [lint_rmd()], [lintr::lint_dir()] or
-#' [lintr::lint_package()].
+#' Returns an opinionated set of files and folders to be excluded from linting, relative to the root of the package directory. To be used with [lint_rmd()],
+#' [lintr::lint_dir()] or [lintr::lint_package()].
 #'
-#' @param excl_vignettes Whether or not to exclude all `.Rmd` files under `vignettes/`. A logical scalar.
+#' @param excl_inst Whether or not to exclude all files under `inst/`. A logical scalar.
+#' @param excl_vignettes Whether or not to exclude all files under `vignettes/`. A logical scalar.
 #'
 #' @return A named list of [lintr::linters].
 #' @seealso [`default_linters`][default_linters] and [lint_rmd()]
@@ -1392,29 +1393,23 @@ gen_pkgdown_ref <- function(rmd,
 #'
 #' @examples
 #' pkgpurl::default_exclusions()
-default_exclusions <- function(excl_vignettes = TRUE) {
+default_exclusions <- function(excl_inst = TRUE,
+                               excl_vignettes = TRUE) {
   
+  checkmate::assert_flag(excl_inst)
   checkmate::assert_flag(excl_vignettes)
   
   c("docs",
     "input",
+    "inst"[excl_inst],
     "output",
+    "packrat",
     "pkgdown",
     "renv",
-    "packrat",
     "tests",
-    list.files(path = "R",
-               recursive = TRUE,
-               full.names = TRUE,
-               pattern = "\\.gen\\.R$"),
-    list.files(path = "Rmd",
-               recursive = TRUE,
-               full.names = TRUE,
-               pattern = "\\.nopurl\\.Rmd$"),
-    if (excl_vignettes) list.files(path = "vignettes",
-                                   recursive = TRUE,
-                                   full.names = TRUE,
-                                   pattern = "\\.Rmd$"),
+    "vignettes"[excl_vignettes],
+    "R/*.gen.R",
+    "Rmd/*.nopurl.Rmd",
     "README.Rmd")
 }
 ```
