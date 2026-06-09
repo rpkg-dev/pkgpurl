@@ -51,29 +51,29 @@ beautifully formatted and actually readable one.
 
 The relevant editor options which adjust the canonical Markdown generation can either be set
 
--   [per `.Rmd` file](https://rstudio.github.io/visual-markdown-editing/#/markdown?id=writer-options), e.g.
+- [per `.Rmd` file](https://rstudio.github.io/visual-markdown-editing/#/markdown?id=writer-options), e.g.
 
-    ``` rmd
-    ---
-    editor_options:
-      markdown:
-        wrap: 160
-        references:
-          location: section
-        canonical: true
-    ---
-    ```
+  ``` rmd
+  ---
+  editor_options:
+    markdown:
+      wrap: 160
+      references:
+        location: section
+      canonical: true
+  ---
+  ```
 
--   or [per project](https://rstudio.github.io/visual-markdown-editing/#/options?id=project-options) in the usual `PACKAGE_NAME.Rproj` file, e.g.
+- or [per project](https://rstudio.github.io/visual-markdown-editing/#/options?id=project-options) in the usual `PACKAGE_NAME.Rproj` file, e.g.
 
-    ``` ini
-    MarkdownWrap: Column
-    MarkdownWrapAtColumn: 160
-    MarkdownReferences: Section
-    MarkdownCanonical: Yes
-    ```
+  ``` ini
+  MarkdownWrap: Column
+  MarkdownWrapAtColumn: 160
+  MarkdownReferences: Section
+  MarkdownCanonical: Yes
+  ```
 
-    (I'd recommend to set them *per project*, so they apply to the whole package including any `.Rmd` vignettes.)
+  (I'd recommend to set them *per project*, so they apply to the whole package including any `.Rmd` vignettes.)
 
 </details>
 
