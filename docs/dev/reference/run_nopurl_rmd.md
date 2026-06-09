@@ -82,42 +82,40 @@ run_nopurl_rmd(
 
 - dependencies:
 
-  Which dependencies do you want to check? Can be a character vector
-  (selecting from "Depends", "Imports", "LinkingTo", "Suggests", or
-  "Enhances"), or a logical vector.
+  What kinds of dependencies to install. Most commonly one of the
+  following values:
 
-  `TRUE` is shorthand for "Depends", "Imports", "LinkingTo" and
-  "Suggests". `NA` is shorthand for "Depends", "Imports" and "LinkingTo"
-  and is the default. `FALSE` is shorthand for no dependencies (i.e.
-  just check this package, not its dependencies).
+  - `NA`: only required (hard) dependencies,
 
-  The value "soft" means the same as `TRUE`, "hard" means the same as
-  `NA`.
+  - `TRUE`: required dependencies plus optional and development
+    dependencies,
 
-  You can also specify dependencies from one or more additional fields,
-  common ones include:
-
-  - Config/Needs/website - for dependencies used in building the pkgdown
-    site.
-
-  - Config/Needs/coverage for dependencies used in calculating test
-    coverage.
+  - `FALSE`: do not install any dependencies. (You might end up with a
+    non-working package, and/or the installation might fail.) See
+    [Package dependency
+    types](https://pak.r-lib.org/reference/package-dependency-types.html)
+    for other possible values and more information about package
+    dependencies.
 
 - upgrade:
 
-  Should package dependencies be upgraded? One of "default", "ask",
-  "always", or "never". "default" respects the value of the
-  `R_REMOTES_UPGRADE` environment variable if set, and falls back to
-  "ask" if unset. "ask" prompts the user for which out of date packages
-  to upgrade. For non-interactive sessions "ask" is equivalent to
-  "always". `TRUE` and `FALSE` are also accepted and correspond to
-  "always" and "never" respectively.
+  When `FALSE`, the default, pak does the minimum amount of work to give
+  you the latest version(s) of `pkg`. It will only upgrade dependent
+  packages if `pkg`, or one of their dependencies explicitly require a
+  higher version than what you currently have. It will also prefer a
+  binary package over to source package, even if the binary package is
+  older.
+
+  When `upgrade = TRUE`, pak will ensure that you have the latest
+  version(s) of `pkg` and all their dependencies.
 
 - keep_source:
 
   If `TRUE` will keep the srcrefs from an installed package. This is
-  useful for debugging (especially inside of RStudio). It defaults to
-  the option `"keep.source.pkgs"`.
+  useful for debugging (especially inside of RStudio or Positron).
+  Defaults to `getOption("keep.source.pkgs") || !build`, since srcrefs
+  are most useful when the package is installed from its source
+  directory, i.e. when `build = FALSE`.
 
 ## Value
 

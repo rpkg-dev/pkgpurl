@@ -10,14 +10,14 @@
 Source:
 [`DESCRIPTION`](https://gitlab.com/rpkg.dev/pkgpurl/blob/HEAD/DESCRIPTION)
 
-Brüggemann S (2025). *pkgpurl: Facilitate Authoring R Packages in the R
+Brüggemann S (2026). *pkgpurl: Facilitate Authoring R Packages in the R
 Markdown File Format*. R package version 0.0.9015,
 <https://pkgpurl.rpkg.dev>.
 
     @Manual{,
       title = {pkgpurl: Facilitate Authoring R Packages in the R Markdown File Format},
       author = {Salim Brüggemann},
-      year = {2025},
+      year = {2026},
       note = {R package version 0.0.9015},
       url = {https://pkgpurl.rpkg.dev},
     }

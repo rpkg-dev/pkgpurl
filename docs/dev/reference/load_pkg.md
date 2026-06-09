@@ -17,7 +17,6 @@ load_pkg(
   add_copyright_notice = FALSE,
   add_license_notice = FALSE,
   gen_pkgdown_ref = FALSE,
-  reset = TRUE,
   recompile = FALSE,
   export_all = TRUE,
   helpers = TRUE,
@@ -69,12 +68,6 @@ load_pkg(
   is set up](https://pal.rpkg.dev/reference/is_pkgdown_dir.html) and a
   [main R Markdown
   file](https://pkgpurl.rpkg.dev/dev/reference/main_rmd.md) exists.
-
-- reset:
-
-  **\[deprecated\]** This is no longer supported because preserving the
-  namespace requires unlocking its environment, which is no longer
-  possible in recent versions of R.
 
 - recompile:
 

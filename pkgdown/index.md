@@ -123,14 +123,6 @@ For the time being, it's recommended to set up a custom shortcut[^3] for one or 
 Debugging can be a bit more laborious since line numbers in warning and error messages always refer to the generated `R/*.gen.R` file(s), not the underlying `Rmd/*.Rmd` source code file(s). If need be, you first have to look up the line numbers in the `R/*.gen.R` file(s) to understand which function / code parts cause the issue in order to know where to fix it in the `Rmd/*.Rmd` source(s).
 
 </details>
-<details>
-<summary>
-👎 <strong>Missing roxygen2 auto-completion</strong>
-</summary>
-
-Other than in `.R` files, RStudio currently doesn't support auto-completion of [roxygen2 tags](https://roxygen2.r-lib.org/articles/rd.html) in `.Rmd` files and its <kbd>Reflow Comment</kbd> command doesn't properly work on them. These are [known issues](https://github.com/rstudio/rstudio/issues/5809#issuecomment-932228146) which will hopefully be resolved in the near future.
-
-</details>
 
 ## Installation
 

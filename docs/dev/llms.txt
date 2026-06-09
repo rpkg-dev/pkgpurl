@@ -16,7 +16,7 @@ definitively worth reading. This package’s function
 [`pkgpurl::purl_rmd()`](https://pkgpurl.rpkg.dev/reference/purl_rmd.html)
 is just a less cumbersome alternative to the Makefile approach outlined
 by him that offers additional convenience features like [auto-generating
-the pkgdown reference index](https://pkgpurl.rpkg.dev/reference/) or
+the pkgdown `Reference:` index](https://pkgpurl.rpkg.dev/reference/) or
 adding
 [copyright](https://pkgpurl.rpkg.dev/reference/purl_rmd.html#arg-add-copyright-notice)
 or
@@ -214,16 +214,6 @@ the underlying `Rmd/*.Rmd` source code file(s). If need be, you first
 have to look up the line numbers in the `R/*.gen.R` file(s) to
 understand which function / code parts cause the issue in order to know
 where to fix it in the `Rmd/*.Rmd` source(s).
-
-👎 **Missing roxygen2 auto-completion**
-
-Other than in `.R` files, RStudio currently doesn’t support
-auto-completion of [roxygen2
-tags](https://roxygen2.r-lib.org/articles/rd.html) in `.Rmd` files and
-its Reflow Comment command doesn’t properly work on them. These are
-[known
-issues](https://github.com/rstudio/rstudio/issues/5809#issuecomment-932228146)
-which will hopefully be resolved in the near future.
 
 ## Installation
 

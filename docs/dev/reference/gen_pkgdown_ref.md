@@ -169,7 +169,7 @@ When fed to `gen_pkgdown_ref()`, the following R Markdown content...
     ```
 
 ...yields this pkgdown index (converted [to
-YAML](https://rdrr.io/pkg/yaml/man/as.yaml.html)):
+YAML](https://yaml.r-lib.org/reference/as.yaml.html)):
 
     reference:
     - contents: main_fn

@@ -55,34 +55,33 @@ which defaults to \code{c("collate", "namespace", "rd")}.}
 arguments to be passed to \verb{R CMD INSTALL}. This defaults to the
 value of the option \code{"devtools.install.args"}.}
 
-\item{dependencies}{Which dependencies do you want to check?
-Can be a character vector (selecting from "Depends", "Imports",
-"LinkingTo", "Suggests", or "Enhances"), or a logical vector.
-
-\code{TRUE} is shorthand for "Depends", "Imports", "LinkingTo" and
-"Suggests". \code{NA} is shorthand for "Depends", "Imports" and "LinkingTo"
-and is the default. \code{FALSE} is shorthand for no dependencies (i.e.
-just check this package, not its dependencies).
-
-The value "soft" means the same as \code{TRUE}, "hard" means the same as \code{NA}.
-
-You can also specify dependencies from one or more additional fields,
-common ones include:
+\item{dependencies}{What kinds of dependencies to install. Most commonly
+one of the following values:
 \itemize{
-\item Config/Needs/website - for dependencies used in building the pkgdown site.
-\item Config/Needs/coverage for dependencies used in calculating test coverage.
+\item \code{NA}: only required (hard) dependencies,
+\item \code{TRUE}: required dependencies plus optional and development
+dependencies,
+\item \code{FALSE}: do not install any dependencies. (You might end up with a
+non-working package, and/or the installation might fail.)
+See \link[pak]{Package dependency types} for other possible values and more
+information about package dependencies.
 }}
 
-\item{upgrade}{Should package dependencies be upgraded? One of "default", "ask", "always", or "never". "default"
-respects the value of the \code{R_REMOTES_UPGRADE} environment variable if set,
-and falls back to "ask" if unset. "ask" prompts the user for which out of
-date packages to upgrade. For non-interactive sessions "ask" is equivalent
-to "always". \code{TRUE} and \code{FALSE} are also accepted and correspond to
-"always" and "never" respectively.}
+\item{upgrade}{When \code{FALSE}, the default, pak does the minimum amount
+of work to give you the latest version(s) of \code{pkg}. It will only upgrade
+dependent packages if \code{pkg}, or one of their dependencies explicitly
+require a higher version than what you currently have. It will also
+prefer a binary package over to source package, even if the binary
+package is older.
+
+When \code{upgrade = TRUE}, pak will ensure that you have the latest
+version(s) of \code{pkg} and all their dependencies.}
 
 \item{keep_source}{If \code{TRUE} will keep the srcrefs from an installed
-package. This is useful for debugging (especially inside of RStudio).
-It defaults to the option \code{"keep.source.pkgs"}.}
+package. This is useful for debugging (especially inside of RStudio or
+Positron). Defaults to \code{getOption("keep.source.pkgs") || !build},
+since srcrefs are most useful when the package is installed from its
+source directory, i.e. when \code{build = FALSE}.}
 }
 \value{
 \code{path}, invisibly.

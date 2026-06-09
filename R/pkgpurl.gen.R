@@ -2,7 +2,7 @@
 # See `README.md#r-markdown-format` for more information on the literate programming approach used applying the R Markdown format.
 
 # pkgpurl: Facilitate Authoring R Packages in the R Markdown File Format
-# Copyright (C) 2025 Salim Brüggemann
+# Copyright (C) 2026 Salim Brüggemann
 # 
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or any later version.
