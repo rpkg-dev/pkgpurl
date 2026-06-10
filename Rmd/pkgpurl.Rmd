@@ -401,12 +401,12 @@ rmd_files <- function(path) {
 #' @param path Path to the new package directory.
 #' @param incl_roxygen2_meta Whether or not to create a `man/roxygen/meta.R` file that i.a. stores the metadata for [roxygen2's `@family`
 #'   tags](https://roxygen2.r-lib.org/articles/index-crossref.html#family).
-#' @param incl_reexports Whether or not to create an `R/reexports.R` file prefilled with an opinionated set of magrittr and rland operator exports.
+#' @param incl_reexports Whether or not to create an `R/reexports.R` file prefilled with an opinionated set of magrittr and rlang operator exports.
 #' @param incl_sysdata_rmd Whether or not to create an `Rmd/sysdata.nopurl.Rmd` stub file.
 #' @param incl_data_rmd Whether or not to create an `Rmd/data.nopurl.Rmd` stub file.
 #' @param incl_asciicasts_rmd Whether or not to create an `Rmd/asciicasts.nopurl.Rmd` stub file.
 #' @param incl_pkgdown_config Whether or not to create a minimal `pkgdown/_pkgdown.yml` configuration file.
-#' @param incl_ripgrep_config Whether or not to create a ripgrep ignore file `.rgignore`.
+#' @param incl_ripgrep_config Whether or not to create a custom `.rgignore` [ripgrep](https://github.com/burntsushi/ripgrep) ignore file.
 #' @param incl_ack_config Whether or not to create an [`.ackrc` configuration file](https://beyondgrep.com/documentation/).
 #' @param incl_air_config Whether or not to create an [`air.toml` configuration file](https://posit-dev.github.io/air/configuration.html). Note that air is not
 #'   of much use yet for R Markdown packages.
