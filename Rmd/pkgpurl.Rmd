@@ -303,7 +303,7 @@ Helper function purling a single file `Rmd/*.Rmd` to `R/*.gen.R`.
 
 NOTES:
 
--   Subdirs under `R/` are not allowed, so we flatten output path hierarchy, c.f. <https://r-pkgs.org/code.html#fn1> (footnote 1).
+- Subdirs under `R/` are not allowed, so we flatten output path hierarchy, c.f. <https://r-pkgs.org/code.html#fn1> (footnote 1).
 
 ```{r}
 process_rmd <- function(path_file,
@@ -553,13 +553,13 @@ create_pkg <- function(name,
 
 TODO:
 
--   Once it's possible to [interact with RStudio's *Build* pane via pkg rstudioapi](https://github.com/rstudio/rstudioapi/issues/17), we should test printing
-    `process_pkg()`'s output to it instead of the console.
+- Once it's possible to [interact with RStudio's *Build* pane via pkg rstudioapi](https://github.com/rstudio/rstudioapi/issues/17), we should test printing
+  `process_pkg()`'s output to it instead of the console.
 
 NOTES:
 
--   There's a [longstanding bug in R](https://bugs.r-project.org/show_bug.cgi?id=16644) that causes `process_pkg(use_rstudio_api = FALSE)` to fail with an error
-    "lazy-load database ... is corrupt".
+- There's a [longstanding bug in R](https://bugs.r-project.org/show_bug.cgi?id=16644) that causes `process_pkg(use_rstudio_api = FALSE)` to fail with an error
+  "lazy-load database ... is corrupt".
 
 ```{r}
 #' Process R Markdown package from source to installation
@@ -721,34 +721,34 @@ load_pkg <- function(path = ".",
 
 TODO:
 
--   Support more OSS licenses in param `add_license_notice` / fn `assemble_license_notice()`. Default license headers would have to be systematically fetched
-    from somewhere for this!
+- Support more OSS licenses in param `add_license_notice` / fn `assemble_license_notice()`. Default license headers would have to be systematically fetched from
+  somewhere for this!
 
-    Notable stuff:
+  Notable stuff:
 
-    -   There's an [Open Source License API by the OSI](https://github.com/OpenSourceOrg/api/blob/master/doc/endpoints.md); maybe create an API wrapper pkg for
-        R? (unfortunately, default license headers don't seem to be included in the data returned by the API (yet))
+  - There's an [Open Source License API by the OSI](https://github.com/OpenSourceOrg/api/blob/master/doc/endpoints.md); maybe create an API wrapper pkg for R?
+    (unfortunately, default license headers don't seem to be included in the data returned by the API (yet))
 
-    -   There's the [Software Package Data Exchange (SPDX)](https://spdx.org/licenses/) project by the Linux Foundation systematically offering license
-        information in a standardized format and defining unique license identifiers (SPDX IDs); an individual license page can be accessed under the URL
-        `https://spdx.org/licenses/[SPDX-ID].html`; it seems to always include a section *Standard License Header* 🎉 (which just says "There is no standard
-        license header for the license" if there's none).
+  - There's the [Software Package Data Exchange (SPDX)](https://spdx.org/licenses/) project by the Linux Foundation systematically offering license information
+    in a standardized format and defining unique license identifiers (SPDX IDs); an individual license page can be accessed under the URL
+    `https://spdx.org/licenses/[SPDX-ID].html`; it seems to always include a section *Standard License Header* 🎉 (which just says "There is no standard license
+    header for the license" if there's none).
 
-        Maybe we should add the [`SPDX-License-Identifier` and `SPDX-FileCopyrightText` tags](https://reuse.software/tutorial/#step-2) to the generated R files
-        besides the license header and instead of the current copyright notice?
+    Maybe we should add the [`SPDX-License-Identifier` and `SPDX-FileCopyrightText` tags](https://reuse.software/tutorial/#step-2) to the generated R files
+    besides the license header and instead of the current copyright notice?
 
-    Viable solution:
+  Viable solution:
 
-    1.  Determine a package license's SPDX identifier. If the OSI API would offer any (fuzzy) search endpoint, we could feed the license info in the pkg
-        DESCRIPTION to the OSI API and query the SPDX identifier. But the OSI API doesn't seem to ... so at least we need to implement a mapping from the
-        [license identifiers officially supported by R](https://cran.rstudio.com/doc/manuals/r-devel/R-exts.html#Licensing) (like the "standard" short
-        specifications) to the SPDX identifiers!
+  1.  Determine a package license's SPDX identifier. If the OSI API would offer any (fuzzy) search endpoint, we could feed the license info in the pkg
+      DESCRIPTION to the OSI API and query the SPDX identifier. But the OSI API doesn't seem to ... so at least we need to implement a mapping from the [license
+      identifiers officially supported by R](https://cran.rstudio.com/doc/manuals/r-devel/R-exts.html#Licensing) (like the "standard" short specifications) to
+      the SPDX identifiers!
 
-    2.  Based on the SPDX identifier, scrape the SPDX page for the *Standard License Header* section.
+  2.  Based on the SPDX identifier, scrape the SPDX page for the *Standard License Header* section.
 
 NOTES:
 
--   The basic workflow is heavily inspired by a pertinent makefile from Yihui Xie found [here](https://yihui.org/rlp/#from-rmd-to-r).
+- The basic workflow is heavily inspired by a pertinent makefile from Yihui Xie found [here](https://yihui.org/rlp/#from-rmd-to-r).
 
 ```{r}
 #' Purl `Rmd/*.Rmd` to `R/*.gen.R`
@@ -898,7 +898,7 @@ purl_rmd <- function(path = ".",
 
 NOTES:
 
--   We only list deviations from lintr's defaults in param `linters`. To list all of lintr's default linters, use: `names(lintr::default_linters)`.
+- We only list deviations from lintr's defaults in param `linters`. To list all of lintr's default linters, use: `names(lintr::default_linters)`.
 
 ```{r}
 #' Lint R Markdown package
@@ -1058,12 +1058,12 @@ run_nopurl_rmd <- function(path = ".",
 
 NOTES:
 
--   The pkgdown reference supports a max. of 2 hierarchy levels.
+- The pkgdown reference supports a max. of 2 hierarchy levels.
 
--   Use `desc: |` YAML syntax to preserve linebreaks and thus allow multi-paragraph descriptions.
+- Use `desc: |` YAML syntax to preserve linebreaks and thus allow multi-paragraph descriptions.
 
--   For a sophisticated pkgdown reference example, see the one of [ggplot2](https://ggplot2.tidyverse.org/reference/index.html) (and compare with its
-    [source](https://github.com/tidyverse/ggplot2/blob/master/_pkgdown.yml)).
+- For a sophisticated pkgdown reference example, see the one of [ggplot2](https://ggplot2.tidyverse.org/reference/index.html) (and compare with its
+  [source](https://github.com/tidyverse/ggplot2/blob/master/_pkgdown.yml)).
 
 ```{r}
 #' Generate pkgdown reference index
