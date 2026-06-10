@@ -52,7 +52,7 @@ create_pkg(
 - incl_reexports:
 
   Whether or not to create an `R/reexports.R` file prefilled with an
-  opinionated set of magrittr and rland operator exports.
+  opinionated set of magrittr and rlang operator exports.
 
 - incl_sysdata_rmd:
 
@@ -73,7 +73,8 @@ create_pkg(
 
 - incl_ripgrep_config:
 
-  Whether or not to create a ripgrep ignore file `.rgignore`.
+  Whether or not to create a custom `.rgignore`
+  [ripgrep](https://github.com/burntsushi/ripgrep) ignore file.
 
 - incl_ack_config:
 

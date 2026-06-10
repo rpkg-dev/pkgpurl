@@ -28,7 +28,7 @@ create_pkg(
 
 \item{incl_roxygen2_meta}{Whether or not to create a \code{man/roxygen/meta.R} file that i.a. stores the metadata for \href{https://roxygen2.r-lib.org/articles/index-crossref.html#family}{roxygen2's \verb{@family} tags}.}
 
-\item{incl_reexports}{Whether or not to create an \code{R/reexports.R} file prefilled with an opinionated set of magrittr and rland operator exports.}
+\item{incl_reexports}{Whether or not to create an \code{R/reexports.R} file prefilled with an opinionated set of magrittr and rlang operator exports.}
 
 \item{incl_sysdata_rmd}{Whether or not to create an \code{Rmd/sysdata.nopurl.Rmd} stub file.}
 
@@ -38,7 +38,7 @@ create_pkg(
 
 \item{incl_pkgdown_config}{Whether or not to create a minimal \verb{pkgdown/_pkgdown.yml} configuration file.}
 
-\item{incl_ripgrep_config}{Whether or not to create a ripgrep ignore file \code{.rgignore}.}
+\item{incl_ripgrep_config}{Whether or not to create a custom \code{.rgignore} \href{https://github.com/burntsushi/ripgrep}{ripgrep} ignore file.}
 
 \item{incl_ack_config}{Whether or not to create an \href{https://beyondgrep.com/documentation/}{\code{.ackrc} configuration file}.}
 
