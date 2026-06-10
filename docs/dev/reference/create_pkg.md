@@ -52,7 +52,10 @@ create_pkg(
 - incl_reexports:
 
   Whether or not to create an `R/reexports.R` file prefilled with an
-  opinionated set of magrittr and rlang operator exports.
+  opinionated set of
+  [magrittr](https://magrittr.tidyverse.org/reference/index.html#pipes)
+  and [rlang](https://rlang.r-lib.org/reference/index.html#operators)
+  operator exports.
 
 - incl_sysdata_rmd:
 

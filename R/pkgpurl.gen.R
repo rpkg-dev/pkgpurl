@@ -311,19 +311,18 @@ rmd_files <- function(path) {
 
 #' Create new R Markdown package
 #'
-#' @description
-#' Populates the directory specified via `path` with all the necessary files for a new R Markdown package.
-#' 
-#' The `DESCRIPTION` file is created using
-#' [usethis::use_description()] and all fields except `Package`, `URL` and `BugReports` are sourced from the [`usethis.description` \R
-#' option](https://usethis.r-lib.org/reference/use_description.html) if defined.
+#' @description Populates the directory specified via `path` with all the necessary files for a new R Markdown package.
+#'
+#' The `DESCRIPTION` file is created using [usethis::use_description()] and all fields except `Package`, `URL` and `BugReports` are sourced from the
+#' [`usethis.description` \R option](https://usethis.r-lib.org/reference/use_description.html) if defined.
 #'
 #' @param name Package name.
 #' @param id_netlify Netlify site identifier.
 #' @param path Path to the new package directory.
 #' @param incl_roxygen2_meta Whether or not to create a `man/roxygen/meta.R` file that i.a. stores the metadata for [roxygen2's `@family`
 #'   tags](https://roxygen2.r-lib.org/articles/index-crossref.html#family).
-#' @param incl_reexports Whether or not to create an `R/reexports.R` file prefilled with an opinionated set of magrittr and rlang operator exports.
+#' @param incl_reexports Whether or not to create an `R/reexports.R` file prefilled with an opinionated set of
+#'   [magrittr](https://magrittr.tidyverse.org/reference/index.html#pipes) and [rlang](https://rlang.r-lib.org/reference/index.html#operators) operator exports.
 #' @param incl_sysdata_rmd Whether or not to create an `Rmd/sysdata.nopurl.Rmd` stub file.
 #' @param incl_data_rmd Whether or not to create an `Rmd/data.nopurl.Rmd` stub file.
 #' @param incl_asciicasts_rmd Whether or not to create an `Rmd/asciicasts.nopurl.Rmd` stub file.

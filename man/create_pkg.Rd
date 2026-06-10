@@ -28,7 +28,8 @@ create_pkg(
 
 \item{incl_roxygen2_meta}{Whether or not to create a \code{man/roxygen/meta.R} file that i.a. stores the metadata for \href{https://roxygen2.r-lib.org/articles/index-crossref.html#family}{roxygen2's \verb{@family} tags}.}
 
-\item{incl_reexports}{Whether or not to create an \code{R/reexports.R} file prefilled with an opinionated set of magrittr and rlang operator exports.}
+\item{incl_reexports}{Whether or not to create an \code{R/reexports.R} file prefilled with an opinionated set of
+\href{https://magrittr.tidyverse.org/reference/index.html#pipes}{magrittr} and \href{https://rlang.r-lib.org/reference/index.html#operators}{rlang} operator exports.}
 
 \item{incl_sysdata_rmd}{Whether or not to create an \code{Rmd/sysdata.nopurl.Rmd} stub file.}
 
@@ -51,6 +52,6 @@ of much use yet for R Markdown packages.}
 \description{
 Populates the directory specified via \code{path} with all the necessary files for a new R Markdown package.
 
-The \code{DESCRIPTION} file is created using
-\code{\link[usethis:use_description]{usethis::use_description()}} and all fields except \code{Package}, \code{URL} and \code{BugReports} are sourced from the \href{https://usethis.r-lib.org/reference/use_description.html}{\code{usethis.description} \R option} if defined.
+The \code{DESCRIPTION} file is created using \code{\link[usethis:use_description]{usethis::use_description()}} and all fields except \code{Package}, \code{URL} and \code{BugReports} are sourced from the
+\href{https://usethis.r-lib.org/reference/use_description.html}{\code{usethis.description} \R option} if defined.
 }
